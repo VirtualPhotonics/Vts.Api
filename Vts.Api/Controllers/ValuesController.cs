@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Vts.Api.Services;
 
@@ -24,6 +25,7 @@ namespace Vts.Api.Controllers
 
         // POST api/v1/values
         [HttpPost]
+        [Authorize (Policy = "ApiKeyPolicy")]
         public string Post([FromBody] dynamic value)
         {
             var forwardSolverService = new ForwardSolverService();
