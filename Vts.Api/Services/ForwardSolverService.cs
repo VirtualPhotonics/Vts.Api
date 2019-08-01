@@ -96,7 +96,7 @@ namespace Vts.Api.Services
                         var imagPoints = times.Zip(results, (x, y) => new Point(x, y.Imaginary));
                         var realPlot = new PlotData { Data = realPoints, Label = "ROfRhoAndFt" };
                         var imagPlot = new PlotData { Data = imagPoints, Label = "ROfRhoAndFt" };
-                        var rhoPlot = new Plots { Id = "ROfRhoAndFtFixedRho", Detector = "R(ρ,ft)", Legend = "R(ρ,ft)", XAxis = "Time", YAxis = "Reflectance", PlotList = new List<PlotDataJson>() };
+                        var rhoPlot = new Plots { Id = "ROfRhoAndFtFixedRho", Detector = "R(ρ,ft)", Legend = "R(ρ,ft)", XAxis = "ft", YAxis = "Reflectance", PlotList = new List<PlotDataJson>() };
                         rhoPlot.PlotList.Add(new PlotDataJson { Data = realPlot.Data.Select(item => new List<double> { item.X, item.Y }).ToList(), Label = fs + " μa=" + op.Mua + " μs'=" + op.Musp + " ρ=" + rho + "(real)" });
                         rhoPlot.PlotList.Add(new PlotDataJson { Data = imagPlot.Data.Select(item => new List<double> { item.X, item.Y }).ToList(), Label = fs + " μa=" + op.Mua + " μs'=" + op.Musp + " ρ=" + rho + "(imag)" });
                         msg = JsonConvert.SerializeObject(rhoPlot);
@@ -178,7 +178,7 @@ namespace Vts.Api.Services
                         var imagPoints = times.Zip(results, (x, y) => new Point(x, y.Imaginary));
                         var realPlot = new PlotData { Data = realPoints, Label = "ROfFxAndFt" };
                         var imagPlot = new PlotData { Data = imagPoints, Label = "ROfFxAndFt" };
-                        var fxPlot = new Plots { Id = "ROfFxAndFtFixedFx", Detector = "R(fx,ft)", Legend = "R(fx,ft)", XAxis = "Time", YAxis = "Reflectance", PlotList = new List<PlotDataJson>() };
+                        var fxPlot = new Plots { Id = "ROfFxAndFtFixedFx", Detector = "R(fx,ft)", Legend = "R(fx,ft)", XAxis = "ft", YAxis = "Reflectance", PlotList = new List<PlotDataJson>() };
                         fxPlot.PlotList.Add(new PlotDataJson { Data = realPlot.Data.Select(item => new List<double> { item.X, item.Y }).ToList(), Label = fs.ToString() + " μa=" + op.Mua + " μs'=" + op.Musp + " fx=" + fx + "(real)" });
                         fxPlot.PlotList.Add(new PlotDataJson { Data = imagPlot.Data.Select(item => new List<double> { item.X, item.Y }).ToList(), Label = fs.ToString() + " μa=" + op.Mua + " μs'=" + op.Musp + " fx=" + fx + "(imag)" });
                         msg = JsonConvert.SerializeObject(fxPlot);
