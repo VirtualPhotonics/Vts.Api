@@ -8,30 +8,23 @@ namespace Vts.Api.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]
-    public class ValuesController : ControllerBase
+    public class ForwardController : ControllerBase
     {
         private readonly IForwardSolverService _forwardSolverService;
 
-        public ValuesController(IForwardSolverService forwardSolverService)
+        public ForwardController(IForwardSolverService forwardSolverService)
         {
             _forwardSolverService = forwardSolverService;
         }
 
-        // GET api/v1/values
+        // GET: api/v1/Forward
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public IEnumerable<string> Get()
         {
-            return new string[] { "value1", "value2" };
+            return new string[] { "Controller", "Forward" };
         }
 
-        // GET api/v1/values/5
-        [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/v1/values
+        // POST: api/v1/Forward
         [HttpPost]
         [Authorize(Policy = "ApiKeyPolicy")]
         public string Post([FromBody] SolutionDomainPlotParameters plotParameters)

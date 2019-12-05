@@ -26,7 +26,6 @@ namespace Vts.Api.Security
                     context.Succeed(requirement);
                 } else
                 {
-                    var response = authorizationFilterContext?.HttpContext.Response;
                     authorizationFilterContext.HttpContext.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
                     context.Fail();
                 }
