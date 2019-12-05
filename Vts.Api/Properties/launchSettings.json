@@ -12,7 +12,7 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "api/v1/values",
+      "launchUrl": "api/ready",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
@@ -20,7 +20,7 @@
     "Vts.Api": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "api/v1/values",
+      "launchUrl": "api/ready",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

@@ -8,7 +8,7 @@ using Vts.Api.Factories;
 using Vts.Api.Models;
 using Vts.Api.Services;
 
-namespace Vts.Api.Test.Services
+namespace Vts.Api.Tests.Services
 {
     class SpectralServiceTests
     {

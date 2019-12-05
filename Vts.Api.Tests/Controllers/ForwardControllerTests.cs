@@ -1,9 +1,9 @@
 ﻿using Moq;
 using NUnit.Framework;
-using Vts.Api.Services;
 using Vts.Api.Controllers;
+using Vts.Api.Services;
 
-namespace Vts.Api.Test.Controllers
+namespace Vts.Api.Tests.Controllers
 {
     public class ForwardControllerTests
     {

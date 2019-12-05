@@ -2,7 +2,7 @@
 using NUnit.Framework;
 using Vts.Api.Services;
 
-namespace Vts.Api.Test.Services
+namespace Vts.Api.Tests.Services
 {
     class InverseSolverServiceTests
     {

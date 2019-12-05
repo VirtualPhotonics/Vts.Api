@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 
-namespace Vts.Api.Test
+namespace Vts.Api.Tests
 {
     class ProgramTests
     {

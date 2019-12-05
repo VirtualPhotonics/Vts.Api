@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Routing;
 using NUnit.Framework;
 using Vts.Api.Security;
 
-namespace Vts.Api.Test.Security
+namespace Vts.Api.Tests.Security
 {
     class ApiKeyRequirementHandlerTests
     {

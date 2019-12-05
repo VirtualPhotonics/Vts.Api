@@ -3,14 +3,14 @@ using Microsoft.AspNetCore.Mvc;
 using NUnit.Framework;
 using Vts.Api.Controllers;
 
-namespace Vts.Api.Test.Controllers
+namespace Vts.Api.Tests.Controllers
 {
-    class LiveControllerTests
+    class DefaultControllerTests
     {
         [Test]
         public void Test_controller_get()
         {
-            var liveController = new LiveController {
+            var liveController = new DefaultController {
                 ControllerContext = new ControllerContext {
                     HttpContext = new DefaultHttpContext()
                 }

@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 using NUnit.Framework;
 using Vts.Api.Services;
 
-namespace Vts.Api.Test
+namespace Vts.Api.Tests
 {
     class StartupTests
     {

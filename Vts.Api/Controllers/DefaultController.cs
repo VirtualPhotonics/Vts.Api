@@ -2,9 +2,9 @@
 
 namespace Vts.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("/")]
     [ApiController]
-    public class LiveController : ControllerBase
+    public class DefaultController : ControllerBase
     {
         // GET: api/Live
         [HttpGet]
