@@ -30,6 +30,7 @@ bld/
 # MSTest test Results
 [Tt]est[Rr]esult*/
 [Bb]uild[Ll]og.*
+[Tt]est[Rr]esult*
 
 # NUNIT
 *.VisualState.xml
@@ -259,3 +260,7 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+
+# Sonar Qube
+.sonarqube/
+SonarCloud*

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using Vts.Api.Converters;
 using Vts.Api.Enums;
 using Vts.Common;
 using Vts.SpectralMapping;
@@ -36,8 +37,14 @@ namespace Vts.Api.Models
         [JsonConverter(typeof(StringEnumConverter))]
         public ScatteringType ScatteringType { get; set; }
         public List<LabelValuePair> AbsorberConcentration { get; set; }
+
+        [JsonConverter(typeof(ScattererConverter))]
         public PowerLawScatterer PowerLawScatterer { get; set; }
+
+        [JsonConverter(typeof(ScattererConverter))]
         public IntralipidScatterer IntralipidScatterer { get; set; }
+
+        [JsonConverter(typeof(ScattererConverter))]
         public MieScatterer MieScatterer { get; set; }
     }
 }
