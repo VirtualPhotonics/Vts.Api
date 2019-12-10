@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using System.Linq;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Moq;
 using Newtonsoft.Json;
@@ -7,6 +8,7 @@ using Vts.Api.Enums;
 using Vts.Api.Factories;
 using Vts.Api.Models;
 using Vts.Api.Services;
+using Vts.Common;
 
 namespace Vts.Api.Tests.Services
 {
@@ -17,11 +19,10 @@ namespace Vts.Api.Tests.Services
         private ILogger<SpectralService> _logger;
         private Mock<IPlotFactory> _plotFactoryMock;
 
-        [Test]
-        public void Test_get_plot_data()
+        [OneTimeSetUp]
+        public void One_time_setup()
         {
             _plotFactoryMock = new Mock<IPlotFactory>();
-            _plotFactoryMock.Setup(x => x.GetPlot(PlotType.Spectral, new SpectralPlotParameters())).Returns("");
             var serviceProvider = new ServiceCollection()
                 .AddLogging()
                 .BuildServiceProvider();
@@ -29,9 +30,43 @@ namespace Vts.Api.Tests.Services
                 .AddConsole();
             _logger = _factory.CreateLogger<SpectralService>();
             _spectralService = new SpectralService(_logger, _plotFactoryMock.Object);
-            var postData = "{\"plotType\":\"mua\",\"plotName\":\"μa\",\"tissueType\":\"Skin\",\"absorberConcentration\":[{\"label\":\"Hb\",\"value\":28.4,\"units\":\"μM\"},{\"label\":\"HbO2\",\"value\":22.4,\"units\":\"μM\"},{\"label\":\"H2O\",\"value\":0.7,\"units\":\"vol. frac.\"},{\"label\":\"Fat\",\"value\":0,\"units\":\"vol. frac.\"},{\"label\":\"Melanin\",\"value\":0.0051,\"units\":\"vol. frac.\"}],\"bloodConcentration\":{\"totalHb\":50.8,\"bloodVolume\":0.021844,\"stO2\":0.4409448818897638,\"visible\":true},\"scattererType\":\"PowerLaw\",\"powerLawScatterer\":{\"a\":1.2,\"b\":1.42,\"show\":true},\"intralipidScatterer\":{\"volumeFraction\":0.01,\"show\":false},\"mieScatterer\":{\"particleRadius\":0.5,\"ParticleRefractiveIndexMismatch\":1.4,\"MediumRefractiveIndexMismatch\":1,\"volumeFraction\":0.01,\"show\":false},\"xAxis\":{\"title\":\"Wavelength Range\",\"startLabel\":\"Begin\",\"startLabelUnits\":\"nm\",\"start\":650,\"endLabel\":\"End\",\"endLabelUnits\":\"nm\",\"stop\":1000,\"numberLabel\":\"Number\",\"count\":36}}";
-            var results = _spectralService.GetPlotData(JsonConvert.DeserializeObject<SpectralPlotParameters>(postData));
-            Assert.IsNull(results);
+        }
+
+        [Test]
+        public void Test_get_plot_data_powerlaw()
+        {
+            var postData = "{\"spectralPlotType\":\"musp\",\"plotName\":\"μs'\",\"tissueType\":\"Skin\",\"absorberConcentration\":[{\"label\":\"Hb\",\"value\":28.4,\"units\":\"μM\"},{\"label\":\"HbO2\",\"value\":22.4,\"units\":\"μM\"},{\"label\":\"H2O\",\"value\":0.7,\"units\":\"vol. frac.\"},{\"label\":\"Fat\",\"value\":0,\"units\":\"vol. frac.\"},{\"label\":\"Melanin\",\"value\":0.0051,\"units\":\"vol. frac.\"}],\"bloodConcentration\":{\"totalHb\":50.8,\"bloodVolume\":0.021844,\"stO2\":0.4409448818897638,\"visible\":true},\"scatteringType\":\"PowerLaw\",\"powerLawScatterer\":{\"a\":1.2,\"b\":1.42,\"show\":true},\"intralipidScatterer\":{\"volumeFraction\":0.01,\"show\":false},\"mieScatterer\":{\"particleRadius\":0.5,\"ParticleRefractiveIndexMismatch\":1.4,\"MediumRefractiveIndexMismatch\":1,\"volumeFraction\":0.01,\"show\":false},\"xAxis\":{\"title\":\"Wavelength Range\",\"startLabel\":\"Begin\",\"startLabelUnits\":\"nm\",\"start\":650,\"endLabel\":\"End\",\"endLabelUnits\":\"nm\",\"stop\":1000,\"numberLabel\":\"Number\",\"count\":36}}";
+            var xAxis = new DoubleRange(650, 1000, 36);
+            var wavelengths = xAxis.AsEnumerable().ToArray();
+            var spectralPlotParameters = JsonConvert.DeserializeObject<SpectralPlotParameters>(postData);
+            _plotFactoryMock.Setup(x => x.GetPlot(PlotType.Spectral, spectralPlotParameters)).Returns("");
+            var results = _spectralService.GetPlotData(spectralPlotParameters);
+            Assert.AreEqual("", results);
+            _plotFactoryMock.Verify(mock => mock.GetPlot(PlotType.Spectral, spectralPlotParameters), Times.Once);
+            Assert.AreEqual(wavelengths[4], spectralPlotParameters.Wavelengths[4]);
+            Assert.AreEqual(TissueType.Skin, spectralPlotParameters.Tissue.TissueType);
+        }
+
+        [Test]
+        public void Test_get_plot_data_mie()
+        {
+            var postData = "{\"spectralPlotType\":\"musp\",\"plotName\":\"μs'\",\"tissueType\":\"Skin\",\"absorberConcentration\":[{\"label\":\"Hb\",\"value\":28.4,\"units\":\"μM\"},{\"label\":\"HbO2\",\"value\":22.4,\"units\":\"μM\"},{\"label\":\"H2O\",\"value\":0.7,\"units\":\"vol. frac.\"},{\"label\":\"Fat\",\"value\":0,\"units\":\"vol. frac.\"},{\"label\":\"Melanin\",\"value\":0.0051,\"units\":\"vol. frac.\"}],\"bloodConcentration\":{\"totalHb\":50.8,\"bloodVolume\":0.021844,\"stO2\":0.4409448818897638,\"visible\":true},\"scatteringType\":\"Mie\",\"powerLawScatterer\":{\"a\":1.2,\"b\":1.42,\"show\":true},\"intralipidScatterer\":{\"volumeFraction\":0.01,\"show\":false},\"mieScatterer\":{\"particleRadius\":0.5,\"ParticleRefractiveIndexMismatch\":1.4,\"MediumRefractiveIndexMismatch\":1,\"volumeFraction\":0.01,\"show\":false},\"xAxis\":{\"title\":\"Wavelength Range\",\"startLabel\":\"Begin\",\"startLabelUnits\":\"nm\",\"start\":650,\"endLabel\":\"End\",\"endLabelUnits\":\"nm\",\"stop\":1000,\"numberLabel\":\"Number\",\"count\":36}}";
+            var spectralPlotParameters = JsonConvert.DeserializeObject<SpectralPlotParameters>(postData);
+            _plotFactoryMock.Setup(x => x.GetPlot(PlotType.Spectral, spectralPlotParameters)).Returns("");
+            var results = _spectralService.GetPlotData(spectralPlotParameters);
+            Assert.AreEqual("", results);
+            _plotFactoryMock.Verify(mock => mock.GetPlot(PlotType.Spectral, spectralPlotParameters), Times.Once);
+        }
+
+        [Test]
+        public void Test_get_plot_data_intralipid()
+        {
+            var postData = "{\"spectralPlotType\":\"musp\",\"plotName\":\"μs'\",\"tissueType\":\"Skin\",\"absorberConcentration\":[{\"label\":\"Hb\",\"value\":28.4,\"units\":\"μM\"},{\"label\":\"HbO2\",\"value\":22.4,\"units\":\"μM\"},{\"label\":\"H2O\",\"value\":0.7,\"units\":\"vol. frac.\"},{\"label\":\"Fat\",\"value\":0,\"units\":\"vol. frac.\"},{\"label\":\"Melanin\",\"value\":0.0051,\"units\":\"vol. frac.\"}],\"bloodConcentration\":{\"totalHb\":50.8,\"bloodVolume\":0.021844,\"stO2\":0.4409448818897638,\"visible\":true},\"scatteringType\":\"Intralipid\",\"powerLawScatterer\":{\"a\":1.2,\"b\":1.42,\"show\":true},\"intralipidScatterer\":{\"volumeFraction\":0.01,\"show\":false},\"mieScatterer\":{\"particleRadius\":0.5,\"ParticleRefractiveIndexMismatch\":1.4,\"MediumRefractiveIndexMismatch\":1,\"volumeFraction\":0.01,\"show\":false},\"xAxis\":{\"title\":\"Wavelength Range\",\"startLabel\":\"Begin\",\"startLabelUnits\":\"nm\",\"start\":650,\"endLabel\":\"End\",\"endLabelUnits\":\"nm\",\"stop\":1000,\"numberLabel\":\"Number\",\"count\":36}}";
+            var spectralPlotParameters = JsonConvert.DeserializeObject<SpectralPlotParameters>(postData);
+            _plotFactoryMock.Setup(x => x.GetPlot(PlotType.Spectral, spectralPlotParameters)).Returns("");
+            var results = _spectralService.GetPlotData(spectralPlotParameters);
+            Assert.AreEqual("", results);
+            _plotFactoryMock.Verify(mock => mock.GetPlot(PlotType.Spectral, spectralPlotParameters), Times.Once);
         }
     }
 }
