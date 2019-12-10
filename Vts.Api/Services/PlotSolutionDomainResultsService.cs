@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Numerics;
 using Microsoft.Extensions.Logging;
@@ -265,6 +266,8 @@ namespace Vts.Api.Services
                             msg = JsonConvert.SerializeObject(plot);
                         }
                         break;
+                    default:
+                        throw new InvalidEnumArgumentException();
                 }
                 return msg;
             }
