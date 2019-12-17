@@ -7,19 +7,19 @@ namespace Vts.Api.Tests.Controllers
 {
     public class SpectralControllerTests
     {
-        private Mock<ISpectralService> spectralServiceMock;
+        private Mock<ISpectralService> _spectralServiceMock;
 
         [OneTimeSetUp]
         public void Setup()
         {
             // set up the mock service
-            spectralServiceMock = new Mock<ISpectralService>();
+            _spectralServiceMock = new Mock<ISpectralService>();
         }
 
         [Test]
         public void Test_controller_get()
         {
-            var spectralController = new SpectralController(spectralServiceMock.Object);
+            var spectralController = new SpectralController(_spectralServiceMock.Object);
             var response = spectralController.Get();
             string[] array = { "Controller", "Spectral" };
             Assert.AreEqual(array, response);
