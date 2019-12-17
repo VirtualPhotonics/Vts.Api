@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NUnit.Framework;
 using Vts.Api.Services;
+using Vts.Api.Tools;
 
 namespace Vts.Api.Tests
 {
@@ -43,6 +44,9 @@ namespace Vts.Api.Tests
             Assert.IsNotNull(serviceProvider.GetService<IForwardSolverService>());
             Assert.IsNotNull(serviceProvider.GetService<IInverseSolverService>());
             Assert.IsNotNull(serviceProvider.GetService<IAuthorizationHandler>());
+            Assert.IsNotNull(serviceProvider.GetService<IParameterTools>());
+            Assert.IsNotNull(serviceProvider.GetService<PlotSolutionDomainResultsService>());
+            Assert.IsNotNull(serviceProvider.GetService<PlotSpectralResultsService>());
         }
     }
 }

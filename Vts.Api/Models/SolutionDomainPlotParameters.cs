@@ -26,7 +26,9 @@ namespace Vts.Api.Models
 
         public LabelValuePair IndependentAxes { get; set; }
         public double NoiseValue { get; set; }
-        public string ModelAnalysis { get; set; }
+
+        [JsonConverter(typeof(StringEnumConverter))]
+        public ForwardAnalysisType ModelAnalysis { get; set; }
         public List<double[]> MeasuredData { get; set; }
     }
 }

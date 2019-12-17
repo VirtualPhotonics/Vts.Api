@@ -8,6 +8,7 @@ using Vts.Api.Enums;
 using Vts.Api.Factories;
 using Vts.Api.Models;
 using Vts.Api.Services;
+using Vts.Api.Tools;
 
 namespace Vts.Api.Tests.Services
 {
@@ -17,6 +18,7 @@ namespace Vts.Api.Tests.Services
         private ILoggerFactory _factory;
         private ILogger<InverseSolverService> _logger;
         private Mock<IPlotFactory> _plotFactoryMock;
+        private IParameterTools _parameterTools;
 
         [OneTimeSetUp]
         public void One_time_setup()
@@ -28,12 +30,13 @@ namespace Vts.Api.Tests.Services
             _factory = serviceProvider.GetService<ILoggerFactory>()
                 .AddConsole();
             _logger = _factory.CreateLogger<InverseSolverService>();
+            _parameterTools = new ParameterTools();
+            _inverseSolverService = new InverseSolverService(_logger, _plotFactoryMock.Object, _parameterTools);
         }
 
         [Test]
         public void Test_get_plot_data()
         {
-            _inverseSolverService = new InverseSolverService(_logger, _plotFactoryMock.Object);
             var postData = "{\"inverseSolverType\":\"PointSourceSDA\",\"optimizerType\":\"MPFitLevenbergMarquardt\",\"optimizationParameters\":\"MuaMusp\",\"solutionDomain\":\"ROfRho\",\"measuredData\":[],\"independentAxes\":{\"label\":\"t\",\"value\":0.05},\"xAxis\":{\"start\":0.5,\"stop\":9.5,\"count\":\"36\"},\"opticalProperties\":{\"mua\":0.01,\"musp\":1,\"g\":0.8,\"n\":1.4}}";
             var solutionDomainPlotParameters = JsonConvert.DeserializeObject<SolutionDomainPlotParameters>(postData);
             _plotFactoryMock.Setup(x => x.GetPlot(PlotType.SolutionDomain, solutionDomainPlotParameters)).Returns("");
@@ -45,11 +48,10 @@ namespace Vts.Api.Tests.Services
         [Test]
         public void Test_get_parameters_in_order_rofrho()
         {
-            _inverseSolverService = new InverseSolverService(_logger, _plotFactoryMock.Object);
             var postData = "{\"inverseSolverType\":\"PointSourceSDA\",\"optimizerType\":\"MPFitLevenbergMarquardt\",\"optimizationParameters\":\"MuaMusp\",\"solutionDomain\":\"ROfRho\",\"measuredData\":[],\"independentAxes\":{\"label\":\"t\",\"value\":0.05},\"xAxis\":{\"start\":0.5,\"stop\":9.5,\"count\":\"36\"},\"opticalProperties\":{\"mua\":0.01,\"musp\":1,\"g\":0.8,\"n\":1.4}}";
             var solutionDomainPlotParameters = JsonConvert.DeserializeObject<SolutionDomainPlotParameters>(postData);
-            var initialGuessParams = InverseSolverService.GetParametersInOrder(
-                InverseSolverService.GetInitialGuessOpticalProperties(solutionDomainPlotParameters.OpticalProperties),
+            var initialGuessParams = _parameterTools.GetParametersInOrder(
+                _parameterTools.GetOpticalPropertiesObject(solutionDomainPlotParameters.OpticalProperties),
                 solutionDomainPlotParameters.XAxis.AsEnumerable().ToArray(),
                 solutionDomainPlotParameters.SolutionDomain,
                 solutionDomainPlotParameters.IndependentAxes.Label,
@@ -62,11 +64,10 @@ namespace Vts.Api.Tests.Services
         [Test]
         public void Test_get_parameters_in_order_roffx()
         {
-            _inverseSolverService = new InverseSolverService(_logger, _plotFactoryMock.Object);
             var postData = "{\"inverseSolverType\":\"PointSourceSDA\",\"optimizerType\":\"MPFitLevenbergMarquardt\",\"optimizationParameters\":\"MuaMusp\",\"solutionDomain\":\"ROfFx\",\"measuredData\":[],\"independentAxes\":{\"label\":\"t\",\"value\":0.05},\"xAxis\":{\"start\":0,\"stop\":0.5,\"count\":\"51\"},\"opticalProperties\":{\"mua\":0.01,\"musp\":1,\"g\":0.8,\"n\":1.4}}";
             var solutionDomainPlotParameters = JsonConvert.DeserializeObject<SolutionDomainPlotParameters>(postData);
-            var initialGuessParams = InverseSolverService.GetParametersInOrder(
-                InverseSolverService.GetInitialGuessOpticalProperties(solutionDomainPlotParameters.OpticalProperties),
+            var initialGuessParams = _parameterTools.GetParametersInOrder(
+                _parameterTools.GetOpticalPropertiesObject(solutionDomainPlotParameters.OpticalProperties),
                 solutionDomainPlotParameters.XAxis.AsEnumerable().ToArray(),
                 solutionDomainPlotParameters.SolutionDomain,
                 solutionDomainPlotParameters.IndependentAxes.Label,
@@ -79,11 +80,10 @@ namespace Vts.Api.Tests.Services
         [Test]
         public void Test_get_parameters_in_order_rofrhoandtime()
         {
-            _inverseSolverService = new InverseSolverService(_logger, _plotFactoryMock.Object);
             var postData = "{\"inverseSolverType\":\"PointSourceSDA\",\"optimizerType\":\"MPFitLevenbergMarquardt\",\"optimizationParameters\":\"MuaMusp\",\"solutionDomain\":\"ROfRhoAndTime\",\"measuredData\":[],\"independentAxes\":{\"label\":\"t\",\"value\":0.05},\"xAxis\":{\"start\":0.5,\"stop\":9.5,\"count\":\"36\"},\"opticalProperties\":{\"mua\":0.01,\"musp\":1,\"g\":0.8,\"n\":1.4}}";
             var solutionDomainPlotParameters = JsonConvert.DeserializeObject<SolutionDomainPlotParameters>(postData);
-            var initialGuessParams = InverseSolverService.GetParametersInOrder(
-                InverseSolverService.GetInitialGuessOpticalProperties(solutionDomainPlotParameters.OpticalProperties),
+            var initialGuessParams = _parameterTools.GetParametersInOrder(
+                _parameterTools.GetOpticalPropertiesObject(solutionDomainPlotParameters.OpticalProperties),
                 solutionDomainPlotParameters.XAxis.AsEnumerable().ToArray(),
                 solutionDomainPlotParameters.SolutionDomain,
                 solutionDomainPlotParameters.IndependentAxes.Label,
@@ -96,11 +96,10 @@ namespace Vts.Api.Tests.Services
         [Test]
         public void Test_get_parameters_in_order_rofrhoandft()
         {
-            _inverseSolverService = new InverseSolverService(_logger, _plotFactoryMock.Object);
             var postData = "{\"inverseSolverType\":\"PointSourceSDA\",\"optimizerType\":\"MPFitLevenbergMarquardt\",\"optimizationParameters\":\"MuaMusp\",\"solutionDomain\":\"ROfRhoAndFt\",\"measuredData\":[],\"independentAxes\":{\"label\":\"ft\",\"value\":0.05},\"xAxis\":{\"start\":0.5,\"stop\":9.5,\"count\":\"19\"},\"opticalProperties\":{\"mua\":0.01,\"musp\":1,\"g\":0.8,\"n\":1.4}}";
             var solutionDomainPlotParameters = JsonConvert.DeserializeObject<SolutionDomainPlotParameters>(postData);
-            var initialGuessParams = InverseSolverService.GetParametersInOrder(
-                InverseSolverService.GetInitialGuessOpticalProperties(solutionDomainPlotParameters.OpticalProperties),
+            var initialGuessParams = _parameterTools.GetParametersInOrder(
+                _parameterTools.GetOpticalPropertiesObject(solutionDomainPlotParameters.OpticalProperties),
                 solutionDomainPlotParameters.XAxis.AsEnumerable().ToArray(),
                 solutionDomainPlotParameters.SolutionDomain,
                 solutionDomainPlotParameters.IndependentAxes.Label,
@@ -113,11 +112,10 @@ namespace Vts.Api.Tests.Services
         [Test]
         public void Test_get_parameters_in_order_roffxandtime()
         {
-            _inverseSolverService = new InverseSolverService(_logger, _plotFactoryMock.Object);
             var postData = "{\"inverseSolverType\":\"PointSourceSDA\",\"optimizerType\":\"MPFitLevenbergMarquardt\",\"optimizationParameters\":\"MuaMusp\",\"solutionDomain\":\"ROfFxAndTime\",\"measuredData\":[],\"independentAxes\":{\"label\":\"t\",\"value\":0.05},\"xAxis\":{\"start\":0,\"stop\":0.5,\"count\":\"51\"},\"opticalProperties\":{\"mua\":0.01,\"musp\":1,\"g\":0.8,\"n\":1.4}}";
             var solutionDomainPlotParameters = JsonConvert.DeserializeObject<SolutionDomainPlotParameters>(postData);
-            var initialGuessParams = InverseSolverService.GetParametersInOrder(
-                InverseSolverService.GetInitialGuessOpticalProperties(solutionDomainPlotParameters.OpticalProperties),
+            var initialGuessParams = _parameterTools.GetParametersInOrder(
+                _parameterTools.GetOpticalPropertiesObject(solutionDomainPlotParameters.OpticalProperties),
                 solutionDomainPlotParameters.XAxis.AsEnumerable().ToArray(),
                 solutionDomainPlotParameters.SolutionDomain,
                 solutionDomainPlotParameters.IndependentAxes.Label,
@@ -130,11 +128,10 @@ namespace Vts.Api.Tests.Services
         [Test]
         public void Test_get_parameters_in_order_roffxandft()
         {
-            _inverseSolverService = new InverseSolverService(_logger, _plotFactoryMock.Object);
             var postData = "{\"inverseSolverType\":\"PointSourceSDA\",\"optimizerType\":\"MPFitLevenbergMarquardt\",\"optimizationParameters\":\"MuaMusp\",\"solutionDomain\":\"ROfFxAndFt\",\"measuredData\":[],\"independentAxes\":{\"label\":\"fx\",\"value\":0.05},\"xAxis\":{\"start\":0,\"stop\":0.5,\"count\":\"51\"},\"opticalProperties\":{\"mua\":0.01,\"musp\":1,\"g\":0.8,\"n\":1.4}}";
             var solutionDomainPlotParameters = JsonConvert.DeserializeObject<SolutionDomainPlotParameters>(postData);
-            var initialGuessParams = InverseSolverService.GetParametersInOrder(
-                InverseSolverService.GetInitialGuessOpticalProperties(solutionDomainPlotParameters.OpticalProperties),
+            var initialGuessParams = _parameterTools.GetParametersInOrder(
+                _parameterTools.GetOpticalPropertiesObject(solutionDomainPlotParameters.OpticalProperties),
                 solutionDomainPlotParameters.XAxis.AsEnumerable().ToArray(),
                 solutionDomainPlotParameters.SolutionDomain,
                 solutionDomainPlotParameters.IndependentAxes.Label,

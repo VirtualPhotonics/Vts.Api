@@ -9,6 +9,7 @@ using Vts.Api.Enums;
 using Vts.Api.Factories;
 using Vts.Api.Models;
 using Vts.Api.Services;
+using Vts.Api.Tools;
 using Vts.Common;
 using Vts.SpectralMapping;
 
@@ -25,8 +26,9 @@ namespace Vts.Api.Tests.Factories
         public void One_time_setup()
         {
             _serviceProvider = new ServiceCollection()
-                .AddSingleton<PlotSpectralResultsService>()
-                .AddSingleton<PlotSolutionDomainResultsService>()
+                .AddTransient<IParameterTools, ParameterTools>()
+                .AddTransient<PlotSpectralResultsService>()
+                .AddTransient<PlotSolutionDomainResultsService>()
                 .AddLogging()
                 .BuildServiceProvider();
             _factory = _serviceProvider.GetService<ILoggerFactory>()

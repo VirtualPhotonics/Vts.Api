@@ -26,14 +26,14 @@ namespace Vts.Api.Tests.Models
             Assert.AreEqual(OptimizerType.MPFitLevenbergMarquardt, solutionDomainPlotParameters.OptimizerType);
             Assert.AreEqual(InverseFitType.MuaMusp, solutionDomainPlotParameters.OptimizationParameters);
             Assert.AreEqual(0, solutionDomainPlotParameters.NoiseValue);
-            Assert.AreEqual("R", solutionDomainPlotParameters.ModelAnalysis);
+            Assert.AreEqual(ForwardAnalysisType.R, solutionDomainPlotParameters.ModelAnalysis);
             Assert.IsNull(solutionDomainPlotParameters.MeasuredData);
         }
 
         [Test]
         public void Test_deserialize_forward_solver_roffxandft()
         {
-            var postData = "{\"forwardSolverType\":\"DistributedPointSourceSDA\",\"solutionDomain\":\"ROfFxAndFt\",\"independentAxes\":{\"label\":\"fx\",\"value\":0.05},\"xAxis\":{\"start\":0,\"stop\":0.5,\"count\":51},\"opticalProperties\":{\"mua\":0.01,\"musp\":1,\"g\":0.8,\"n\":1.4},\"modelAnalysis\":\"R\",\"noiseValue\":\"0\"}";
+            var postData = "{\"forwardSolverType\":\"DistributedPointSourceSDA\",\"solutionDomain\":\"ROfFxAndFt\",\"independentAxes\":{\"label\":\"fx\",\"value\":0.05},\"xAxis\":{\"start\":0,\"stop\":0.5,\"count\":51},\"opticalProperties\":{\"mua\":0.01,\"musp\":1,\"g\":0.8,\"n\":1.4},\"modelAnalysis\":\"dRdMusp\",\"noiseValue\":\"0\"}";
             var xAxis = new DoubleRange(0, 0.5, 51);
             var opticalProperties = new OpticalProperties(0.01, 1, 0.8, 1.4);
             var solutionDomainPlotParameters = JsonConvert.DeserializeObject<SolutionDomainPlotParameters>(postData);
@@ -48,7 +48,7 @@ namespace Vts.Api.Tests.Models
             Assert.AreEqual(OptimizerType.MPFitLevenbergMarquardt, solutionDomainPlotParameters.OptimizerType);
             Assert.AreEqual(InverseFitType.MuaMusp, solutionDomainPlotParameters.OptimizationParameters);
             Assert.AreEqual(0, solutionDomainPlotParameters.NoiseValue);
-            Assert.AreEqual("R", solutionDomainPlotParameters.ModelAnalysis);
+            Assert.AreEqual(ForwardAnalysisType.dRdMusp, solutionDomainPlotParameters.ModelAnalysis);
             Assert.IsNull(solutionDomainPlotParameters.MeasuredData);
         }
 
@@ -82,7 +82,7 @@ namespace Vts.Api.Tests.Models
             Assert.AreEqual(OptimizerType.MPFitLevenbergMarquardt, solutionDomainPlotParameters.OptimizerType);
             Assert.AreEqual(InverseFitType.MuaMusp, solutionDomainPlotParameters.OptimizationParameters);
             Assert.AreEqual(0, solutionDomainPlotParameters.NoiseValue);
-            Assert.IsNull(solutionDomainPlotParameters.ModelAnalysis);
+            Assert.AreEqual(ForwardAnalysisType.R, solutionDomainPlotParameters.ModelAnalysis);
             Assert.AreEqual(measuredData[3][0], solutionDomainPlotParameters.MeasuredData[3][0]);
             Assert.AreEqual(measuredData[7][1], solutionDomainPlotParameters.MeasuredData[7][1]);
             Assert.AreEqual(measuredData[5][0], solutionDomainPlotParameters.MeasuredData[5][0]);

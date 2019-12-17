@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Vts.Api.Enums;
 using Vts.Api.Models;
 using Vts.Api.Services;
+using Vts.Api.Tools;
 
 namespace Vts.Api.Factories
 {
@@ -20,7 +21,7 @@ namespace Vts.Api.Factories
             switch (plotType)
             {
                 case PlotType.SolutionDomain:
-                    var plotSolutionDomainResultsService = _serviceProvider.GetService<PlotSolutionDomainResultsService>();
+                    var plotSolutionDomainResultsService = _serviceProvider.GetRequiredService<PlotSolutionDomainResultsService>();
                     return plotSolutionDomainResultsService.Plot((SolutionDomainPlotParameters)plotParameters);
                 case PlotType.Spectral:
                     var plotSpectralResultsService = _serviceProvider.GetService<PlotSpectralResultsService>();

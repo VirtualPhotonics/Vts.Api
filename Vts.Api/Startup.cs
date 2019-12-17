@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using Vts.Api.Factories;
 using Vts.Api.Security;
 using Vts.Api.Services;
+using Vts.Api.Tools;
 
 namespace Vts.Api
 {
@@ -37,8 +38,9 @@ namespace Vts.Api
             services.AddTransient<IForwardSolverService, ForwardSolverService>();
             services.AddTransient<IInverseSolverService, InverseSolverService>();
             services.AddTransient<ISpectralService, SpectralService>();
-            services.AddSingleton<PlotSpectralResultsService>();
-            services.AddSingleton<PlotSolutionDomainResultsService>();
+            services.AddTransient<IParameterTools, ParameterTools>();
+            services.AddTransient<PlotSpectralResultsService>();
+            services.AddTransient<PlotSolutionDomainResultsService>();
             services.AddTransient<IPlotFactory, PlotFactory>();
             services.AddAuthentication().AddJwtBearer();
             services.AddAuthorization(authConfig => {
