@@ -3,7 +3,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Vts.Api.Enums;
 using Vts.Api.Models;
 using Vts.Api.Services;
-using Vts.Api.Tools;
 
 namespace Vts.Api.Factories
 {

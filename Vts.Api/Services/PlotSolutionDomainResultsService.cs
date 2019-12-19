@@ -49,10 +49,6 @@ namespace Vts.Api.Services
                     var plotData = new PlotData { Data = xyPoints, Label = parameters.SolutionDomain.ToString() };
                     plot = new Plots {
                         Id = hasIndependentAxis ? $"{parameters.SolutionDomain.ToString()}Fixed{parameters.IndependentAxes.Label}" : $"{parameters.SolutionDomain.ToString()}",
-                        Detector = hasIndependentAxis ? $"R({parameters.IndependentAxes.First},{parameters.IndependentAxes.Second})" : $"R({parameters.IndependentAxes.First})",
-                        Legend = hasIndependentAxis ? $"R({parameters.IndependentAxes.First},{parameters.IndependentAxes.Second})" : $"R({parameters.IndependentAxes.First})",
-                        XAxis = hasIndependentAxis && parameters.IndependentAxes.Label == parameters.IndependentAxes.First ? parameters.IndependentAxes.Second : parameters.IndependentAxes.First,
-                        YAxis = "Reflectance",
                         PlotList = new List<PlotDataJson>()
                     };
                     plot.PlotList.Add(new PlotDataJson {
@@ -64,17 +60,12 @@ namespace Vts.Api.Services
                 {
                     var offset = reflectance.Length/2;
                     IEnumerable<ComplexPoint> xyPointsComplex = independentValues.Zip(reflectance, (x, y) => new ComplexPoint(x, new Complex(y, reflectance[Array.IndexOf(reflectance, y)+offset]))).ToArray();
-
                     var xyPointsReal = xyPointsComplex.Select(item => new Point(item.X, item.Y.Real));
                     var xyPointsImaginary = xyPointsComplex.Select(item => new Point(item.X, item.Y.Imaginary));
                     var plotDataReal = new PlotData { Data = xyPointsReal, Label = parameters.SolutionDomain.ToString() };
                     var plotDataImaginary = new PlotData { Data = xyPointsImaginary, Label = parameters.SolutionDomain.ToString() };
                     plot = new Plots {
                         Id = $"{parameters.SolutionDomain.ToString()}Fixed{parameters.IndependentAxes.Label}",
-                        Detector = $"R({parameters.IndependentAxes.First},{parameters.IndependentAxes.Second})",
-                        Legend = $"R({parameters.IndependentAxes.First},{parameters.IndependentAxes.Second})",
-                        XAxis = parameters.IndependentAxes.Label == parameters.IndependentAxes.First ? $"{parameters.IndependentAxes.Second}" : parameters.IndependentAxes.First,
-                        YAxis = "Reflectance",
                         PlotList = new List<PlotDataJson>()
                     };
                     plot.PlotList.Add(new PlotDataJson {

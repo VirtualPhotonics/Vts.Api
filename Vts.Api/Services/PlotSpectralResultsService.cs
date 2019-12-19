@@ -38,10 +38,6 @@ namespace Vts.Api.Services
             var plotData = new PlotData { Data = xyPoints, Label = parameters.TissueType };
             var plot = new Plots {
                 Id = "Spectral" + parameters.SpectralPlotType,
-                Detector = "Spectral " + parameters.PlotName,
-                Legend = "Spectral",
-                XAxis = "λ",
-                YAxis = parameters.YAxis,
                 PlotList = new List<PlotDataJson>()
             };
             plot.PlotList.Add(new PlotDataJson {
