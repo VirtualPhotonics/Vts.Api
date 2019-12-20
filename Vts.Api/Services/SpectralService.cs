@@ -52,7 +52,7 @@ namespace Vts.Api.Services
             }
 
             // get the wavelength
-            plotParameters.Wavelengths = plotParameters.XAxis.AsEnumerable().ToArray();
+            plotParameters.Wavelengths = plotParameters.XAxis.AxisRange.AsEnumerable().ToArray();
             // set up the tissue
             plotParameters.Tissue = new Tissue(chromophoreAbsorbers, scatterer, plotParameters.TissueType);
 

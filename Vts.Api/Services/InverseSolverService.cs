@@ -28,10 +28,10 @@ namespace Vts.Api.Services
                 var inverseSolver = plotParameters.InverseSolverType;
                 var initialGuessParams = _parameterTools.GetParametersInOrder(
                     _parameterTools.GetOpticalPropertiesObject(plotParameters.OpticalProperties),
-                    plotParameters.XAxis.AsEnumerable().ToArray(), 
-                    plotParameters.SolutionDomain, 
-                    plotParameters.IndependentAxes.Label,
-                    plotParameters.IndependentAxes.Value);
+                    plotParameters.XAxis.AxisRange.AsEnumerable().ToArray(), 
+                    plotParameters.SolutionDomain,
+                    plotParameters.IndependentAxis?.Axis,
+                    plotParameters.IndependentAxis?.AxisValue);
                 var initialGuessParamsConvert = initialGuessParams.Values.ToArray();
                 // get measured data from inverse solver analysis component
                 var measuredPoints = plotParameters.MeasuredData;

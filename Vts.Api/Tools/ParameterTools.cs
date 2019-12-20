@@ -20,11 +20,11 @@ namespace Vts.Api.Tools
 
         // the following needs to change when Wavelength is added into independent variable list
         public IDictionary<IndependentVariableAxis, object> GetParametersInOrder(
-            object opticalProperties, double[] xs, SolutionDomainType solutionDomain, string independentAxis, double independentValue)
+            object opticalProperties, double[] xs, SolutionDomainType solutionDomain, IndependentVariableAxis? independentAxis, double? independentValue)
         {
             // make list of independent vars with independent first then constant
             var listIndependentVariableAxes = new List<IndependentVariableAxis>();
-            var isConstant = "";
+            var isConstant = independentAxis;
             switch (solutionDomain)
             {
                 case SolutionDomainType.ROfRho:
@@ -33,12 +33,10 @@ namespace Vts.Api.Tools
                 case SolutionDomainType.ROfRhoAndTime:
                 listIndependentVariableAxes.Add(IndependentVariableAxis.Rho);
                 listIndependentVariableAxes.Add(IndependentVariableAxis.Time);
-                isConstant = independentAxis == "t" ? "t" : "rho";
                 break;
                 case SolutionDomainType.ROfRhoAndFt:
                 listIndependentVariableAxes.Add(IndependentVariableAxis.Ft);
                 listIndependentVariableAxes.Add(IndependentVariableAxis.Rho);
-                isConstant = independentAxis == "ft" ? "ft" : "rho";
                 break;
                 case SolutionDomainType.ROfFx:
                 listIndependentVariableAxes.Add(IndependentVariableAxis.Fx);
@@ -46,12 +44,10 @@ namespace Vts.Api.Tools
                 case SolutionDomainType.ROfFxAndTime:
                 listIndependentVariableAxes.Add(IndependentVariableAxis.Time);
                 listIndependentVariableAxes.Add(IndependentVariableAxis.Fx);
-                isConstant = independentAxis == "t" ? "t" : "fx";
                 break;
                 case SolutionDomainType.ROfFxAndFt:
                 listIndependentVariableAxes.Add(IndependentVariableAxis.Ft);
                 listIndependentVariableAxes.Add(IndependentVariableAxis.Fx);
-                isConstant = independentAxis == "ft" ? "ft" : "fx";
                 break;
                 default:
                 throw new InvalidEnumArgumentException("There is no Enum of this type");
@@ -94,15 +90,17 @@ namespace Vts.Api.Tools
         }
 
         // this has commented out code that might come into play when we add wavelength as axis
-        internal double[] GetParameterValues(IndependentVariableAxis axis, string isConstant, double independentValue,
+        internal double[] GetParameterValues(IndependentVariableAxis axis, IndependentVariableAxis? isConstant, double? independentValue,
             double[] xs)
         {
-            if (((axis == IndependentVariableAxis.Rho) && (isConstant == "rho")) ||
-                ((axis == IndependentVariableAxis.Time) && (isConstant == "t")) ||
-                ((axis == IndependentVariableAxis.Fx) && (isConstant == "fx")) ||
-                ((axis == IndependentVariableAxis.Ft) && (isConstant == "ft")))
+            if (((axis == IndependentVariableAxis.Rho) && (isConstant == IndependentVariableAxis.Rho)) ||
+                ((axis == IndependentVariableAxis.Time) && (isConstant == IndependentVariableAxis.Time)) ||
+                ((axis == IndependentVariableAxis.Fx) && (isConstant == IndependentVariableAxis.Fx)) ||
+                ((axis == IndependentVariableAxis.Ft) && (isConstant == IndependentVariableAxis.Ft)))
             {
-                return new[] { independentValue };
+                if (independentValue == null)
+                    return new double[0];
+                return new[] { (double)independentValue };
             }
             return xs.ToArray();
             //else

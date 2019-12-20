@@ -60,7 +60,7 @@ namespace Vts.Api.Tests.Factories
         [Test]
         public void Get_solution_domain_service_from_factory()
         {
-            var postData = "{\"forwardSolverType\":\"DistributedPointSourceSDA\",\"solutionDomain\":\"ROfRho\",\"independentAxes\":{\"show\":false,\"first\":\"ρ\",\"second\":\"t\",\"label\":\"t\",\"value\":0.05,\"units\":\"ns\",\"firstUnits\":\"mm\",\"secondUnits\":\"ns\"},\"xAxis\":{\"title\":\"Detector Positions\",\"startLabel\":\"Begin\",\"startLabelUnits\":\"mm\",\"start\":0.5,\"endLabel\":\"End\",\"endLabelUnits\":\"mm\",\"stop\":9.5,\"numberLabel\":\"Number\",\"count\":19},\"opticalProperties\":{\"title\":\"Optical Properties\",\"mua\":0.01,\"musp\":1,\"g\":0.8,\"n\":1.4},\"modelAnalysis\":\"R\",\"noiseValue\":\"0\"}";
+            var postData = "{\"forwardSolverType\":\"DistributedPointSourceSDA\",\"solutionDomain\":\"ROfRho\",\"xAxis\":{\"axis\":\"rho\",\"axisRange\":{\"start\":0.5,\"stop\":9.5,\"count\":19}},\"opticalProperties\":{\"title\":\"Optical Properties\",\"mua\":0.01,\"musp\":1,\"g\":0.8,\"n\":1.4},\"modelAnalysis\":\"R\",\"noiseValue\":\"0\"}";
             var solutionDomainPlotParameters = JsonConvert.DeserializeObject<SolutionDomainPlotParameters>(postData);
             _plotFactory = new PlotFactory(_serviceProvider);
             var data = _plotFactory.GetPlot(PlotType.SolutionDomain, solutionDomainPlotParameters);

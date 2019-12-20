@@ -28,32 +28,31 @@ namespace Vts.Api.Services
             var parameters = (SolutionDomainPlotParameters) plotParameters;
             var fs = parameters.ForwardSolverType;
             var op = parameters.OpticalProperties;
-            var independentValue = parameters.IndependentAxes.Value;
-            var independentValues = parameters.XAxis.AsEnumerable().ToArray();
+            var hasIndependentAxis = parameters.SolutionDomain != SolutionDomainType.ROfFx && parameters.SolutionDomain != SolutionDomainType.ROfRho;
+            var independentValues = parameters.XAxis.AxisRange.AsEnumerable().ToArray();
             try
             {
                 Plots plot;
                 var parametersInOrder = _parameterTools.GetParametersInOrder(
                     _parameterTools.GetOpticalPropertiesObject(parameters.OpticalProperties),
-                    plotParameters.XAxis.AsEnumerable().ToArray(),
+                    plotParameters.XAxis.AxisRange.AsEnumerable().ToArray(),
                     parameters.SolutionDomain,
-                    parameters.IndependentAxes.Label,
-                    parameters.IndependentAxes.Value);
+                    parameters.IndependentAxis?.Axis,
+                    parameters.IndependentAxis?.AxisValue);
                 var parametersInOrderObject = parametersInOrder.Values.ToArray();
                 var reflectance = parameters.NoiseValue > 0 ? ComputationFactory.ComputeReflectance(fs, parameters.SolutionDomain, parameters.ModelAnalysis, parametersInOrderObject).AddNoise(parameters.NoiseValue) : ComputationFactory.ComputeReflectance(fs, parameters.SolutionDomain, parameters.ModelAnalysis, parametersInOrderObject);
                 var isComplex = ComputationFactory.IsComplexSolver(parameters.SolutionDomain);
-                var hasIndependentAxis = parameters.SolutionDomain != SolutionDomainType.ROfFx && parameters.SolutionDomain != SolutionDomainType.ROfRho;
                 if (!isComplex)
                 {
                     var xyPoints = independentValues.Zip(reflectance, (x, y) => new Point(x, y));
                     var plotData = new PlotData { Data = xyPoints, Label = parameters.SolutionDomain.ToString() };
                     plot = new Plots {
-                        Id = hasIndependentAxis ? $"{parameters.SolutionDomain.ToString()}Fixed{parameters.IndependentAxes.Label}" : $"{parameters.SolutionDomain.ToString()}",
+                        Id = hasIndependentAxis ? $"{parameters.SolutionDomain.ToString()}Fixed{parameters.IndependentAxis.Axis}" : $"{parameters.SolutionDomain.ToString()}",
                         PlotList = new List<PlotDataJson>()
                     };
                     plot.PlotList.Add(new PlotDataJson {
                         Data = plotData.Data.Select(item => new List<double> { item.X, item.Y }).ToList(),
-                        Label = hasIndependentAxis ? $"{fs} μa={op.Mua} μs'={op.Musp} {parameters.IndependentAxes.Label}={parameters.IndependentAxes.Value}" : $"{fs} μa={op.Mua} μs'={op.Musp}"
+                        Label = hasIndependentAxis ? $"{fs} μa={op.Mua} μs'={op.Musp} {parameters.IndependentAxis.Axis}={parameters.IndependentAxis.AxisValue}" : $"{fs} μa={op.Mua} μs'={op.Musp}"
                     });
                 }
                 else
@@ -65,16 +64,16 @@ namespace Vts.Api.Services
                     var plotDataReal = new PlotData { Data = xyPointsReal, Label = parameters.SolutionDomain.ToString() };
                     var plotDataImaginary = new PlotData { Data = xyPointsImaginary, Label = parameters.SolutionDomain.ToString() };
                     plot = new Plots {
-                        Id = $"{parameters.SolutionDomain.ToString()}Fixed{parameters.IndependentAxes.Label}",
+                        Id = $"{parameters.SolutionDomain.ToString()}Fixed{parameters.IndependentAxis.Axis}",
                         PlotList = new List<PlotDataJson>()
                     };
                     plot.PlotList.Add(new PlotDataJson {
                         Data = plotDataReal.Data.Select(item => new List<double> { item.X, item.Y }).ToList(),
-                        Label = $"{fs} μa={op.Mua} μs'={op.Musp} {parameters.IndependentAxes.Label}={independentValue}(real)"
+                        Label = $"{fs} μa={op.Mua} μs'={op.Musp} {parameters.IndependentAxis.Axis}={parameters.IndependentAxis.AxisValue}(real)"
                     });
                     plot.PlotList.Add(new PlotDataJson {
                         Data = plotDataImaginary.Data.Select(item => new List<double> { item.X, item.Y }).ToList(),
-                        Label = $"{fs} μa={op.Mua} μs'={op.Musp} {parameters.IndependentAxes.Label}={independentValue}(imag)"
+                        Label = $"{fs} μa={op.Mua} μs'={op.Musp} {parameters.IndependentAxis.Axis}={parameters.IndependentAxis.AxisValue}(imag)"
                     });
                 }
                 var msg = JsonConvert.SerializeObject(plot);

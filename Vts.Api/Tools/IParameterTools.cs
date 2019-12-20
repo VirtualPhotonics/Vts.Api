@@ -7,8 +7,8 @@ namespace Vts.Api.Tools
         object GetOpticalPropertiesObject(OpticalProperties opticalProperties);
 
         IDictionary<IndependentVariableAxis, object> GetParametersInOrder(
-            object opticalProperties, double[] xs, SolutionDomainType solutionDomain, string independentAxis,
-            double independentValue);
+            object opticalProperties, double[] xs, SolutionDomainType solutionDomain, IndependentVariableAxis? independentAxis,
+            double? independentValue);
 
     }
 }
