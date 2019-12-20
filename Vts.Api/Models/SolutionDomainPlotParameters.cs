@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using Vts.Api.Converters;
 
 namespace Vts.Api.Models
 {
@@ -27,6 +28,7 @@ namespace Vts.Api.Models
         [JsonConverter(typeof(StringEnumConverter))]
         public ForwardAnalysisType ModelAnalysis { get; set; }
         public List<double[]> MeasuredData { get; set; }
+        [JsonConverter(typeof(OpticalPropertyListConverter))]
         public List<OpticalProperties> WavelengthOpticalPropertyList { get; set; }
         public IndependentAxis IndependentAxis { get; set; }
         public IndependentAxis SecondIndependentAxis { get; set; }

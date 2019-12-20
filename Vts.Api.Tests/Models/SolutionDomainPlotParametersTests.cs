@@ -34,14 +34,14 @@ namespace Vts.Api.Tests.Models
         public void Test_deserialize_forward_solver_with_wavelength()
         {
             var postData =
-                "{\"forwardSolverType\":\"DistributedPointSourceSDA\",\"solutionDomain\":\"ROfRho\",\"xAxis\":{\"axis\":\"rho\",\"axisRange\":{\"start\":0.5,\"stop\":9.5,\"count\":19}},\"independentAxis\":{\"axis\":\"wavelength\",\"axisRange\":{\"start\":650,\"stop\":1000,\"count\":3}},\"wavelengthOpticalPropertyList\":[{\"opticalProperties\":{\"mua\":0.0679,\"musp\":1.06,\"g\":0.8,\"n\":1.4}},{\"opticalProperties\":{\"mua\":0.04,\"musp\":0.934,\"g\":0.8,\"n\":1.4}},{\"opticalProperties\":{\"mua\":0.0678,\"musp\":0.84,\"g\":0.8,\"n\":1.4}}],\"modelAnalysis\":\"R\",\"noiseValue\":\"0\"}";
+                "{\"forwardSolverType\":\"DistributedPointSourceSDA\",\"solutionDomain\":\"ROfRho\",\"xAxis\":{\"axis\":\"rho\",\"axisRange\":{\"start\":0.5,\"stop\":9.5,\"count\":19}},\"independentAxis\":{\"axis\":\"wavelength\",\"axisRange\":{\"start\":650,\"stop\":1000,\"count\":3}},\"wavelengthOpticalPropertyList\":[{\"mua\":0.0679,\"musp\":1.06,\"g\":0.8,\"n\":1.4},{\"mua\":0.04,\"musp\":0.934,\"g\":0.8,\"n\":1.4},{\"mua\":0.0678,\"musp\":0.84,\"g\":0.8,\"n\":1.4}],\"modelAnalysis\":\"R\",\"noiseValue\":\"0\"}";
             var xAxis = new DoubleRange(0.5, 9.5, 19);
             var independentAxis = new DoubleRange(650, 1000, 3);
             var opticalPropertyList = new[]
             {
                 new OpticalProperties(0.0679, 1.06, 0.8, 1.4),
                 new OpticalProperties(0.04, 0.934, 0.8, 1.4),
-                new OpticalProperties(0.0678, 0.934, 0.8, 1.4)
+                new OpticalProperties(0.0678, 0.84, 0.8, 1.4)
             };
             var solutionDomainPlotParameters = JsonConvert.DeserializeObject<SolutionDomainPlotParameters>(postData);
             Assert.AreEqual(IndependentVariableAxis.Wavelength, solutionDomainPlotParameters.IndependentAxis.Axis);
@@ -71,14 +71,14 @@ namespace Vts.Api.Tests.Models
         public void Test_deserialize_forward_solver_rofrhoandt_with_wavelength()
         {
             var postData =
-                "{\"forwardSolverType\":\"DistributedPointSourceSDA\",\"solutionDomain\":\"ROfRho\",\"xAxis\":{\"axis\":\"rho\",\"axisRange\":{\"start\":0.5,\"stop\":9.5,\"count\":19}},\"secondIndependentAxis\":{\"axis\":\"time\",\"axisValue\":0.05},\"independentAxis\":{\"axis\":\"wavelength\",\"axisRange\":{\"start\":650,\"stop\":1000,\"count\":3}},\"wavelengthOpticalPropertyList\":[{\"opticalProperties\":{\"mua\":0.0679,\"musp\":1.06,\"g\":0.8,\"n\":1.4}},{\"opticalProperties\":{\"mua\":0.04,\"musp\":0.934,\"g\":0.8,\"n\":1.4}},{\"opticalProperties\":{\"mua\":0.0678,\"musp\":0.84,\"g\":0.8,\"n\":1.4}}],\"modelAnalysis\":\"R\",\"noiseValue\":\"0\"}";
+                "{\"forwardSolverType\":\"DistributedPointSourceSDA\",\"solutionDomain\":\"ROfRho\",\"xAxis\":{\"axis\":\"rho\",\"axisRange\":{\"start\":0.5,\"stop\":9.5,\"count\":19}},\"secondIndependentAxis\":{\"axis\":\"time\",\"axisValue\":0.05},\"independentAxis\":{\"axis\":\"wavelength\",\"axisRange\":{\"start\":650,\"stop\":1000,\"count\":3}},\"wavelengthOpticalPropertyList\":[{\"mua\":0.0679,\"musp\":1.06,\"g\":0.8,\"n\":1.4},{\"mua\":0.04,\"musp\":0.934,\"g\":0.8,\"n\":1.4},{\"mua\":0.0678,\"musp\":0.84,\"g\":0.8,\"n\":1.4}],\"modelAnalysis\":\"R\",\"noiseValue\":\"0\"}";
             var xAxis = new DoubleRange(0.5, 9.5, 19);
             var independentAxis = new DoubleRange(650, 1000, 3);
             var opticalPropertyList = new[]
             {
                 new OpticalProperties(0.0679, 1.06, 0.8, 1.4),
                 new OpticalProperties(0.04, 0.934, 0.8, 1.4),
-                new OpticalProperties(0.0678, 0.934, 0.8, 1.4)
+                new OpticalProperties(0.0678, 0.84, 0.8, 1.4)
             };
             var solutionDomainPlotParameters = JsonConvert.DeserializeObject<SolutionDomainPlotParameters>(postData);
             Assert.AreEqual(IndependentVariableAxis.Time, solutionDomainPlotParameters.SecondIndependentAxis.Axis); Assert.AreEqual(0.05, solutionDomainPlotParameters.SecondIndependentAxis.AxisValue);
