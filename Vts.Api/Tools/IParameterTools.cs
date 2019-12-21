@@ -1,14 +1,14 @@
 ﻿using System.Collections.Generic;
+using Vts.Api.Models;
 
 namespace Vts.Api.Tools
 {
     public interface IParameterTools
     {
-        object GetOpticalPropertiesObject(OpticalProperties opticalProperties);
+        IEnumerable<OpticalProperties> GetOpticalPropertiesObject(OpticalProperties opticalProperties, IEnumerable<OpticalProperties> wavelengthOpticalProperties);
 
         IDictionary<IndependentVariableAxis, object> GetParametersInOrder(
-            object opticalProperties, double[] xs, SolutionDomainType solutionDomain, IndependentVariableAxis? independentAxis,
-            double? independentValue);
+            object opticalProperties, SolutionDomainType solutionDomain, IndependentAxis xAxis, IndependentAxis independentAxis, IndependentAxis secondIndependentAxis);
 
     }
 }

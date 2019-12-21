@@ -1,30 +1,47 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using Vts.Api.Models;
 using Vts.Extensions;
 
 namespace Vts.Api.Tools
 {
     public class ParameterTools : IParameterTools
     {
-        public ParameterTools()
+        /// <summary>
+        /// Returns a list of optical properties
+        /// </summary>
+        /// <param name="opticalProperties">Single set of Optical Properties</param>
+        /// <param name="wavelengthOpticalProperties">List of Optical Properties when adding wavelength</param>
+        /// <returns>A list of optical properties</returns>
+        public IEnumerable<OpticalProperties> GetOpticalPropertiesObject(OpticalProperties opticalProperties, IEnumerable<OpticalProperties> wavelengthOpticalProperties)
         {
+            if (wavelengthOpticalProperties != null)
+            {
+                return wavelengthOpticalProperties;
+            }
 
+            if (opticalProperties != null)
+            {
+                return new[] { opticalProperties };
+            }
+            return new List<OpticalProperties>();
         }
 
-        // this needs further development when add in wavelength refer to WPF code
-        public object GetOpticalPropertiesObject(OpticalProperties opticalProperties)
-        {
-            return new[] { opticalProperties };
-        }
-
-        // the following needs to change when Wavelength is added into independent variable list
+        /// <summary>
+        /// This method gets the parameters in the correct order to then send to ComputeReflectance
+        /// </summary>
+        /// <param name="opticalProperties">list of optical properties</param>
+        /// <param name="solutionDomain">the solution domain enum</param>
+        /// <param name="xAxis">the x-axis object</param>
+        /// <param name="independentAxis">the independent axis, if needed</param>
+        /// <param name="secondIndependentAxis">the second independent axis, if needed</param>
+        /// <returns></returns>
         public IDictionary<IndependentVariableAxis, object> GetParametersInOrder(
-            object opticalProperties, double[] xs, SolutionDomainType solutionDomain, IndependentVariableAxis? independentAxis, double? independentValue)
+            object opticalProperties, SolutionDomainType solutionDomain, IndependentAxis xAxis, IndependentAxis independentAxis, IndependentAxis secondIndependentAxis)
         {
             // make list of independent vars with independent first then constant
             var listIndependentVariableAxes = new List<IndependentVariableAxis>();
-            var isConstant = independentAxis;
             switch (solutionDomain)
             {
                 case SolutionDomainType.ROfRho:
@@ -55,19 +72,24 @@ namespace Vts.Api.Tools
 
             // get all parameters in order
             var allParameters =
-                from iva in listIndependentVariableAxes
-                where iva != IndependentVariableAxis.Wavelength
-                orderby GetParameterOrder(iva)
-                select new KeyValuePair<IndependentVariableAxis, object>(iva,
-                    GetParameterValues(iva, isConstant, independentValue, xs));
-            // OPs are always first in the list
+                from independentVariableAxis in listIndependentVariableAxes
+                orderby GetParameterOrder(independentVariableAxis)
+                select new KeyValuePair<IndependentVariableAxis, object>(independentVariableAxis,
+                    GetParameterValues(independentVariableAxis, xAxis, independentAxis, secondIndependentAxis));
+            // Optical Properties are always first in the list
             return
-                new KeyValuePair<IndependentVariableAxis, object>(IndependentVariableAxis.Wavelength,
+                new KeyValuePair<IndependentVariableAxis, object>(
+                        IndependentVariableAxis.Wavelength,
                         opticalProperties)
                     .AsEnumerable()
                     .Concat(allParameters).ToDictionary();
         }
 
+        /// <summary>
+        /// Based on the axis, it returns the sort index
+        /// </summary>
+        /// <param name="axis">The independent variable axis</param>
+        /// <returns>Returns an integer</returns>
         internal int GetParameterOrder(IndependentVariableAxis axis)
         {
             switch (axis)
@@ -89,79 +111,25 @@ namespace Vts.Api.Tools
             }
         }
 
-        // this has commented out code that might come into play when we add wavelength as axis
-        internal double[] GetParameterValues(IndependentVariableAxis axis, IndependentVariableAxis? isConstant, double? independentValue,
-            double[] xs)
+        /// <summary>
+        /// This method will get the correct parameter value based on whether it is fixed or a range
+        /// </summary>
+        /// <param name="currentAxis">The current Axis to return values</param>
+        /// <param name="xAxis">The x-axis</param>
+        /// <param name="independentAxis">The first independent axis</param>
+        /// <param name="secondIndependentAxis">The second independent axis</param>
+        /// <returns>a double array with the value(s)</returns>
+        internal double[] GetParameterValues(IndependentVariableAxis currentAxis, IndependentAxis xAxis, IndependentAxis independentAxis, IndependentAxis secondIndependentAxis)
         {
-            if (((axis == IndependentVariableAxis.Rho) && (isConstant == IndependentVariableAxis.Rho)) ||
-                ((axis == IndependentVariableAxis.Time) && (isConstant == IndependentVariableAxis.Time)) ||
-                ((axis == IndependentVariableAxis.Fx) && (isConstant == IndependentVariableAxis.Fx)) ||
-                ((axis == IndependentVariableAxis.Ft) && (isConstant == IndependentVariableAxis.Ft)))
+            if (independentAxis != null && currentAxis == independentAxis.Axis)
             {
-                if (independentValue == null)
-                    return new double[0];
-                return new[] { (double)independentValue };
+                return independentAxis.AxisRange == null ? new[] { independentAxis.AxisValue } : independentAxis.AxisRange.AsEnumerable().ToArray();
             }
-            return xs.ToArray();
-            //else
-            //{
-            //    if (axis != IndependentVariableAxis.Time)
-            //    {
-            //        return xs.ToArray();
-            //    }
-            //    else
-            //    {
-            //        return xs.ToArray();
-            //    }
-            //}
-            //{
-            //    var positionIndex = 0; //hard-coded for now
-            //    switch (positionIndex)
-            //    {
-            //        case 0:
-            //        default:
-            //            return new[] {independentValue};
-            //case 1:
-            //return new[] { SolutionDomainTypeOptionVM.ConstantAxesVMs[1].AxisValue };
-            //case 2:
-            //    return new[] { SolutionDomainTypeOptionVM.ConstantAxisThreeValue };
-            //}
-            //}
-            //else
-            //{
-            //    //var numAxes = axis.Count();
-            //    var numAxes = 1;
-            //    var positionIndex = 0; //hard-coded for now
-            //    //var positionIndex = SolutionDomainTypeOptionVM.IndependentVariableAxisOptionVM.SelectedValues.IndexOf(axis);
-            //    switch (numAxes)
-            //    {
-            //        case 1:
-            //        default:
-            //            //return AllRangeVMs[0].Values.ToArray();
-            //            return xs.ToArray();
-            //case 2:
-            //    switch (positionIndex)
-            //    {
-            //        case 0:
-            //        default:
-            //            return AllRangeVMs[1].Values.ToArray();
-            //        case 1:
-            //            return AllRangeVMs[0].Values.ToArray();
-            //    }
-            //case 3:
-            //    switch (positionIndex)
-            //    {
-            //        case 0:
-            //        default:
-            //            return AllRangeVMs[2].Values.ToArray();
-            //        case 1:
-            //            return AllRangeVMs[1].Values.ToArray();
-            //        case 2:
-            //            return AllRangeVMs[0].Values.ToArray();
-            //    }
-            //}
-            //}
+            if (secondIndependentAxis != null && currentAxis == secondIndependentAxis.Axis)
+            {
+                return secondIndependentAxis.AxisRange == null ? new[] { secondIndependentAxis.AxisValue } : secondIndependentAxis.AxisRange.AsEnumerable().ToArray();
+            }
+            return xAxis.AxisRange.AsEnumerable().ToArray();
         }
-
     }
 }
