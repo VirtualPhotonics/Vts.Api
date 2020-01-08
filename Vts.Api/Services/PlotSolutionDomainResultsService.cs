@@ -47,65 +47,15 @@ namespace Vts.Api.Services
                 var totalNumberOfValues = isComplex ? reflectance.Length / 2 : reflectance.Length;
                 // Get the number of plots
                 var numberOfPlots = totalNumberOfValues / numberOfPointsPerPlot;
-                var plot = new Plots {
-                    Id = hasIndependentAxis 
-                        ? $"{parameters.SolutionDomain.ToString()}Independent{parameters.IndependentAxis.Axis}" 
-                        : $"{parameters.SolutionDomain.ToString()}",
-                    PlotList = new List<PlotDataJson>()
-                };
-                for (var i = 0; i < numberOfPlots; i++)
+                Plots plot;
+                if (!isComplex)
                 {
-                    if (!isComplex)
-                    {
-                        var offset = numberOfPointsPerPlot * i;
-                        var xyPoints = independentValues.Zip(reflectance, (x, y) => 
-                            new Point(x, reflectance[Array.IndexOf(reflectance, y) + offset]));
-                        var plotData = new PlotData
-                        {
-                            Data = xyPoints,
-                            Label = parameters.SolutionDomain.ToString()
-                        };
-                        plot.PlotList.Add(new PlotDataJson
-                        {
-                            Data = plotData.Data.Select(item => new List<double> {item.X, item.Y}).ToList(),
-                            Label = GetPlotLabel(fs, opticalPropertyList, i, parameters.XAxis,
-                                parameters.IndependentAxis, parameters.SecondIndependentAxis, "")
-                        });
-                    }
-                    else
-                    {
-                        var complexOffset = reflectance.Length / 2;
-                        var offset = (complexOffset * i) + complexOffset;
-                        var xyPointsComplex = independentValues.Zip(reflectance, (x, y) => 
-                            new ComplexPoint(x, new Complex(y, reflectance[Array.IndexOf(reflectance, y) + offset]))).ToArray();
-                        var xyPointsReal = xyPointsComplex.Select(item => 
-                            new Point(item.X, item.Y.Real));
-                        var xyPointsImaginary = xyPointsComplex.Select(item => 
-                            new Point(item.X, item.Y.Imaginary));
-                        var plotDataReal = new PlotData
-                        {
-                            Data = xyPointsReal,
-                            Label = parameters.SolutionDomain.ToString()
-                        };
-                        var plotDataImaginary = new PlotData
-                        {
-                            Data = xyPointsImaginary,
-                            Label = parameters.SolutionDomain.ToString()
-                        };
-                        plot.PlotList.Add(new PlotDataJson
-                        {
-                            Data = plotDataReal.Data.Select(item => new List<double> {item.X, item.Y}).ToList(),
-                            Label = GetPlotLabel(fs, opticalPropertyList, i, parameters.XAxis,
-                                parameters.IndependentAxis, parameters.SecondIndependentAxis, "(real)")
-                        });
-                        plot.PlotList.Add(new PlotDataJson
-                        {
-                            Data = plotDataImaginary.Data.Select(item => new List<double> {item.X, item.Y})
-                                .ToList(),
-                            Label = GetPlotLabel(fs, opticalPropertyList, i, parameters.XAxis,
-                                parameters.IndependentAxis, parameters.SecondIndependentAxis, "(imag)")
-                        });
-                    }
+                    plot = RearrangePlotPoints(numberOfPointsPerPlot, numberOfPlots, independentValues, reflectance,
+                        parameters, opticalPropertyList, hasIndependentAxis);
+                }
+                else
+                {
+                    plot = RearrangePlotComplexPoints(numberOfPointsPerPlot, numberOfPlots, independentValues, reflectance, parameters, opticalPropertyList, hasIndependentAxis);
                 }
                 var msg = JsonConvert.SerializeObject(plot);
                 return msg;
@@ -115,6 +65,73 @@ namespace Vts.Api.Services
                 _logger.LogError("An error occurred: {Message}", e.Message);
                 throw;
             }
+        }
+
+        internal Plots RearrangePlotPoints(int numberOfPointsPerPlot, int numberOfPlots, double[] independentValues, double[] reflectance, SolutionDomainPlotParameters parameters, OpticalProperties[] opticalPropertyList, bool hasIndependentAxis)
+        {
+            var plot = new Plots {
+                Id = hasIndependentAxis
+                    ? $"{parameters.SolutionDomain.ToString()}Independent{parameters.IndependentAxis.Axis}"
+                    : $"{parameters.SolutionDomain.ToString()}",
+                PlotList = new List<PlotDataJson>()
+            };
+            for (var i = 0; i < numberOfPlots; i++)
+            {
+                var offset = numberOfPointsPerPlot * i;
+                var xyPoints = independentValues.Zip(reflectance, (x, y) =>
+                    new Point(x, reflectance[Array.IndexOf(reflectance, y) + offset]));
+                var plotData = new PlotData {
+                    Data = xyPoints,
+                    Label = parameters.SolutionDomain.ToString()
+                };
+                plot.PlotList.Add(new PlotDataJson {
+                    Data = plotData.Data.Select(item => new List<double> { item.X, item.Y }).ToList(),
+                    Label = GetPlotLabel(parameters.ForwardSolverType, opticalPropertyList, i, parameters.XAxis,
+                        parameters.IndependentAxis, parameters.SecondIndependentAxis, "")
+                });
+            }
+            return plot;
+        }
+
+        internal Plots RearrangePlotComplexPoints(int numberOfPointsPerPlot, int numberOfPlots, double[] independentValues, double[] reflectance, SolutionDomainPlotParameters parameters, OpticalProperties[] opticalPropertyList, bool hasIndependentAxis)
+        {
+            var plot = new Plots {
+                Id = hasIndependentAxis
+                    ? $"{parameters.SolutionDomain.ToString()}Independent{parameters.IndependentAxis.Axis}"
+                    : $"{parameters.SolutionDomain.ToString()}",
+                PlotList = new List<PlotDataJson>()
+            };
+            var complexOffset = reflectance.Length / 2;
+            for (var i = 0; i < numberOfPlots; i++)
+            {
+                var offset = numberOfPointsPerPlot * i;
+                var xyPointsComplex = independentValues.Zip(reflectance, (x, y) =>
+                    new ComplexPoint(x, new Complex(reflectance[Array.IndexOf(reflectance, y) + offset], reflectance[Array.IndexOf(reflectance, y) + offset + complexOffset]))).ToArray();
+                var xyPointsReal = xyPointsComplex.Select(item =>
+                    new Point(item.X, item.Y.Real));
+                var xyPointsImaginary = xyPointsComplex.Select(item =>
+                    new Point(item.X, item.Y.Imaginary));
+                var plotDataReal = new PlotData {
+                    Data = xyPointsReal,
+                    Label = parameters.SolutionDomain.ToString()
+                };
+                var plotDataImaginary = new PlotData {
+                    Data = xyPointsImaginary,
+                    Label = parameters.SolutionDomain.ToString()
+                };
+                plot.PlotList.Add(new PlotDataJson {
+                    Data = plotDataReal.Data.Select(item => new List<double> { item.X, item.Y }).ToList(),
+                    Label = GetPlotLabel(parameters.ForwardSolverType, opticalPropertyList, i, parameters.XAxis,
+                        parameters.IndependentAxis, parameters.SecondIndependentAxis, "(real)")
+                });
+                plot.PlotList.Add(new PlotDataJson {
+                    Data = plotDataImaginary.Data.Select(item => new List<double> { item.X, item.Y })
+                        .ToList(),
+                    Label = GetPlotLabel(parameters.ForwardSolverType, opticalPropertyList, i, parameters.XAxis,
+                        parameters.IndependentAxis, parameters.SecondIndependentAxis, "(imag)")
+                });
+            }
+            return plot;
         }
 
         internal string GetPlotLabel(ForwardSolverType fs, OpticalProperties[] opticalPropertyList, int i, IndependentAxis xAxis, IndependentAxis independentAxis, IndependentAxis secondIndependentAxis, string additionalLabel)
