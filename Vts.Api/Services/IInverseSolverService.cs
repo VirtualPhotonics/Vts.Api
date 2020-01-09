@@ -1,9 +1,10 @@
-﻿using Vts.Api.Models;
+﻿using Vts.Api.Data;
+using Vts.Api.Models;
 
 namespace Vts.Api.Services
 {
     public interface IInverseSolverService
     {
-        string GetPlotData(SolutionDomainPlotParameters plotParameters);
+        Plots GetPlotData(SolutionDomainPlotParameters plotParameters);
     }
 }

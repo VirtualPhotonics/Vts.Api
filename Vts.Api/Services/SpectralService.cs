@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Extensions.Logging;
+using Vts.Api.Data;
 using Vts.Api.Enums;
 using Vts.Api.Factories;
 using Vts.Api.Models;
@@ -20,7 +21,7 @@ namespace Vts.Api.Services
             _plotFactory = plotFactory;
         }
 
-        public string GetPlotData(SpectralPlotParameters plotParameters)
+        public Plots GetPlotData(SpectralPlotParameters plotParameters)
         {
             _logger.LogInformation("Get the plot data for the Spectral Panel");
 

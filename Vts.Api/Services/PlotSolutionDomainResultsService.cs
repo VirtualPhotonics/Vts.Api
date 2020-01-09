@@ -23,7 +23,7 @@ namespace Vts.Api.Services
             _parameterTools = parameterTools;
         }
 
-        public string Plot(IPlotParameters plotParameters)
+        public Plots Plot(IPlotParameters plotParameters)
         {
             var parameters = (SolutionDomainPlotParameters) plotParameters;
             var fs = parameters.ForwardSolverType;
@@ -57,8 +57,7 @@ namespace Vts.Api.Services
                 {
                     plot = RearrangePlotComplexPoints(numberOfPointsPerPlot, numberOfPlots, independentValues, reflectance, parameters, opticalPropertyList, hasIndependentAxis);
                 }
-                var msg = JsonConvert.SerializeObject(plot);
-                return msg;
+                return plot;
             }
             catch (Exception e)
             {

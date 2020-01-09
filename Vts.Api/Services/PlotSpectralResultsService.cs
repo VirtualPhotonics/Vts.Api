@@ -17,7 +17,7 @@ namespace Vts.Api.Services
             _logger = logger;
         }
 
-        public string Plot(IPlotParameters plotParameters)
+        public Plots Plot(IPlotParameters plotParameters)
         {
             var parameters = (SpectralPlotParameters)plotParameters;
             var xyPoints = new List<Point>();
@@ -44,7 +44,7 @@ namespace Vts.Api.Services
                 Data = plotData.Data.Select(item => new List<double> { item.X, item.Y }).ToList(),
                 Label = parameters.TissueType + " " + parameters.PlotName
             });
-            return JsonConvert.SerializeObject(plot);
+            return plot;
         }
     }
 }

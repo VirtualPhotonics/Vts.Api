@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using Moq;
 using Newtonsoft.Json;
 using NUnit.Framework;
+using Vts.Api.Data;
 using Vts.Api.Enums;
 using Vts.Api.Factories;
 using Vts.Api.Models;
@@ -39,9 +40,9 @@ namespace Vts.Api.Tests.Services
         {
             var postData = "{\"inverseSolverType\":\"PointSourceSDA\",\"optimizerType\":\"MPFitLevenbergMarquardt\",\"optimizationParameters\":\"MuaMusp\",\"solutionDomain\":\"ROfRho\",\"measuredData\":[],\"xAxis\":{\"axis\":\"fx\",\"axisRange\":{\"start\":0.5,\"stop\":9.5,\"count\":19}},\"opticalProperties\":{\"mua\":0.01,\"musp\":1,\"g\":0.8,\"n\":1.4}}";
             var solutionDomainPlotParameters = JsonConvert.DeserializeObject<SolutionDomainPlotParameters>(postData);
-            _plotFactoryMock.Setup(x => x.GetPlot(PlotType.SolutionDomain, solutionDomainPlotParameters)).Returns("");
+            _plotFactoryMock.Setup(x => x.GetPlot(PlotType.SolutionDomain, solutionDomainPlotParameters)).Returns(new Plots());
             var results = _inverseSolverService.GetPlotData(solutionDomainPlotParameters);
-            Assert.AreEqual("", results);
+            Assert.IsInstanceOf<Plots>(results);
             _plotFactoryMock.Verify(mock => mock.GetPlot(PlotType.SolutionDomain, solutionDomainPlotParameters), Times.Once);
         }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Microsoft.Extensions.Logging;
+using Vts.Api.Data;
 using Vts.Api.Enums;
 using Vts.Api.Factories;
 using Vts.Api.Models;
@@ -21,7 +22,7 @@ namespace Vts.Api.Services
             _plotFactory = plotFactory;
             _parameterTools = parameterTools;
         }
-        public string GetPlotData(SolutionDomainPlotParameters plotParameters)
+        public Plots GetPlotData(SolutionDomainPlotParameters plotParameters)
         {
             try
             {
@@ -57,8 +58,7 @@ namespace Vts.Api.Services
                 plotParameters.ForwardSolverType = inverseSolver;
                 plotParameters.OpticalProperties = fitops[0]; // not sure [0] is always going to work here
                 plotParameters.NoiseValue = 0;
-                var msg = _plotFactory.GetPlot(PlotType.SolutionDomain, plotParameters);
-                return msg;
+                return _plotFactory.GetPlot(PlotType.SolutionDomain, plotParameters);
             }
             catch (Exception e)
             {

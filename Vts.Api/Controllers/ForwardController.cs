@@ -27,7 +27,7 @@ namespace Vts.Api.Controllers
         // POST: api/v1/Forward
         [HttpPost]
         [Authorize(Policy = "ApiKeyPolicy")]
-        public string Post([FromBody] SolutionDomainPlotParameters plotParameters)
+        public dynamic Post([FromBody] SolutionDomainPlotParameters plotParameters)
         {
             return _forwardSolverService.GetPlotData(plotParameters);
         }
