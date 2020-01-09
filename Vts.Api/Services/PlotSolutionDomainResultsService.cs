@@ -50,12 +50,12 @@ namespace Vts.Api.Services
                 Plots plot;
                 if (!isComplex)
                 {
-                    plot = RearrangePlotPoints(numberOfPointsPerPlot, numberOfPlots, independentValues, reflectance,
+                    plot = ConstructPlots(numberOfPointsPerPlot, numberOfPlots, independentValues, reflectance,
                         parameters, opticalPropertyList, hasIndependentAxis);
                 }
                 else
                 {
-                    plot = RearrangePlotComplexPoints(numberOfPointsPerPlot, numberOfPlots, independentValues, reflectance, parameters, opticalPropertyList, hasIndependentAxis);
+                    plot = ConstructComplexPlots(numberOfPointsPerPlot, numberOfPlots, independentValues, reflectance, parameters, opticalPropertyList, hasIndependentAxis);
                 }
                 return plot;
             }
@@ -66,7 +66,7 @@ namespace Vts.Api.Services
             }
         }
 
-        internal Plots RearrangePlotPoints(int numberOfPointsPerPlot, int numberOfPlots, double[] independentValues, double[] reflectance, SolutionDomainPlotParameters parameters, OpticalProperties[] opticalPropertyList, bool hasIndependentAxis)
+        internal Plots ConstructPlots(int numberOfPointsPerPlot, int numberOfPlots, double[] independentValues, double[] reflectance, SolutionDomainPlotParameters parameters, OpticalProperties[] opticalPropertyList, bool hasIndependentAxis)
         {
             var plot = new Plots {
                 Id = hasIndependentAxis
@@ -92,7 +92,7 @@ namespace Vts.Api.Services
             return plot;
         }
 
-        internal Plots RearrangePlotComplexPoints(int numberOfPointsPerPlot, int numberOfPlots, double[] independentValues, double[] reflectance, SolutionDomainPlotParameters parameters, OpticalProperties[] opticalPropertyList, bool hasIndependentAxis)
+        internal Plots ConstructComplexPlots(int numberOfPointsPerPlot, int numberOfPlots, double[] independentValues, double[] reflectance, SolutionDomainPlotParameters parameters, OpticalProperties[] opticalPropertyList, bool hasIndependentAxis)
         {
             var plot = new Plots {
                 Id = hasIndependentAxis
