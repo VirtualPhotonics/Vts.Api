@@ -136,22 +136,31 @@ namespace Vts.Api.Services
 
         internal string GetPlotLabel(ForwardSolverType fs, OpticalProperties[] opticalPropertyList, int i, IndependentAxis xAxis, IndependentAxis independentAxis, IndependentAxis secondIndependentAxis, string additionalLabel)
         {
+            var independentLabel = "";
+            var secondIndependentLabel = "";
+            if (independentAxis != null)
+            {
+                var independentValue = independentAxis.AxisValue;
+                if (independentAxis.AxisRange != null)
+                {
+                    var independentArray = independentAxis.AxisRange.AsEnumerable().ToArray();
+                    independentValue = independentArray[i];
+                }
+                independentLabel = $" {independentAxis.Axis}={independentValue}";
+            }
+
+            if (secondIndependentAxis != null)
+            {
+                var secondIndependentValue = secondIndependentAxis.AxisValue;
+                secondIndependentLabel = $" {secondIndependentAxis.Axis}={secondIndependentValue}";
+            }
+
             if (xAxis.Axis == IndependentVariableAxis.Wavelength)
             {
-                return independentAxis == null
-                    ? $"{fs}{additionalLabel}"
-                    : $"{fs} {independentAxis.Axis}={independentAxis.AxisValue}{additionalLabel}";
+                return $"{fs}{independentLabel}{secondIndependentLabel}{additionalLabel}";
+            }
 
-            }
-            if (opticalPropertyList.Length == 1)
-            {
-                return independentAxis == null
-                    ? $"{fs} μa={opticalPropertyList[0].Mua} μs'={opticalPropertyList[0].Musp}{additionalLabel}"
-                    : $"{fs} μa={opticalPropertyList[0].Mua} μs'={opticalPropertyList[0].Musp} {independentAxis.Axis}={independentAxis.AxisValue}{additionalLabel}";
-            }
-            return independentAxis == null
-                ? $"{fs} μa={opticalPropertyList[i].Mua} μs'={opticalPropertyList[i].Musp}{additionalLabel}"
-                : $"{fs} μa={opticalPropertyList[i].Mua} μs'={opticalPropertyList[i].Musp} {independentAxis.Axis}={independentAxis.AxisValue}{additionalLabel}";
+            return opticalPropertyList.Length == 1 ? $"{fs} μa={opticalPropertyList[0].Mua} μs'={opticalPropertyList[0].Musp}{independentLabel}{secondIndependentLabel}{additionalLabel}" : $"{fs} μa={opticalPropertyList[i].Mua} μs'={opticalPropertyList[i].Musp}{independentLabel}{secondIndependentLabel}{additionalLabel}";
         }
     }
 }
