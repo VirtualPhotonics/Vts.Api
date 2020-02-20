@@ -75,14 +75,30 @@ namespace Vts.Api.Services
             };
             for (var i = 0; i < numberOfPlots; i++)
             {
-                var offset = numberOfPointsPerPlot * i;
-                var xyPoints = independentValues.Zip(reflectance, (x, y) =>
-                    new Point(x, reflectance[Array.IndexOf(reflectance, y) + offset]));
-                var plotData = new PlotData {
+                IEnumerable<Point> xyPoints;
+                if (opticalPropertyList.Length > 1)
+                {
+                    IList<Point> newPoints = new List<Point>();
+                    for (var j = 0; j < numberOfPointsPerPlot; j++)
+                    {
+                        var offset = i + (numberOfPlots * j);
+                        newPoints.Add(new Point(independentValues[j], reflectance[offset]));
+                    }
+                    xyPoints = newPoints.ToArray();
+                }
+                else
+                {
+                    var offset = numberOfPointsPerPlot * i;
+                    xyPoints = independentValues.Zip(reflectance, (x, y) =>
+                        new Point(x, reflectance[Array.IndexOf(reflectance, y) + offset]));
+                }
+                var plotData = new PlotData
+                {
                     Data = xyPoints,
                     Label = parameters.SolutionDomain.ToString()
                 };
-                plot.PlotList.Add(new PlotDataJson {
+                plot.PlotList.Add(new PlotDataJson
+                {
                     Data = plotData.Data.Select(item => new List<double> { item.X, item.Y }).ToList(),
                     Label = GetPlotLabel(parameters.ForwardSolverType, opticalPropertyList, i, parameters.XAxis,
                         parameters.IndependentAxis, parameters.SecondIndependentAxis, "")
@@ -102,13 +118,31 @@ namespace Vts.Api.Services
             var complexOffset = reflectance.Length / 2;
             for (var i = 0; i < numberOfPlots; i++)
             {
-                var offset = numberOfPointsPerPlot * i;
-                var xyPointsComplex = independentValues.Zip(reflectance, (x, y) =>
-                    new ComplexPoint(x, new Complex(reflectance[Array.IndexOf(reflectance, y) + offset], reflectance[Array.IndexOf(reflectance, y) + offset + complexOffset]))).ToArray();
-                var xyPointsReal = xyPointsComplex.Select(item =>
-                    new Point(item.X, item.Y.Real));
-                var xyPointsImaginary = xyPointsComplex.Select(item =>
-                    new Point(item.X, item.Y.Imaginary));
+                IEnumerable<Point> xyPointsReal;
+                IEnumerable<Point> xyPointsImaginary;
+                if (opticalPropertyList.Length > 1)
+                {
+                    IList<Point> newPointsReal = new List<Point>();
+                    IList<Point> newPointsImaginary = new List<Point>();
+                    for (var j = 0; j < numberOfPointsPerPlot; j++)
+                    {
+                        var offset = i + (numberOfPlots * j);
+                        newPointsReal.Add(new Point(independentValues[j], reflectance[offset]));
+                        newPointsImaginary.Add(new Point(independentValues[j], reflectance[offset + 1]));
+                    }
+                    xyPointsReal = newPointsReal.ToArray();
+                    xyPointsImaginary = newPointsImaginary.ToArray();
+                }
+                else
+                {
+                    var offset = numberOfPointsPerPlot * i;
+                    var xyPointsComplex = independentValues.Zip(reflectance, (x, y) =>
+                        new ComplexPoint(x, new Complex(reflectance[Array.IndexOf(reflectance, y) + offset], reflectance[Array.IndexOf(reflectance, y) + offset + complexOffset]))).ToArray();
+                    xyPointsReal = xyPointsComplex.Select(item =>
+                        new Point(item.X, item.Y.Real));
+                    xyPointsImaginary = xyPointsComplex.Select(item =>
+                        new Point(item.X, item.Y.Imaginary));
+                }
                 var plotDataReal = new PlotData {
                     Data = xyPointsReal,
                     Label = parameters.SolutionDomain.ToString()
