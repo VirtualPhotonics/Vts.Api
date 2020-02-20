@@ -128,7 +128,7 @@ namespace Vts.Api.Services
                     {
                         var offset = i + (numberOfPlots * j);
                         newPointsReal.Add(new Point(independentValues[j], reflectance[offset]));
-                        newPointsImaginary.Add(new Point(independentValues[j], reflectance[offset + 1]));
+                        newPointsImaginary.Add(new Point(independentValues[j], reflectance[offset + complexOffset]));
                     }
                     xyPointsReal = newPointsReal.ToArray();
                     xyPointsImaginary = newPointsImaginary.ToArray();
