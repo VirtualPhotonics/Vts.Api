@@ -76,7 +76,7 @@ namespace Vts.Api.Services
             for (var i = 0; i < numberOfPlots; i++)
             {
                 IEnumerable<Point> xyPoints;
-                if (opticalPropertyList.Length > 1)
+                if (opticalPropertyList.Length > 1 && parameters.XAxis.Axis == IndependentVariableAxis.Wavelength)
                 {
                     IList<Point> newPoints = new List<Point>();
                     for (var j = 0; j < numberOfPointsPerPlot; j++)
@@ -120,7 +120,7 @@ namespace Vts.Api.Services
             {
                 IEnumerable<Point> xyPointsReal;
                 IEnumerable<Point> xyPointsImaginary;
-                if (opticalPropertyList.Length > 1)
+                if (opticalPropertyList.Length > 1 && parameters.XAxis.Axis == IndependentVariableAxis.Wavelength)
                 {
                     IList<Point> newPointsReal = new List<Point>();
                     IList<Point> newPointsImaginary = new List<Point>();
