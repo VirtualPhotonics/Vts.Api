@@ -67,7 +67,7 @@ namespace Vts.Api.Tests.Services
                 for (var j = 0; j < expected.PlotList[i].Data.Count; j++)
                 {
                     Assert.That(Math.Round(expected.PlotList[i].Data[j][0], 6), Is.EqualTo(Math.Round(data.PlotList[i].Data[j][0], 6)));
-                    Assert.AreNotEqual(Math.Round(expected.PlotList[i].Data[j][1], 6), Math.Round(data.PlotList[i].Data[j][1], 6));
+                    Assert.AreNotEqual(expected.PlotList[i].Data[j][1], data.PlotList[i].Data[j][1]);
                 }
             }
         }
