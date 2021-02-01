@@ -1,9 +1,9 @@
-﻿using System.Linq;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Moq;
 using Newtonsoft.Json;
 using NUnit.Framework;
+using System;
 using Vts.Api.Data;
 using Vts.Api.Enums;
 using Vts.Api.Factories;
@@ -140,6 +140,13 @@ namespace Vts.Api.Tests.Services
             var test = (OpticalProperties[])initialGuessParams[IndependentVariableAxis.Wavelength];
             Assert.IsNotNull(test);
             Assert.AreEqual(0.01, test[0].Mua);
+        }
+
+        [Test]
+        public void Test_get_plot_data_throws_error()
+        {
+            Assert.Throws<NullReferenceException>(() =>
+                    _inverseSolverService.GetPlotData(null));
         }
     }
 }

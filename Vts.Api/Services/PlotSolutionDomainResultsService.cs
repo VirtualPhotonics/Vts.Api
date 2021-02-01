@@ -24,12 +24,12 @@ namespace Vts.Api.Services
 
         public Plots Plot(IPlotParameters plotParameters)
         {
-            var parameters = (SolutionDomainPlotParameters) plotParameters;
-            var fs = parameters.ForwardSolverType;
-            var hasIndependentAxis = parameters.SolutionDomain != SolutionDomainType.ROfFx && parameters.SolutionDomain != SolutionDomainType.ROfRho;
-            var independentValues = parameters.XAxis.AxisRange.AsEnumerable().ToArray();
             try
             {
+                var parameters = (SolutionDomainPlotParameters)plotParameters;
+                var fs = parameters.ForwardSolverType;
+                var hasIndependentAxis = parameters.SolutionDomain != SolutionDomainType.ROfFx && parameters.SolutionDomain != SolutionDomainType.ROfRho;
+                var independentValues = parameters.XAxis.AxisRange.AsEnumerable().ToArray();
                 var opticalPropertyList = _parameterTools.GetOpticalPropertiesObject(parameters.OpticalProperties,
                     parameters.WavelengthOpticalPropertyList).ToArray();
                 var parametersInOrder = _parameterTools.GetParametersInOrder(

@@ -30,7 +30,7 @@ namespace Vts.Api.Tests.Services
                 .AddConsole();
             _logger = _factory.CreateLogger<ForwardSolverService>();
             _forwardSolverService = new ForwardSolverService(_logger, _plotFactoryMock.Object);
-            var postData = "{\"forwardSolverType\":\"DistributedPointSourceSDA\",\"solutionDomain\":\"ROfRho\",\"independentAxes\":{\"label\":\"t\",\"value\":0.05},\"xAxis\":{\"start\":0.5,\"stop\":9.5,\"count\":19},\"opticalProperties\":{\"mua\":0.01,\"musp\":1,\"g\":0.8,\"n\":1.4},\"modelAnalysis\":\"R\",\"noiseValue\":\"0\"}";
+            const string postData = "{\"forwardSolverType\":\"DistributedPointSourceSDA\",\"solutionDomain\":\"ROfRho\",\"independentAxes\":{\"label\":\"t\",\"value\":0.05},\"xAxis\":{\"start\":0.5,\"stop\":9.5,\"count\":19},\"opticalProperties\":{\"mua\":0.01,\"musp\":1,\"g\":0.8,\"n\":1.4},\"modelAnalysis\":\"R\",\"noiseValue\":\"0\"}";
             var solutionDomainPlotParameters = JsonConvert.DeserializeObject<SolutionDomainPlotParameters>(postData);
             _plotFactoryMock.Setup(x => x.GetPlot(PlotType.SolutionDomain, solutionDomainPlotParameters)).Returns(new Plots());
             var results = _forwardSolverService.GetPlotData(solutionDomainPlotParameters);

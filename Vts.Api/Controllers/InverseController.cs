@@ -24,13 +24,6 @@ namespace Vts.Api.Controllers
             return new string[] { "Controller", "Inverse" };
         }
 
-        // GET: api/v1/Inverse/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
         // POST: api/v1/Inverse
         [HttpPost]
         [Authorize(Policy = "ApiKeyPolicy")]

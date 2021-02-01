@@ -4,7 +4,7 @@ using Vts.Api.Data;
 
 namespace Vts.Api.Tests.Data
 {
-    class ComplexPointTests
+    internal class ComplexPointTests
     {
         [Test]
         public void Test_complex_point()
