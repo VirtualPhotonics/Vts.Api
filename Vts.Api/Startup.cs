@@ -31,7 +31,8 @@ namespace Vts.Api
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             // In production, the Angular files will be served from this directory
-            services.AddSpaStaticFiles(configuration => {
+            services.AddSpaStaticFiles(configuration =>
+            {
                 configuration.RootPath = "ClientApp/dist";
             });
             services.AddTransient<IAuthorizationHandler, ApiKeyRequirementHandler>();
@@ -43,10 +44,11 @@ namespace Vts.Api
             services.AddTransient<PlotSolutionDomainResultsService>();
             services.AddTransient<IPlotFactory, PlotFactory>();
             services.AddAuthentication().AddJwtBearer();
-            services.AddAuthorization(authConfig => {
+            services.AddAuthorization(authConfig =>
+            {
                 authConfig.AddPolicy("ApiKeyPolicy",
                     policyBuilder => policyBuilder
-                        .AddRequirements(new ApiKeyRequirement(new[] { "", "TESTKEY" }))
+                        .AddRequirements(new ApiKeyRequirement(new[] { "TESTKEY" }))
                         .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme));
             });
         }
@@ -57,6 +59,7 @@ namespace Vts.Api
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             }
             else
             {

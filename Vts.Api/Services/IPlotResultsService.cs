@@ -6,6 +6,6 @@ namespace Vts.Api.Services
     public interface IPlotResultsService
     {
         Plots Plot(IPlotParameters plotParameters);
-        
+
     }
 }

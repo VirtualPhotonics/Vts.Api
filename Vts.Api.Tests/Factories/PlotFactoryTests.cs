@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using NUnit.Framework;
-using Vts.Api.Data;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Vts.Api.Enums;
 using Vts.Api.Factories;
 using Vts.Api.Models;

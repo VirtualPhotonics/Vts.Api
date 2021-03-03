@@ -1,9 +1,9 @@
-﻿using System.Linq;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Moq;
 using Newtonsoft.Json;
 using NUnit.Framework;
+using System.Linq;
 using Vts.Api.Data;
 using Vts.Api.Enums;
 using Vts.Api.Factories;

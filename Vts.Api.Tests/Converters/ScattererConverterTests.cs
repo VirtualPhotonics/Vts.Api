@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using NUnit.Framework;
+using System;
 using System.IO;
 using System.Text;
-using Newtonsoft.Json;
-using NUnit.Framework;
 using Vts.Api.Converters;
 using Vts.SpectralMapping;
 

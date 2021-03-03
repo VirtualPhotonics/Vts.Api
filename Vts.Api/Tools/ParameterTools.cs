@@ -45,29 +45,29 @@ namespace Vts.Api.Tools
             switch (solutionDomain)
             {
                 case SolutionDomainType.ROfRho:
-                listIndependentVariableAxes.Add(IndependentVariableAxis.Rho);
-                break;
+                    listIndependentVariableAxes.Add(IndependentVariableAxis.Rho);
+                    break;
                 case SolutionDomainType.ROfRhoAndTime:
-                listIndependentVariableAxes.Add(IndependentVariableAxis.Rho);
-                listIndependentVariableAxes.Add(IndependentVariableAxis.Time);
-                break;
+                    listIndependentVariableAxes.Add(IndependentVariableAxis.Rho);
+                    listIndependentVariableAxes.Add(IndependentVariableAxis.Time);
+                    break;
                 case SolutionDomainType.ROfRhoAndFt:
-                listIndependentVariableAxes.Add(IndependentVariableAxis.Ft);
-                listIndependentVariableAxes.Add(IndependentVariableAxis.Rho);
-                break;
+                    listIndependentVariableAxes.Add(IndependentVariableAxis.Ft);
+                    listIndependentVariableAxes.Add(IndependentVariableAxis.Rho);
+                    break;
                 case SolutionDomainType.ROfFx:
-                listIndependentVariableAxes.Add(IndependentVariableAxis.Fx);
-                break;
+                    listIndependentVariableAxes.Add(IndependentVariableAxis.Fx);
+                    break;
                 case SolutionDomainType.ROfFxAndTime:
-                listIndependentVariableAxes.Add(IndependentVariableAxis.Time);
-                listIndependentVariableAxes.Add(IndependentVariableAxis.Fx);
-                break;
+                    listIndependentVariableAxes.Add(IndependentVariableAxis.Time);
+                    listIndependentVariableAxes.Add(IndependentVariableAxis.Fx);
+                    break;
                 case SolutionDomainType.ROfFxAndFt:
-                listIndependentVariableAxes.Add(IndependentVariableAxis.Ft);
-                listIndependentVariableAxes.Add(IndependentVariableAxis.Fx);
-                break;
+                    listIndependentVariableAxes.Add(IndependentVariableAxis.Ft);
+                    listIndependentVariableAxes.Add(IndependentVariableAxis.Fx);
+                    break;
                 default:
-                throw new InvalidEnumArgumentException("There is no Enum of this type");
+                    throw new InvalidEnumArgumentException("There is no Enum of this type");
             }
 
             // get all parameters in order
@@ -95,19 +95,19 @@ namespace Vts.Api.Tools
             switch (axis)
             {
                 case IndependentVariableAxis.Wavelength:
-                return 0;
+                    return 0;
                 case IndependentVariableAxis.Rho:
-                return 1;
+                    return 1;
                 case IndependentVariableAxis.Fx:
-                return 1;
+                    return 1;
                 case IndependentVariableAxis.Time:
-                return 2;
+                    return 2;
                 case IndependentVariableAxis.Ft:
-                return 2;
+                    return 2;
                 case IndependentVariableAxis.Z:
-                return 3;
+                    return 3;
                 default:
-                throw new InvalidEnumArgumentException("There is no Enum of this type");
+                    throw new InvalidEnumArgumentException("There is no Enum of this type");
             }
         }
 

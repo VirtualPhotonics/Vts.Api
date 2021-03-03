@@ -27,7 +27,7 @@ namespace Vts.Api.Tests.Controllers
             string[] array = { "Controller", "Inverse" };
             Assert.AreEqual(array, response);
         }
-        
+
         [Test]
         public void Test_controller_post()
         {

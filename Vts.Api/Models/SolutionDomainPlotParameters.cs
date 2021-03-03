@@ -1,21 +1,25 @@
-﻿using System.Collections.Generic;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using System.Collections.Generic;
 using Vts.Api.Converters;
 
 namespace Vts.Api.Models
 {
     public class SolutionDomainPlotParameters : IPlotParameters
     {
+        [JsonRequired]
         [JsonConverter(typeof(StringEnumConverter))]
         public ForwardSolverType ForwardSolverType { get; set; }
 
         [JsonConverter(typeof(StringEnumConverter))]
         public ForwardSolverType InverseSolverType { get; set; }
 
+        [JsonRequired]
         [JsonConverter(typeof(StringEnumConverter))]
         public SolutionDomainType SolutionDomain { get; set; }
+        [JsonRequired]
         public IndependentAxis XAxis { get; set; }
+        [JsonRequired]
         public OpticalProperties OpticalProperties { get; set; }
 
         [JsonConverter(typeof(StringEnumConverter))]

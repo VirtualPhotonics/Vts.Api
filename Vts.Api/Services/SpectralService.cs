@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Extensions.Logging;
 using Vts.Api.Data;
 using Vts.Api.Enums;
 using Vts.Api.Factories;
@@ -48,8 +48,8 @@ namespace Vts.Api.Services
                     scatterer = plotParameters.MieScatterer;
                     break;
                 default:
-                scatterer = new PowerLawScatterer();
-                break;
+                    scatterer = new PowerLawScatterer();
+                    break;
             }
 
             // get the wavelength

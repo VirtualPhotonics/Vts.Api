@@ -17,7 +17,7 @@ namespace Vts.Api.Tests.Models
             var powerLawScatterer = new PowerLawScatterer(1.2, 1.42);
             var intralipidScatterer = new IntralipidScatterer(0.01);
             var mieScatterer = new MieScatterer(0.5, 1.4, 1, 0.01);
-            var absorberConcentrations = new[] {new LabelValuePair() {Label = "Hb", Value = 28.4}};
+            var absorberConcentrations = new[] { new LabelValuePair() { Label = "Hb", Value = 28.4 } };
             var spectralPlotParameters = JsonConvert.DeserializeObject<SpectralPlotParameters>(postData);
             Assert.AreEqual(xAxis.Start, spectralPlotParameters.XAxis.AxisRange.Start);
             Assert.AreEqual(xAxis.Stop, spectralPlotParameters.XAxis.AxisRange.Stop);

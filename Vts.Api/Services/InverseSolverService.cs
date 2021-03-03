@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Microsoft.Extensions.Logging;
+using System;
 using System.Linq;
-using Microsoft.Extensions.Logging;
 using Vts.Api.Data;
 using Vts.Api.Enums;
 using Vts.Api.Factories;
@@ -37,8 +37,8 @@ namespace Vts.Api.Services
                 // get measured data from inverse solver analysis component
                 var measuredPoints = plotParameters.MeasuredData;
                 var dependentValues = measuredPoints.Select(p => p.Last()).ToArray(); // get y value
-                var lowerBounds = new double[] {0, 0, 0, 0};
-                var upperBounds = new []
+                var lowerBounds = new double[] { 0, 0, 0, 0 };
+                var upperBounds = new[]
                 {
                     double.PositiveInfinity, double.PositiveInfinity, double.PositiveInfinity, double.PositiveInfinity
                 };

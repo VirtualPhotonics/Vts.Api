@@ -1,5 +1,5 @@
-﻿using System;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
+using System;
 using Vts.Api.Data;
 using Vts.Api.Enums;
 using Vts.Api.Factories;

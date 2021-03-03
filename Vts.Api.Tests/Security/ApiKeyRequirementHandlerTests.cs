@@ -1,13 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Abstractions;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Routing;
 using NUnit.Framework;
+using System.Collections.Generic;
+using System.Security.Claims;
+using System.Threading.Tasks;
 using Vts.Api.Security;
 
 namespace Vts.Api.Tests.Security
@@ -19,7 +19,7 @@ namespace Vts.Api.Tests.Security
         {
             var context = new DefaultHttpContext();
             context.Request.Headers.Add("X-API-KEY", "TESTAPIKEY");
-            var requirements = new [] { new ApiKeyRequirement(new[] { "TESTAPIKEY" })};
+            var requirements = new[] { new ApiKeyRequirement(new[] { "TESTAPIKEY" }) };
             // we need to create a shell of the AuthorizationHandlerContext, that contains the header information 
             var actionContext = new ActionContext(context, new RouteData(), new ActionDescriptor());
             // we need to include the ApiControllerAttribute here to mimic the call to the API

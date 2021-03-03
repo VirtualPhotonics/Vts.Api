@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace Vts.Api.Converters
 {
@@ -11,12 +11,12 @@ namespace Vts.Api.Converters
         public override IEnumerable<OpticalProperties> ReadJson(JsonReader reader, Type objectType, IEnumerable<OpticalProperties> existingValue, bool hasExistingValue, JsonSerializer serializer)
         {
             var token = JToken.Load(reader);
-            return token.Type == JTokenType.Array 
+            return token.Type == JTokenType.Array
                 ? token.Select(x => new OpticalProperties(
-                    (double)x["mua"], 
-                    (double)x["musp"], 
-                    (double)x["g"], 
-                    (double)x["n"])).ToList() 
+                    (double)x["mua"],
+                    (double)x["musp"],
+                    (double)x["g"],
+                    (double)x["n"])).ToList()
                 : new List<OpticalProperties>();
         }
 

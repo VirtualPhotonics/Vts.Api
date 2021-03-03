@@ -10,8 +10,10 @@ namespace Vts.Api.Tests.Controllers
         [Test]
         public void Test_controller_get()
         {
-            var liveController = new DefaultController {
-                ControllerContext = new ControllerContext {
+            var liveController = new DefaultController
+            {
+                ControllerContext = new ControllerContext
+                {
                     HttpContext = new DefaultHttpContext()
                 }
             };

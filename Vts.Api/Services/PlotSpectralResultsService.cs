@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Extensions.Logging;
 using Vts.Api.Data;
 using Vts.Api.Enums;
 using Vts.Api.Models;
@@ -26,20 +26,22 @@ namespace Vts.Api.Services
                 switch (parameters.SpectralPlotType)
                 {
                     case SpectralPlotType.Mua:
-                    xyPoints.Add(new Point(wv, parameters.Tissue.GetMua(wv)));
-                    break;
+                        xyPoints.Add(new Point(wv, parameters.Tissue.GetMua(wv)));
+                        break;
                     case SpectralPlotType.Musp:
-                    xyPoints.Add(new Point(wv, parameters.Tissue.GetMusp(wv)));
-                    break;
+                        xyPoints.Add(new Point(wv, parameters.Tissue.GetMusp(wv)));
+                        break;
 
                 }
             }
             var plotData = new PlotData { Data = xyPoints, Label = parameters.TissueType };
-            var plot = new Plots {
+            var plot = new Plots
+            {
                 Id = "Spectral" + parameters.SpectralPlotType,
                 PlotList = new List<PlotDataJson>()
             };
-            plot.PlotList.Add(new PlotDataJson {
+            plot.PlotList.Add(new PlotDataJson
+            {
                 Data = plotData.Data.Select(item => new List<double> { item.X, item.Y }).ToList(),
                 Label = parameters.TissueType + " " + parameters.PlotName
             });

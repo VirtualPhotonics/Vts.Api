@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
-using Microsoft.Extensions.Logging;
 using Vts.Api.Data;
 using Vts.Api.Models;
 using Vts.Api.Tools;
@@ -67,7 +67,8 @@ namespace Vts.Api.Services
 
         internal Plots ConstructPlots(int numberOfPointsPerPlot, int numberOfPlots, double[] independentValues, double[] reflectance, SolutionDomainPlotParameters parameters, OpticalProperties[] opticalPropertyList, bool hasIndependentAxis)
         {
-            var plot = new Plots {
+            var plot = new Plots
+            {
                 Id = hasIndependentAxis
                     ? $"{parameters.SolutionDomain.ToString()}Independent{parameters.IndependentAxis.Axis}"
                     : $"{parameters.SolutionDomain.ToString()}",
@@ -109,7 +110,8 @@ namespace Vts.Api.Services
 
         internal Plots ConstructComplexPlots(int numberOfPointsPerPlot, int numberOfPlots, double[] independentValues, double[] reflectance, SolutionDomainPlotParameters parameters, OpticalProperties[] opticalPropertyList, bool hasIndependentAxis)
         {
-            var plot = new Plots {
+            var plot = new Plots
+            {
                 Id = hasIndependentAxis
                     ? $"{parameters.SolutionDomain.ToString()}Independent{parameters.IndependentAxis.Axis}"
                     : $"{parameters.SolutionDomain.ToString()}",
@@ -143,20 +145,24 @@ namespace Vts.Api.Services
                     xyPointsImaginary = xyPointsComplex.Select(item =>
                         new Point(item.X, item.Y.Imaginary));
                 }
-                var plotDataReal = new PlotData {
+                var plotDataReal = new PlotData
+                {
                     Data = xyPointsReal,
                     Label = parameters.SolutionDomain.ToString()
                 };
-                var plotDataImaginary = new PlotData {
+                var plotDataImaginary = new PlotData
+                {
                     Data = xyPointsImaginary,
                     Label = parameters.SolutionDomain.ToString()
                 };
-                plot.PlotList.Add(new PlotDataJson {
+                plot.PlotList.Add(new PlotDataJson
+                {
                     Data = plotDataReal.Data.Select(item => new List<double> { item.X, item.Y }).ToList(),
                     Label = GetPlotLabel(parameters.ForwardSolverType, opticalPropertyList, i, parameters.XAxis,
                         parameters.IndependentAxis, parameters.SecondIndependentAxis, "(real)")
                 });
-                plot.PlotList.Add(new PlotDataJson {
+                plot.PlotList.Add(new PlotDataJson
+                {
                     Data = plotDataImaginary.Data.Select(item => new List<double> { item.X, item.Y })
                         .ToList(),
                     Label = GetPlotLabel(parameters.ForwardSolverType, opticalPropertyList, i, parameters.XAxis,

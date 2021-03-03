@@ -1,12 +1,12 @@
-﻿using System.Net;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.TestHost;
 using NUnit.Framework;
+using System.Net;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
 using Vts.Api.Controllers;
 
 namespace Vts.Api.Tests.Controllers
@@ -16,8 +16,10 @@ namespace Vts.Api.Tests.Controllers
         [Test]
         public void Test_controller_get()
         {
-            var readyController = new ReadyController {
-                ControllerContext = new ControllerContext {
+            var readyController = new ReadyController
+            {
+                ControllerContext = new ControllerContext
+                {
                     HttpContext = new DefaultHttpContext()
                 }
             };
@@ -29,8 +31,10 @@ namespace Vts.Api.Tests.Controllers
         [Test]
         public void Test_controller_post()
         {
-            var readyController = new ReadyController {
-                ControllerContext = new ControllerContext {
+            var readyController = new ReadyController
+            {
+                ControllerContext = new ControllerContext
+                {
                     HttpContext = new DefaultHttpContext()
                 }
             };

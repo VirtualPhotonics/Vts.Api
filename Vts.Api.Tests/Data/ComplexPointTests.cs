@@ -1,5 +1,5 @@
-﻿using System.Numerics;
-using NUnit.Framework;
+﻿using NUnit.Framework;
+using System.Numerics;
 using Vts.Api.Data;
 
 namespace Vts.Api.Tests.Data

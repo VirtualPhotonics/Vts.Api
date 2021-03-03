@@ -1,5 +1,5 @@
-﻿using System;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
+using System;
 using Vts.Api.Data;
 using Vts.Api.Enums;
 using Vts.Api.Models;

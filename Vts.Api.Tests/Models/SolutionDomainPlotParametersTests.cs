@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using NUnit.Framework;
+using System.Collections.Generic;
 using Vts.Api.Models;
 using Vts.Common;
 
@@ -20,7 +20,7 @@ namespace Vts.Api.Tests.Models
             Assert.AreEqual(xAxis.Count, solutionDomainPlotParameters.XAxis.AxisRange.Count);
             Assert.AreEqual(xAxis.Delta, solutionDomainPlotParameters.XAxis.AxisRange.Delta);
             Assert.AreEqual(ForwardSolverType.DistributedPointSourceSDA, solutionDomainPlotParameters.ForwardSolverType);
-            Assert.AreEqual(ForwardSolverType.PointSourceSDA ,solutionDomainPlotParameters.InverseSolverType);
+            Assert.AreEqual(ForwardSolverType.PointSourceSDA, solutionDomainPlotParameters.InverseSolverType);
             Assert.AreEqual(SolutionDomainType.ROfRho, solutionDomainPlotParameters.SolutionDomain);
             Assert.AreEqual(opticalProperties.Mua, solutionDomainPlotParameters.OpticalProperties.Mua);
             Assert.AreEqual(OptimizerType.MPFitLevenbergMarquardt, solutionDomainPlotParameters.OptimizerType);
