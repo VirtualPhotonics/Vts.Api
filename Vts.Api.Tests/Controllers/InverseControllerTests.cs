@@ -8,7 +8,7 @@ using Vts.Api.Services;
 
 namespace Vts.Api.Tests.Controllers
 {
-    public class InverseControllerTests
+    internal class InverseControllerTests
     {
         private Mock<IInverseSolverService> _inverseSolverMock;
 

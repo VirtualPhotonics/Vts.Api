@@ -12,7 +12,7 @@ using Vts.Api.Security;
 
 namespace Vts.Api.Tests.Security
 {
-    class ApiKeyRequirementHandlerTests
+    internal class ApiKeyRequirementHandlerTests
     {
         [Test]
         public async Task Test_api_key_requirement_handler_succeed()

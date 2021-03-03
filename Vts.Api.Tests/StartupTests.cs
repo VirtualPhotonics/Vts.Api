@@ -9,7 +9,7 @@ using Vts.Api.Tools;
 
 namespace Vts.Api.Tests
 {
-    class StartupTests
+    internal class StartupTests
     {
         private ILogger<Startup> _logger;
         private ILoggerFactory _factory;

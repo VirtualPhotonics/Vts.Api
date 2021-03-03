@@ -5,7 +5,7 @@ using Vts.Api.Controllers;
 
 namespace Vts.Api.Tests.Controllers
 {
-    class DefaultControllerTests
+    internal class DefaultControllerTests
     {
         [Test]
         public void Test_controller_get()

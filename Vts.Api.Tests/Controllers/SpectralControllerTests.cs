@@ -8,7 +8,7 @@ using Vts.Api.Services;
 
 namespace Vts.Api.Tests.Controllers
 {
-    public class SpectralControllerTests
+    internal class SpectralControllerTests
     {
         private Mock<ISpectralService> _spectralServiceMock;
 

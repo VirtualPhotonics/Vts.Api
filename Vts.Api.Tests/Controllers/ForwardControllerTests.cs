@@ -8,7 +8,7 @@ using Vts.Api.Services;
 
 namespace Vts.Api.Tests.Controllers
 {
-    public class ForwardControllerTests
+    internal class ForwardControllerTests
     {
         private Mock<IForwardSolverService> _forwardSolverServiceMock;
 

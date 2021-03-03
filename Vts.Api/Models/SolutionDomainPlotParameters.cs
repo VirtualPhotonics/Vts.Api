@@ -19,7 +19,6 @@ namespace Vts.Api.Models
         public SolutionDomainType SolutionDomain { get; set; }
         [JsonRequired]
         public IndependentAxis XAxis { get; set; }
-        [JsonRequired]
         public OpticalProperties OpticalProperties { get; set; }
 
         [JsonConverter(typeof(StringEnumConverter))]

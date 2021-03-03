@@ -6,7 +6,7 @@ using Vts.Api.Security;
 
 namespace Vts.Api.Tests.Security
 {
-    class ApiKeyRequirementTests
+    internal class ApiKeyRequirementTests
     {
         [Test]
         public void Test_api_key_handler()

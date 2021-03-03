@@ -11,7 +11,7 @@ using Vts.Api.Controllers;
 
 namespace Vts.Api.Tests.Controllers
 {
-    class ReadyControllerTests
+    internal class ReadyControllerTests
     {
         [Test]
         public void Test_controller_get()
@@ -38,7 +38,7 @@ namespace Vts.Api.Tests.Controllers
                     HttpContext = new DefaultHttpContext()
                 }
             };
-            var body = "{}";
+            const string body = "{}";
             readyController.Post(body);
             Assert.AreEqual(200, readyController.HttpContext.Response.StatusCode);
         }
@@ -48,8 +48,8 @@ namespace Vts.Api.Tests.Controllers
         {
             var server = new TestServer(new WebHostBuilder().UseStartup<Startup>());
             var httpClient = server.CreateClient();
-            var url = "api/ready";
-            var expected = HttpStatusCode.OK;
+            const string url = "api/ready";
+            const HttpStatusCode expected = HttpStatusCode.OK;
             httpClient.DefaultRequestHeaders.Add("X-API-KEY", "TESTKEY");
             var response = await httpClient.PostAsync(url, new StringContent("{}", Encoding.UTF8, "application/json"));
             Assert.AreEqual(expected, response.StatusCode);
@@ -60,8 +60,8 @@ namespace Vts.Api.Tests.Controllers
         {
             var server = new TestServer(new WebHostBuilder().UseStartup<Startup>());
             var client = server.CreateClient();
-            var url = "api/ready";
-            var expected = HttpStatusCode.Unauthorized;
+            const string url = "api/ready";
+            const HttpStatusCode expected = HttpStatusCode.Unauthorized;
 
             var response = client.PostAsync(url, new StringContent("{}", Encoding.UTF8, "application/json"));
 
