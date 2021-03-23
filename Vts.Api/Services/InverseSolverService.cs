@@ -52,11 +52,9 @@ namespace Vts.Api.Services
                     initialGuessParamsConvert,
                     lowerBounds,
                     upperBounds);
-                var fitops = ComputationFactory.UnFlattenOpticalProperties(fit);
-                //var fitparms =
-                //    GetParametersInOrder(fitops, independentValues, sd, independentAxis, independentAxisValue);
+                var fitOpticalProperties = ComputationFactory.UnFlattenOpticalProperties(fit);
                 plotParameters.ForwardSolverType = inverseSolver;
-                plotParameters.OpticalProperties = fitops[0]; // not sure [0] is always going to work here
+                plotParameters.OpticalProperties = fitOpticalProperties[0]; // not sure [0] is always going to work here
                 plotParameters.NoiseValue = 0;
                 return _plotFactory.GetPlot(PlotType.SolutionDomain, plotParameters);
             }
