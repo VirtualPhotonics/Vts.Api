@@ -28,7 +28,7 @@ namespace Vts.Api.Services
             {
                 var inverseSolver = plotParameters.InverseSolverType;
                 var initialGuessParams = _parameterTools.GetParametersInOrder(
-                    _parameterTools.GetOpticalPropertiesObject(plotParameters.OpticalProperties, plotParameters.WavelengthOpticalPropertyList),
+                    _parameterTools.GetOpticalPropertiesObject(plotParameters.OpticalProperties, plotParameters.WavelengthOpticalPropertyList).ToArray(),
                     plotParameters.SolutionDomain,
                     plotParameters.XAxis,
                     plotParameters.IndependentAxis,
@@ -52,9 +52,17 @@ namespace Vts.Api.Services
                     initialGuessParamsConvert,
                     lowerBounds,
                     upperBounds);
+                // the optical properties are returned as an array of doubles so we need to convert into an optical property object
                 var fitOpticalProperties = ComputationFactory.UnFlattenOpticalProperties(fit);
                 plotParameters.ForwardSolverType = inverseSolver;
-                plotParameters.OpticalProperties = fitOpticalProperties[0]; // not sure [0] is always going to work here
+                if (fitOpticalProperties.Length > 1)
+                {
+                    plotParameters.WavelengthOpticalPropertyList = fitOpticalProperties.ToList();
+                }
+                else
+                {
+                    plotParameters.OpticalProperties = fitOpticalProperties[0];
+                }
                 plotParameters.NoiseValue = 0;
                 return _plotFactory.GetPlot(PlotType.SolutionDomain, plotParameters);
             }
