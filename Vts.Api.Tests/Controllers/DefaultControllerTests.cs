@@ -5,13 +5,15 @@ using Vts.Api.Controllers;
 
 namespace Vts.Api.Tests.Controllers
 {
-    class DefaultControllerTests
+    internal class DefaultControllerTests
     {
         [Test]
         public void Test_controller_get()
         {
-            var liveController = new DefaultController {
-                ControllerContext = new ControllerContext {
+            var liveController = new DefaultController
+            {
+                ControllerContext = new ControllerContext
+                {
                     HttpContext = new DefaultHttpContext()
                 }
             };

@@ -2,7 +2,7 @@
 
 namespace Vts.Api.Tests
 {
-    class ProgramTests
+    internal class ProgramTests
     {
         [Test]
         public void Test_create_web_host_builder()

@@ -1,6 +1,7 @@
-﻿using System;
+﻿using Microsoft.Extensions.Logging;
+using System;
 using System.Linq;
-using Microsoft.Extensions.Logging;
+using Vts.Api.Data;
 using Vts.Api.Enums;
 using Vts.Api.Factories;
 using Vts.Api.Models;
@@ -21,23 +22,23 @@ namespace Vts.Api.Services
             _plotFactory = plotFactory;
             _parameterTools = parameterTools;
         }
-        public string GetPlotData(SolutionDomainPlotParameters plotParameters)
+        public Plots GetPlotData(SolutionDomainPlotParameters plotParameters)
         {
             try
             {
                 var inverseSolver = plotParameters.InverseSolverType;
                 var initialGuessParams = _parameterTools.GetParametersInOrder(
-                    _parameterTools.GetOpticalPropertiesObject(plotParameters.OpticalProperties),
-                    plotParameters.XAxis.AsEnumerable().ToArray(), 
-                    plotParameters.SolutionDomain, 
-                    plotParameters.IndependentAxes.Label,
-                    plotParameters.IndependentAxes.Value);
+                    _parameterTools.GetOpticalPropertiesObject(plotParameters.OpticalProperties, plotParameters.WavelengthOpticalPropertyList).ToArray(),
+                    plotParameters.SolutionDomain,
+                    plotParameters.XAxis,
+                    plotParameters.IndependentAxis,
+                    plotParameters.SecondIndependentAxis);
                 var initialGuessParamsConvert = initialGuessParams.Values.ToArray();
                 // get measured data from inverse solver analysis component
                 var measuredPoints = plotParameters.MeasuredData;
                 var dependentValues = measuredPoints.Select(p => p.Last()).ToArray(); // get y value
-                var lowerBounds = new double[] {0, 0, 0, 0};
-                var upperBounds = new []
+                var lowerBounds = new double[] { 0, 0, 0, 0 };
+                var upperBounds = new[]
                 {
                     double.PositiveInfinity, double.PositiveInfinity, double.PositiveInfinity, double.PositiveInfinity
                 };
@@ -51,14 +52,19 @@ namespace Vts.Api.Services
                     initialGuessParamsConvert,
                     lowerBounds,
                     upperBounds);
-                var fitops = ComputationFactory.UnFlattenOpticalProperties(fit);
-                //var fitparms =
-                //    GetParametersInOrder(fitops, independentValues, sd, independentAxis, independentAxisValue);
+                // the optical properties are returned as an array of doubles so we need to convert into an optical property object
+                var fitOpticalProperties = ComputationFactory.UnFlattenOpticalProperties(fit);
                 plotParameters.ForwardSolverType = inverseSolver;
-                plotParameters.OpticalProperties = fitops[0]; // not sure [0] is always going to work here
+                if (fitOpticalProperties.Length > 1)
+                {
+                    plotParameters.WavelengthOpticalPropertyList = fitOpticalProperties.ToList();
+                }
+                else
+                {
+                    plotParameters.OpticalProperties = fitOpticalProperties[0];
+                }
                 plotParameters.NoiseValue = 0;
-                var msg = _plotFactory.GetPlot(PlotType.SolutionDomain, plotParameters);
-                return msg;
+                return _plotFactory.GetPlot(PlotType.SolutionDomain, plotParameters);
             }
             catch (Exception e)
             {

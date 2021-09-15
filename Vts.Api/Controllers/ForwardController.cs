@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using Vts.Api.Models;
 using Vts.Api.Services;
 
@@ -27,7 +27,7 @@ namespace Vts.Api.Controllers
         // POST: api/v1/Forward
         [HttpPost]
         [Authorize(Policy = "ApiKeyPolicy")]
-        public string Post([FromBody] SolutionDomainPlotParameters plotParameters)
+        public dynamic Post([FromBody] SolutionDomainPlotParameters plotParameters)
         {
             return _forwardSolverService.GetPlotData(plotParameters);
         }

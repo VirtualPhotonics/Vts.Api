@@ -1,15 +1,15 @@
-﻿using System.Collections.Generic;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NUnit.Framework;
+using System.Collections.Generic;
 using Vts.Api.Services;
 using Vts.Api.Tools;
 
 namespace Vts.Api.Tests
 {
-    class StartupTests
+    internal class StartupTests
     {
         private ILogger<Startup> _logger;
         private ILoggerFactory _factory;

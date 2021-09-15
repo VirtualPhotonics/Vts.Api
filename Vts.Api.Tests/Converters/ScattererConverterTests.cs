@@ -1,19 +1,19 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using NUnit.Framework;
+using System;
 using System.IO;
 using System.Text;
-using Newtonsoft.Json;
-using NUnit.Framework;
 using Vts.Api.Converters;
 using Vts.SpectralMapping;
 
 namespace Vts.Api.Tests.Converters
 {
-    class ScattererConverterTests
+    internal class ScattererConverterTests
     {
         [Test]
         public void Test_powerlaw_scatterer_json_deserializer()
         {
-            var json = "{\"a\": 1.2,\"b\": 1.42}";
+            const string json = "{\"a\": 1.2,\"b\": 1.42}";
             var reader = new JsonTextReader(new StringReader(json));
             while (reader.TokenType == JsonToken.None)
             {
@@ -31,7 +31,7 @@ namespace Vts.Api.Tests.Converters
         [Test]
         public void Test_powerlawscatterer_default_json_deserializer()
         {
-            var json = "{\"powerLawScatterer\": {}}";
+            const string json = "{\"powerLawScatterer\": {}}";
             var reader = new JsonTextReader(new StringReader(json));
             while (reader.TokenType == JsonToken.None)
             {
@@ -48,7 +48,7 @@ namespace Vts.Api.Tests.Converters
         [Test]
         public void Test_intralipid_scatterer_json_deserializer()
         {
-            var json = "{\"volumeFraction\": 0.02}";
+            const string json = "{\"volumeFraction\": 0.02}";
             var reader = new JsonTextReader(new StringReader(json));
             while (reader.TokenType == JsonToken.None)
             {
@@ -64,7 +64,7 @@ namespace Vts.Api.Tests.Converters
         [Test]
         public void Test_intralipid_scatterer_default_json_deserializer()
         {
-            var json = "{\"intralipidScatterer\": {}}";
+            const string json = "{\"intralipidScatterer\": {}}";
             var reader = new JsonTextReader(new StringReader(json));
             while (reader.TokenType == JsonToken.None)
             {
@@ -80,7 +80,7 @@ namespace Vts.Api.Tests.Converters
         [Test]
         public void Test_mie_scatterer_json_deserializer()
         {
-            var json = "{\"particleRadius\": 0.8,\"particleRefractiveIndex\": 1.6,\"mediumRefractiveIndex\": 1.1,\"volumeFraction\": 0.1}";
+            const string json = "{\"particleRadius\": 0.8,\"particleRefractiveIndex\": 1.6,\"mediumRefractiveIndex\": 1.1,\"volumeFraction\": 0.1}";
             var reader = new JsonTextReader(new StringReader(json));
             while (reader.TokenType == JsonToken.None)
             {
@@ -100,7 +100,7 @@ namespace Vts.Api.Tests.Converters
         [Test]
         public void Test_mie_scatterer_default_json_deserializer()
         {
-            var json = "{\"mieScatterer\": {}}";
+            const string json = "{\"mieScatterer\": {}}";
             var reader = new JsonTextReader(new StringReader(json));
             while (reader.TokenType == JsonToken.None)
             {
@@ -119,7 +119,7 @@ namespace Vts.Api.Tests.Converters
         [Test]
         public void Test_invalidscatterer_json_deserializer()
         {
-            var json = "{\"this\": \"that\"}";
+            const string json = "{\"this\": \"that\"}";
             var reader = new JsonTextReader(new StringReader(json));
             while (reader.TokenType == JsonToken.None)
             {

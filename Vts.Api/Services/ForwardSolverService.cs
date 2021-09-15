@@ -1,5 +1,6 @@
-﻿using System;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
+using System;
+using Vts.Api.Data;
 using Vts.Api.Enums;
 using Vts.Api.Factories;
 using Vts.Api.Models;
@@ -17,7 +18,7 @@ namespace Vts.Api.Services
             _plotFactory = plotFactory;
         }
 
-        public string GetPlotData(SolutionDomainPlotParameters plotParameters)
+        public Plots GetPlotData(SolutionDomainPlotParameters plotParameters)
         {
             try
             {

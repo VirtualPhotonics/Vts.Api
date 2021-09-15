@@ -1,5 +1,6 @@
-﻿using System;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
+using System;
+using Vts.Api.Data;
 using Vts.Api.Enums;
 using Vts.Api.Models;
 using Vts.Api.Services;
@@ -15,7 +16,7 @@ namespace Vts.Api.Factories
             _serviceProvider = serviceProvider;
         }
 
-        public string GetPlot(PlotType plotType, IPlotParameters plotParameters)
+        public Plots GetPlot(PlotType plotType, IPlotParameters plotParameters)
         {
             switch (plotType)
             {

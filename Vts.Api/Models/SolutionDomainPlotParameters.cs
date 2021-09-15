@@ -1,21 +1,24 @@
-﻿using System.Collections.Generic;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using Vts.Common;
+using System.Collections.Generic;
+using Vts.Api.Converters;
 
 namespace Vts.Api.Models
 {
     public class SolutionDomainPlotParameters : IPlotParameters
     {
+        [JsonRequired]
         [JsonConverter(typeof(StringEnumConverter))]
         public ForwardSolverType ForwardSolverType { get; set; }
 
         [JsonConverter(typeof(StringEnumConverter))]
         public ForwardSolverType InverseSolverType { get; set; }
 
+        [JsonRequired]
         [JsonConverter(typeof(StringEnumConverter))]
         public SolutionDomainType SolutionDomain { get; set; }
-        public DoubleRange XAxis { get; set; }
+        [JsonRequired]
+        public IndependentAxis XAxis { get; set; }
         public OpticalProperties OpticalProperties { get; set; }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -23,12 +26,14 @@ namespace Vts.Api.Models
 
         [JsonConverter(typeof(StringEnumConverter))]
         public InverseFitType OptimizationParameters { get; set; }
-
-        public LabelValuePair IndependentAxes { get; set; }
         public double NoiseValue { get; set; }
 
         [JsonConverter(typeof(StringEnumConverter))]
         public ForwardAnalysisType ModelAnalysis { get; set; }
         public List<double[]> MeasuredData { get; set; }
+        [JsonConverter(typeof(OpticalPropertyListConverter))]
+        public List<OpticalProperties> WavelengthOpticalPropertyList { get; set; }
+        public IndependentAxis IndependentAxis { get; set; }
+        public IndependentAxis SecondIndependentAxis { get; set; }
     }
 }

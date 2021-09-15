@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using Vts.Api.Models;
 using Vts.Api.Services;
 
@@ -24,17 +24,10 @@ namespace Vts.Api.Controllers
             return new string[] { "Controller", "Inverse" };
         }
 
-        // GET: api/v1/Inverse/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
         // POST: api/v1/Inverse
         [HttpPost]
         [Authorize(Policy = "ApiKeyPolicy")]
-        public string Post([FromBody] SolutionDomainPlotParameters plotParameters)
+        public dynamic Post([FromBody] SolutionDomainPlotParameters plotParameters)
         {
             return _inverseSolverService.GetPlotData(plotParameters);
         }

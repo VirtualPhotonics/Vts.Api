@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using System.Collections.Generic;
 using Vts.Api.Converters;
 using Vts.Api.Enums;
-using Vts.Common;
 using Vts.SpectralMapping;
 
 namespace Vts.Api.Models
@@ -13,13 +12,13 @@ namespace Vts.Api.Models
         /// <summary>
         /// x-axis is wavelength
         /// </summary>
-        public DoubleRange XAxis { get; set; }
-        
+        public IndependentAxis XAxis { get; set; }
+
         /// <summary>
         /// y-axis
         /// </summary>
-        public string YAxis {  get; set; }
-        
+        public string YAxis { get; set; }
+
         /// <summary>
         /// Spectral plot type Enum
         /// </summary>

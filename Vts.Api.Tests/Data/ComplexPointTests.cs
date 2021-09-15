@@ -1,10 +1,10 @@
-﻿using System.Numerics;
-using NUnit.Framework;
+﻿using NUnit.Framework;
+using System.Numerics;
 using Vts.Api.Data;
 
 namespace Vts.Api.Tests.Data
 {
-    class ComplexPointTests
+    internal class ComplexPointTests
     {
         [Test]
         public void Test_complex_point()

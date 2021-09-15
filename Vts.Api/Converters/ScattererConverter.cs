@@ -1,12 +1,24 @@
-﻿using System;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System;
 using Vts.SpectralMapping;
 
 namespace Vts.Api.Converters
 {
-    public class ScattererConverter: JsonConverter<IScatterer>
+    /// <summary>
+    /// Class to convert the JSON object and return a Scatterer
+    /// </summary>
+    public class ScattererConverter : JsonConverter<IScatterer>
     {
+        /// <summary>
+        /// Reads the JSON object and returns a Scatterer
+        /// </summary>
+        /// <param name="reader">JSON reader</param>
+        /// <param name="objectType">Object type</param>
+        /// <param name="existingValue">The existing value</param>
+        /// <param name="hasExistingValue">Boolean for existing value</param>
+        /// <param name="serializer">JSON serializer</param>
+        /// <returns>The scatterer</returns>
         public override IScatterer ReadJson(JsonReader reader, Type objectType, IScatterer existingValue, bool hasExistingValue,
             JsonSerializer serializer)
         {

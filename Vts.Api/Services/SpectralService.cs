@@ -1,7 +1,8 @@
-﻿using System;
+﻿using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Extensions.Logging;
+using Vts.Api.Data;
 using Vts.Api.Enums;
 using Vts.Api.Factories;
 using Vts.Api.Models;
@@ -20,7 +21,7 @@ namespace Vts.Api.Services
             _plotFactory = plotFactory;
         }
 
-        public string GetPlotData(SpectralPlotParameters plotParameters)
+        public Plots GetPlotData(SpectralPlotParameters plotParameters)
         {
             _logger.LogInformation("Get the plot data for the Spectral Panel");
 
@@ -47,12 +48,12 @@ namespace Vts.Api.Services
                     scatterer = plotParameters.MieScatterer;
                     break;
                 default:
-                scatterer = new PowerLawScatterer();
-                break;
+                    scatterer = new PowerLawScatterer();
+                    break;
             }
 
             // get the wavelength
-            plotParameters.Wavelengths = plotParameters.XAxis.AsEnumerable().ToArray();
+            plotParameters.Wavelengths = plotParameters.XAxis.AxisRange.AsEnumerable().ToArray();
             // set up the tissue
             plotParameters.Tissue = new Tissue(chromophoreAbsorbers, scatterer, plotParameters.TissueType);
 

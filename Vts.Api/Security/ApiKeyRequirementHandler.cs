@@ -1,8 +1,8 @@
-﻿using System.Linq;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Filters;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace Vts.Api.Security
 {
@@ -24,7 +24,8 @@ namespace Vts.Api.Security
                 if (apiKey != null && requirement.ApiKeys.Any(requiredApiKey => apiKey == requiredApiKey))
                 {
                     context.Succeed(requirement);
-                } else
+                }
+                else
                 {
                     authorizationFilterContext.HttpContext.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
                     context.Fail();

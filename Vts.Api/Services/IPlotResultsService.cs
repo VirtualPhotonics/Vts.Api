@@ -1,10 +1,11 @@
-﻿using Vts.Api.Models;
+﻿using Vts.Api.Data;
+using Vts.Api.Models;
 
 namespace Vts.Api.Services
 {
     public interface IPlotResultsService
     {
-        string Plot(IPlotParameters plotParameters);
-        
+        Plots Plot(IPlotParameters plotParameters);
+
     }
 }

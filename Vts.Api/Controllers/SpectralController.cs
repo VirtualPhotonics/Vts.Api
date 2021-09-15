@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using Vts.Api.Models;
 using Vts.Api.Services;
 
@@ -27,7 +27,7 @@ namespace Vts.Api.Controllers
         // POST: api/v1/Spectral
         [HttpPost]
         [Authorize(Policy = "ApiKeyPolicy")]
-        public string Post([FromBody] SpectralPlotParameters plotParameters)
+        public dynamic Post([FromBody] SpectralPlotParameters plotParameters)
         {
             return _spectralService.GetPlotData(plotParameters);
         }
