@@ -4,6 +4,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NUnit.Framework;
 using System.Collections.Generic;
+using Microsoft.AspNetCore;
+using Microsoft.AspNetCore.Hosting;
 using Vts.Api.Services;
 using Vts.Api.Tools;
 
@@ -11,7 +13,7 @@ namespace Vts.Api.Tests
 {
     internal class StartupTests
     {
-        private ILogger<Startup> _logger;
+        private IWebHost _host;
         private ILoggerFactory _factory;
 
         [SetUp]
@@ -20,33 +22,32 @@ namespace Vts.Api.Tests
             var serviceProvider = new ServiceCollection()
                 .AddLogging()
                 .BuildServiceProvider();
-            _factory = serviceProvider.GetService<ILoggerFactory>()
-                .AddConsole();
-            _logger = _factory.CreateLogger<Startup>();
+            _factory = serviceProvider.GetService<ILoggerFactory>();
         }
 
         [Test]
         public void Test_startup()
         {
-            // setup a test configuration to test the strartup
+            // setup a test configuration to test the startup
             var testConfiguration = new Dictionary<string, string>();
-            var configuration = new ConfigurationBuilder()
-                .AddInMemoryCollection(testConfiguration)
+            _host = WebHost.CreateDefaultBuilder()
+                .ConfigureAppConfiguration((context, config) =>
+                {
+                    var replacementConfiguration = new ConfigurationBuilder()
+                        .AddInMemoryCollection(testConfiguration)
+                        .Build();
+
+                    config.AddConfiguration(replacementConfiguration);
+                })
+                .UseStartup<Startup>()
                 .Build();
-            // Call the Startup constructor with the generated configuration
-            var target = new Startup(configuration, _logger);
-            var services = new ServiceCollection()
-                .AddLogging();
-            // Call ConfigureServices
-            target.ConfigureServices(services);
-            var serviceProvider = services.BuildServiceProvider();
             // Check the services were added correctly
-            Assert.IsNotNull(serviceProvider.GetService<IForwardSolverService>());
-            Assert.IsNotNull(serviceProvider.GetService<IInverseSolverService>());
-            Assert.IsNotNull(serviceProvider.GetService<IAuthorizationHandler>());
-            Assert.IsNotNull(serviceProvider.GetService<IParameterTools>());
-            Assert.IsNotNull(serviceProvider.GetService<PlotSolutionDomainResultsService>());
-            Assert.IsNotNull(serviceProvider.GetService<PlotSpectralResultsService>());
+            Assert.IsNotNull(_host.Services.GetService<IForwardSolverService>());
+            Assert.IsNotNull(_host.Services.GetService<IInverseSolverService>());
+            Assert.IsNotNull(_host.Services.GetService<IAuthorizationHandler>());
+            Assert.IsNotNull(_host.Services.GetService<IParameterTools>());
+            Assert.IsNotNull(_host.Services.GetService<PlotSolutionDomainResultsService>());
+            Assert.IsNotNull(_host.Services.GetService<PlotSpectralResultsService>());
         }
     }
 }

@@ -26,8 +26,7 @@ namespace Vts.Api.Tests.Services
             var serviceProvider = new ServiceCollection()
                 .AddLogging()
                 .BuildServiceProvider();
-            _factory = serviceProvider.GetService<ILoggerFactory>()
-                .AddConsole();
+            _factory = serviceProvider.GetService<ILoggerFactory>();
             _logger = _factory.CreateLogger<ForwardSolverService>();
             _forwardSolverService = new ForwardSolverService(_logger, _plotFactoryMock.Object);
             const string postData = "{\"forwardSolverType\":\"DistributedPointSourceSDA\",\"solutionDomain\":\"ROfRho\",\"independentAxes\":{\"label\":\"t\",\"value\":0.05},\"xAxis\":{\"start\":0.5,\"stop\":9.5,\"count\":19},\"opticalProperties\":{\"mua\":0.01,\"musp\":1,\"g\":0.8,\"n\":1.4},\"modelAnalysis\":\"R\",\"noiseValue\":\"0\"}";
@@ -45,8 +44,7 @@ namespace Vts.Api.Tests.Services
             var serviceProvider = new ServiceCollection()
                 .AddLogging()
                 .BuildServiceProvider();
-            _factory = serviceProvider.GetService<ILoggerFactory>()
-                .AddConsole();
+            _factory = serviceProvider.GetService<ILoggerFactory>();
             _logger = _factory.CreateLogger<ForwardSolverService>();
             _forwardSolverService = new ForwardSolverService(_logger, _plotFactoryMock.Object);
             const string postData = "{\"forwardSolverType\":\"DistributedPointSourceSDA\",\"solutionDomain\":\"ROfRho\",\"xAxis\":{\"start\":0.5,\"stop\":9.5,\"count\":19},\"opticalProperties\":{\"mua\":0.01,\"musp\":1,\"g\":0.8,\"n\":1.4},\"modelAnalysis\":\"R\",\"noiseValue\":\"0\"}";

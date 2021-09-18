@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 using Vts.Api.Security;
@@ -16,8 +15,7 @@ namespace Vts.Api.Tests.Security
                 {
                     authConfig.AddPolicy("ApiKeyPolicy",
                         policyBuilder => policyBuilder
-                        .AddRequirements(new ApiKeyRequirement(new[] { "TESTKEY" }))
-                        .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme));
+                        .AddRequirements(new ApiKeyRequirement(new[] { "TESTKEY" })));
                 })
                     .BuildServiceProvider();
             var service = serviceProvider.GetService<IAuthorizationPolicyProvider>();

@@ -22,8 +22,7 @@ namespace Vts.Api.Tests.Services
             _serviceProvider = new ServiceCollection()
                 .AddLogging()
                 .BuildServiceProvider();
-            _factory = _serviceProvider.GetService<ILoggerFactory>()
-                .AddConsole();
+            _factory = _serviceProvider.GetService<ILoggerFactory>();
             _logger = _factory.CreateLogger<PlotSolutionDomainResultsService>();
         }
 
