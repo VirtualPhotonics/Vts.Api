@@ -4,6 +4,7 @@ using Moq;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using System;
+using System.ComponentModel;
 using Vts.Api.Data;
 using Vts.Api.Enums;
 using Vts.Api.Factories;
@@ -28,8 +29,7 @@ namespace Vts.Api.Tests.Services
             var serviceProvider = new ServiceCollection()
                 .AddLogging()
                 .BuildServiceProvider();
-            _factory = serviceProvider.GetService<ILoggerFactory>()
-                .AddConsole();
+            _factory = serviceProvider.GetService<ILoggerFactory>();
             _logger = _factory.CreateLogger<InverseSolverService>();
             _parameterTools = new ParameterTools();
             _inverseSolverService = new InverseSolverService(_logger, _plotFactoryMock.Object, _parameterTools);
@@ -140,6 +140,31 @@ namespace Vts.Api.Tests.Services
             var test = (OpticalProperties[])initialGuessParams[IndependentVariableAxis.Wavelength];
             Assert.IsNotNull(test);
             Assert.AreEqual(0.01, test[0].Mua);
+        }
+
+        [Test]
+        public void GetParametersInOrder_throws_exception()
+        {
+            Assert.Throws<InvalidEnumArgumentException>(() => _parameterTools.GetParametersInOrder(null,
+                (SolutionDomainType) 99, new IndependentAxis(), new IndependentAxis(), new IndependentAxis()));
+        }
+
+        [Test]
+        public void Test_GetParameterOrder_throws_exception()
+        {
+            Assert.Throws<InvalidEnumArgumentException>(() =>
+                ParameterTools.GetParameterOrder((IndependentVariableAxis) 99));
+        }
+
+        [Test]
+        public void Test_GetParameterOrder_returns_integer()
+        {
+            Assert.AreEqual(0, ParameterTools.GetParameterOrder(IndependentVariableAxis.Wavelength));
+            Assert.AreEqual(1, ParameterTools.GetParameterOrder(IndependentVariableAxis.Rho));
+            Assert.AreEqual(1, ParameterTools.GetParameterOrder(IndependentVariableAxis.Fx));
+            Assert.AreEqual(2, ParameterTools.GetParameterOrder(IndependentVariableAxis.Time));
+            Assert.AreEqual(2, ParameterTools.GetParameterOrder(IndependentVariableAxis.Ft));
+            Assert.AreEqual(3, ParameterTools.GetParameterOrder(IndependentVariableAxis.Z));
         }
 
         [Test]

@@ -24,8 +24,7 @@ namespace Vts.Api.Tests.Services
             var serviceProvider = new ServiceCollection()
                 .AddLogging()
                 .BuildServiceProvider();
-            _factory = serviceProvider.GetService<ILoggerFactory>()
-                .AddConsole();
+            _factory = serviceProvider.GetService<ILoggerFactory>();
             _logger = _factory.CreateLogger<PlotSpectralResultsService>();
         }
 

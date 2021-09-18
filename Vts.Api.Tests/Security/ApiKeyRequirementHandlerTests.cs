@@ -26,10 +26,13 @@ namespace Vts.Api.Tests.Security
             var filters = new List<IFilterMetadata>() {
                 new ApiControllerAttribute(),
             };
+            var httpContextAccessor = new HttpContextAccessor
+            {
+                HttpContext = context
+            };
             var authFilterContext = new AuthorizationFilterContext(actionContext, filters);
             var authHandlerContext = new AuthorizationHandlerContext(requirements, ClaimsPrincipal.Current, authFilterContext);
-            var keyService = new ApiKeyRequirementHandler();
-            await keyService.HandleAsync(authHandlerContext);
+            var keyService = new ApiKeyRequirementHandler(httpContextAccessor); await keyService.HandleAsync(authHandlerContext);
             Assert.IsTrue(authHandlerContext.HasSucceeded);
         }
 
@@ -43,9 +46,30 @@ namespace Vts.Api.Tests.Security
             var filters = new List<IFilterMetadata>() {
                 new ApiControllerAttribute(),
             };
+            var httpContextAccessor = new HttpContextAccessor
+            {
+                HttpContext = context
+            };
             var authFilterContext = new AuthorizationFilterContext(actionContext, filters);
             var authHandlerContext = new AuthorizationHandlerContext(requirements, ClaimsPrincipal.Current, authFilterContext);
-            var keyService = new ApiKeyRequirementHandler();
+            var keyService = new ApiKeyRequirementHandler(httpContextAccessor);
+            await keyService.HandleAsync(authHandlerContext);
+            Assert.IsTrue(authHandlerContext.HasFailed);
+        }
+
+        [Test]
+        public async Task Test_api_key_requirement_handler_fail_null_context()
+        {
+            var context = new DefaultHttpContext();
+            context.Request.Headers.Add("X-API-KEY", "TESTKEY");
+            var requirements = new[] { new ApiKeyRequirement(new[] { "TESTKEY" }) };
+            var actionContext = new ActionContext(context, new RouteData(), new ActionDescriptor());
+            var filters = new List<IFilterMetadata>() {
+                new ApiControllerAttribute(),
+            };
+            var authFilterContext = new AuthorizationFilterContext(actionContext, filters);
+            var authHandlerContext = new AuthorizationHandlerContext(requirements, ClaimsPrincipal.Current, authFilterContext);
+            var keyService = new ApiKeyRequirementHandler(null);
             await keyService.HandleAsync(authHandlerContext);
             Assert.IsTrue(authHandlerContext.HasFailed);
         }

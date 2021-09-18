@@ -1,8 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using Vts.Api.Models;
 using Vts.Extensions;
+
+[assembly: InternalsVisibleTo("Vts.Api.Tests")]
 
 namespace Vts.Api.Tools
 {
@@ -90,25 +93,18 @@ namespace Vts.Api.Tools
         /// </summary>
         /// <param name="axis">The independent variable axis</param>
         /// <returns>Returns an integer</returns>
-        internal int GetParameterOrder(IndependentVariableAxis axis)
+        internal static int GetParameterOrder(IndependentVariableAxis axis)
         {
-            switch (axis)
+            return axis switch
             {
-                case IndependentVariableAxis.Wavelength:
-                    return 0;
-                case IndependentVariableAxis.Rho:
-                    return 1;
-                case IndependentVariableAxis.Fx:
-                    return 1;
-                case IndependentVariableAxis.Time:
-                    return 2;
-                case IndependentVariableAxis.Ft:
-                    return 2;
-                case IndependentVariableAxis.Z:
-                    return 3;
-                default:
-                    throw new InvalidEnumArgumentException("There is no Enum of this type");
-            }
+                IndependentVariableAxis.Wavelength => 0,
+                IndependentVariableAxis.Rho => 1,
+                IndependentVariableAxis.Fx => 1,
+                IndependentVariableAxis.Time => 2,
+                IndependentVariableAxis.Ft => 2,
+                IndependentVariableAxis.Z => 3,
+                _ => throw new InvalidEnumArgumentException("There is no Enum of this type")
+            };
         }
 
         /// <summary>

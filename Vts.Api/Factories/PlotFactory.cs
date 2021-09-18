@@ -25,7 +25,7 @@ namespace Vts.Api.Factories
                     return plotSolutionDomainResultsService.Plot((SolutionDomainPlotParameters)plotParameters);
                 case PlotType.Spectral:
                     var plotSpectralResultsService = _serviceProvider.GetService<PlotSpectralResultsService>();
-                    return plotSpectralResultsService.Plot((SpectralPlotParameters)plotParameters);
+                    return plotSpectralResultsService?.Plot((SpectralPlotParameters)plotParameters);
                 default:
                     return null;
             }
