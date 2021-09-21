@@ -29,28 +29,30 @@ namespace Vts.Api.Services
 
             // set up the absorber concentrations
             var chromophoreAbsorbers = new List<IChromophoreAbsorber>();
-            foreach (var absorber in plotParameters.AbsorberConcentration)
+            if (plotParameters.AbsorberConcentration == null)
             {
-                chromophoreAbsorbers.Add(new ChromophoreAbsorber(Enum.Parse<ChromophoreType>(absorber.Label, true), absorber.Value));
+                if (Enum.TryParse(plotParameters.TissueType, out TissueType tissueType))
+                {
+                    chromophoreAbsorbers = TissueProvider.CreateAbsorbers(tissueType).ToList();
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            else
+            {
+                chromophoreAbsorbers.AddRange(plotParameters.AbsorberConcentration.Select(absorber => new ChromophoreAbsorber(Enum.Parse<ChromophoreType>(absorber.Label, true), absorber.Value)));
             }
 
             // set up the scatterer
-            IScatterer scatterer;
-            switch (plotParameters.ScatteringType)
+            IScatterer scatterer = plotParameters.ScatteringType switch
             {
-                case ScatteringType.PowerLaw:
-                    scatterer = plotParameters.PowerLawScatterer;
-                    break;
-                case ScatteringType.Intralipid:
-                    scatterer = plotParameters.IntralipidScatterer;
-                    break;
-                case ScatteringType.Mie:
-                    scatterer = plotParameters.MieScatterer;
-                    break;
-                default:
-                    scatterer = new PowerLawScatterer();
-                    break;
-            }
+                ScatteringType.PowerLaw => plotParameters.PowerLawScatterer,
+                ScatteringType.Intralipid => plotParameters.IntralipidScatterer,
+                ScatteringType.Mie => plotParameters.MieScatterer,
+                _ => new PowerLawScatterer()
+            };
 
             // get the wavelength
             plotParameters.Wavelengths = plotParameters.XAxis.AxisRange.AsEnumerable().ToArray();
