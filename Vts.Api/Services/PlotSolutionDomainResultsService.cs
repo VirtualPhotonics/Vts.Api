@@ -65,7 +65,7 @@ namespace Vts.Api.Services
             }
         }
 
-        internal Plots ConstructPlots(int numberOfPointsPerPlot, int numberOfPlots, double[] independentValues, double[] reflectance, SolutionDomainPlotParameters parameters, OpticalProperties[] opticalPropertyList, bool hasIndependentAxis)
+        internal static Plots ConstructPlots(int numberOfPointsPerPlot, int numberOfPlots, double[] independentValues, double[] reflectance, SolutionDomainPlotParameters parameters, OpticalProperties[] opticalPropertyList, bool hasIndependentAxis)
         {
             var plot = new Plots
             {
@@ -108,7 +108,7 @@ namespace Vts.Api.Services
             return plot;
         }
 
-        internal Plots ConstructComplexPlots(int numberOfPointsPerPlot, int numberOfPlots, double[] independentValues, double[] reflectance, SolutionDomainPlotParameters parameters, OpticalProperties[] opticalPropertyList, bool hasIndependentAxis)
+        internal static Plots ConstructComplexPlots(int numberOfPointsPerPlot, int numberOfPlots, double[] independentValues, double[] reflectance, SolutionDomainPlotParameters parameters, OpticalProperties[] opticalPropertyList, bool hasIndependentAxis)
         {
             var plot = new Plots
             {
@@ -172,7 +172,7 @@ namespace Vts.Api.Services
             return plot;
         }
 
-        internal string GetPlotLabel(ForwardSolverType fs, OpticalProperties[] opticalPropertyList, int i, IndependentAxis xAxis, IndependentAxis independentAxis, IndependentAxis secondIndependentAxis, string additionalLabel)
+        internal static string GetPlotLabel(ForwardSolverType fs, OpticalProperties[] opticalPropertyList, int i, IndependentAxis xAxis, IndependentAxis independentAxis, IndependentAxis secondIndependentAxis, string additionalLabel)
         {
             var independentLabel = "";
             var secondIndependentLabel = "";

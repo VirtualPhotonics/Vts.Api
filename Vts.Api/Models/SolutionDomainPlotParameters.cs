@@ -35,5 +35,19 @@ namespace Vts.Api.Models
         public List<OpticalProperties> WavelengthOpticalPropertyList { get; set; }
         public IndependentAxis IndependentAxis { get; set; }
         public IndependentAxis SecondIndependentAxis { get; set; }
+
+        public string ValidateData()
+        {
+            if (OpticalProperties == null && WavelengthOpticalPropertyList.Count == 0)
+            {
+                return "{\"Error\": \"OpticalProperties or WavelengthOpticalPropertyList must have a value\"}";
+            }
+
+            if (XAxis.Axis == IndependentVariableAxis.Wavelength && WavelengthOpticalPropertyList.Count != XAxis.AxisRange.Count)
+            {
+                return $"{{\"Error\": \"The WavelengthOpticalPropertyList (count: {WavelengthOpticalPropertyList.Count}) must have the same number of values as the axis range (count: {XAxis.AxisRange.Count})\"}}";
+            }
+            return "";
+        }
     }
 }

@@ -29,6 +29,11 @@ namespace Vts.Api.Controllers
         [Authorize(Policy = "ApiKeyPolicy")]
         public dynamic Post([FromBody] SolutionDomainPlotParameters plotParameters)
         {
+            var result = plotParameters.ValidateData();
+            if (!string.IsNullOrEmpty(result))
+            {
+                return result;
+            }
             return _forwardSolverService.GetPlotData(plotParameters);
         }
     }
