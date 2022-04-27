@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <UserSecretsId>925ac32d-8d2b-4fa3-8255-d3768b19402d</UserSecretsId>
   </PropertyGroup>
 
@@ -10,9 +10,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.10" />
-    <PackageReference Include="Swashbuckle.AspNetCore.Newtonsoft" Version="6.2.1" />
-    <PackageReference Include="VirtualPhotonics.Vts" Version="5.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.4" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Newtonsoft" Version="6.3.1" />
+    <PackageReference Include="VirtualPhotonics.Vts" Version="6.0.0" />
   </ItemGroup>
 
 </Project>
