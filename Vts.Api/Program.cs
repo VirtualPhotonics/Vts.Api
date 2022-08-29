@@ -1,17 +1,21 @@
-﻿using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Logging;
+using Vts.Api;
 
-namespace Vts.Api
-{
-    public static class Program
-    {
-        public static void Main(string[] args)
-        {
-            CreateWebHostBuilder(args).Build().Run();
-        }
+using var loggerFactory = LoggerFactory.Create(x => x
+    .SetMinimumLevel(LogLevel.Trace)
+    .AddConsole());
 
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>();
-    }
-}
+var logger = loggerFactory.CreateLogger<Startup>();
+
+var builder = WebApplication.CreateBuilder(args);
+
+var startup = new Startup(builder.Configuration, logger);
+
+startup.ConfigureServices(builder.Services);
+
+var webApplication = builder.Build();
+
+startup.Configure(webApplication, webApplication.Environment);
+
+webApplication.Run();
