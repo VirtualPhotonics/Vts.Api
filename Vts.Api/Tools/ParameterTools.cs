@@ -115,7 +115,7 @@ namespace Vts.Api.Tools
         /// <param name="independentAxis">The first independent axis</param>
         /// <param name="secondIndependentAxis">The second independent axis</param>
         /// <returns>a double array with the value(s)</returns>
-        internal double[] GetParameterValues(IndependentVariableAxis currentAxis, IndependentAxis xAxis, IndependentAxis independentAxis, IndependentAxis secondIndependentAxis)
+        internal static double[] GetParameterValues(IndependentVariableAxis currentAxis, IndependentAxis xAxis, IndependentAxis independentAxis, IndependentAxis secondIndependentAxis)
         {
             if (independentAxis != null && currentAxis == independentAxis.Axis)
             {

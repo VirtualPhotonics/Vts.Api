@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using NUnit.Framework;
-using System;
 using Vts.Api.Data;
 using Vts.Api.Models;
 using Vts.Api.Services;
@@ -12,10 +11,11 @@ namespace Vts.Api.Tests.Services
 {
     internal class PlotSolutionDomainResultsServiceTests
     {
-        private ILoggerFactory _factory;
-        private ILogger<PlotSolutionDomainResultsService> _logger;
-        private IServiceProvider _serviceProvider;
-        private PlotSolutionDomainResultsService _plotSolutionDomainResultsService;
+        private ILoggerFactory? _factory;
+        private ILogger<PlotSolutionDomainResultsService>? _logger;
+        private IServiceProvider? _serviceProvider;
+        private PlotSolutionDomainResultsService? _plotSolutionDomainResultsService;
+
         [OneTimeSetUp]
         public void One_time_setup()
         {
@@ -23,7 +23,7 @@ namespace Vts.Api.Tests.Services
                 .AddLogging()
                 .BuildServiceProvider();
             _factory = _serviceProvider.GetService<ILoggerFactory>();
-            _logger = _factory.CreateLogger<PlotSolutionDomainResultsService>();
+            if (_factory != null) _logger = _factory.CreateLogger<PlotSolutionDomainResultsService>();
         }
 
         [Test]
@@ -57,9 +57,9 @@ namespace Vts.Api.Tests.Services
             var data = _plotSolutionDomainResultsService.Plot(solutionDomainPlotParameters);
             const string results = "{\"Id\":\"ROfRho\",\"PlotList\":[{\"Label\":\"PointSourceSDA μa=0.01 μs'=1\",\"Data\":[[0.5,0.036717565366669314],[1.0,0.022495920023422971],[1.5,0.013879262176677631],[2.0,0.00909004259895382],[2.5,0.0062645286764352335],[3.0,0.0044801714205314185],[3.5,0.0032915341287590738],[4.0,0.0024679357796148146],[4.5,0.001880333047738071],[5.0,0.0014516116956410983],[5.5,0.0011332021316975245],[6.0,0.00089323725881868422],[6.5,0.00071013402604237666],[7.0,0.00056890403099352531],[7.5,0.00045892623723661589],[8.0,0.00037254747448076136],[8.5,0.00030417414834209468],[9.0,0.00024966707466955989],[9.5,0.00020592949690778192]]}]}";
             var expected = JsonConvert.DeserializeObject<Plots>(results);
-            Assert.AreEqual(expected.Id, data.Id);
-            Assert.AreEqual(expected.PlotList.Count, data.PlotList.Count);
-            for (var i = 0; i < expected.PlotList.Count; i++)
+            Assert.AreEqual(expected?.Id, data.Id);
+            Assert.AreEqual(expected?.PlotList.Count, data.PlotList.Count);
+            for (var i = 0; i < expected?.PlotList.Count; i++)
             {
                 Assert.AreEqual(expected.PlotList[i].Label, data.PlotList[i].Label);
                 Assert.AreEqual(expected.PlotList[i].Data.Count, data.PlotList[i].Data.Count);
@@ -223,12 +223,12 @@ namespace Vts.Api.Tests.Services
                 _plotSolutionDomainResultsService.Plot(null));
         }
 
-        internal void Verify_plot_data(Plots data, string results)
+        internal static void Verify_plot_data(Plots data, string results)
         {
             var expected = JsonConvert.DeserializeObject<Plots>(results);
-            Assert.AreEqual(expected.Id, data.Id);
-            Assert.AreEqual(expected.PlotList.Count, data.PlotList.Count);
-            for (var i = 0; i < expected.PlotList.Count; i++)
+            Assert.AreEqual(expected?.Id, data.Id);
+            Assert.AreEqual(expected?.PlotList.Count, data.PlotList.Count);
+            for (var i = 0; i < expected?.PlotList.Count; i++)
             {
                 Assert.AreEqual(expected.PlotList[i].Label, data.PlotList[i].Label);
                 Assert.AreEqual(expected.PlotList[i].Data.Count, data.PlotList[i].Data.Count);

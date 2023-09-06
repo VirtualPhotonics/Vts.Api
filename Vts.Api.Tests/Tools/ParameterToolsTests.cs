@@ -1,5 +1,4 @@
 ﻿using NUnit.Framework;
-using System.Collections.Generic;
 using Vts.Api.Tools;
 
 namespace Vts.Api.Tests.Tools

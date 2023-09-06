@@ -36,7 +36,7 @@ namespace Vts.Api.Services
                 var initialGuessParamsConvert = initialGuessParams.Values.ToArray();
                 // get measured data from inverse solver analysis component
                 var measuredPoints = plotParameters.MeasuredData;
-                var dependentValues = measuredPoints.Select(p => p.Last()).ToArray(); // get y value
+                var dependentValues = measuredPoints.Select(p => p[^1]).ToArray(); // get y value
                 var lowerBounds = new double[] { 0, 0, 0, 0 };
                 var upperBounds = new[]
                 {

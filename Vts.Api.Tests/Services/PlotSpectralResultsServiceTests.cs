@@ -2,8 +2,6 @@
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using NUnit.Framework;
-using System;
-using System.Linq;
 using Vts.Api.Data;
 using Vts.Api.Models;
 using Vts.Api.Services;
@@ -14,9 +12,9 @@ namespace Vts.Api.Tests.Services
 {
     internal class PlotSpectralResultsServiceTests
     {
-        private PlotSpectralResultsService _plotSpectralResultsService;
-        private ILoggerFactory _factory;
-        private ILogger<PlotSpectralResultsService> _logger;
+        private PlotSpectralResultsService? _plotSpectralResultsService;
+        private ILoggerFactory? _factory;
+        private ILogger<PlotSpectralResultsService>? _logger;
 
         [OneTimeSetUp]
         public void One_time_setup()
@@ -63,12 +61,12 @@ namespace Vts.Api.Tests.Services
             Verify_plot_data(data, muspResults);
         }
 
-        internal void Verify_plot_data(Plots data, string results)
+        internal static void Verify_plot_data(Plots data, string results)
         {
             var expected = JsonConvert.DeserializeObject<Plots>(results);
-            Assert.AreEqual(expected.Id, data.Id);
-            Assert.AreEqual(expected.PlotList.Count, data.PlotList.Count);
-            for (var i = 0; i < expected.PlotList.Count; i++)
+            Assert.AreEqual(expected?.Id, data.Id);
+            Assert.AreEqual(expected?.PlotList.Count, data.PlotList.Count);
+            for (var i = 0; i < expected?.PlotList.Count; i++)
             {
                 Assert.AreEqual(expected.PlotList[i].Label, data.PlotList[i].Label);
                 Assert.AreEqual(expected.PlotList[i].Data.Count, data.PlotList[i].Data.Count);
