@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using NUnit.Framework;
-using System.Collections.Generic;
 using Vts.Api.Models;
 using Vts.Common;
 

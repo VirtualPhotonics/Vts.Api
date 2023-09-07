@@ -70,8 +70,8 @@ namespace Vts.Api.Services
             var plot = new Plots
             {
                 Id = hasIndependentAxis
-                    ? $"{parameters.SolutionDomain.ToString()}Independent{parameters.IndependentAxis.Axis}"
-                    : $"{parameters.SolutionDomain.ToString()}",
+                    ? $"{parameters.SolutionDomain}Independent{parameters.IndependentAxis.Axis}"
+                    : $"{parameters.SolutionDomain}",
                 PlotList = new List<PlotDataJson>()
             };
             for (var i = 0; i < numberOfPlots; i++)
@@ -113,8 +113,8 @@ namespace Vts.Api.Services
             var plot = new Plots
             {
                 Id = hasIndependentAxis
-                    ? $"{parameters.SolutionDomain.ToString()}Independent{parameters.IndependentAxis.Axis}"
-                    : $"{parameters.SolutionDomain.ToString()}",
+                    ? $"{parameters.SolutionDomain}Independent{parameters.IndependentAxis.Axis}"
+                    : $"{parameters.SolutionDomain}",
                 PlotList = new List<PlotDataJson>()
             };
             var complexOffset = reflectance.Length / 2;

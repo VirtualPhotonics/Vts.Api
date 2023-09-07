@@ -1,7 +1,5 @@
 ﻿using Newtonsoft.Json;
 using NUnit.Framework;
-using System;
-using System.IO;
 using System.Text;
 
 namespace Vts.Api.Tests.Converters

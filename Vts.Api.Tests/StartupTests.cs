@@ -1,11 +1,10 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NUnit.Framework;
-using System.Collections.Generic;
-using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Hosting;
 using Vts.Api.Services;
 using Vts.Api.Tools;
 
@@ -13,17 +12,7 @@ namespace Vts.Api.Tests
 {
     internal class StartupTests
     {
-        private IWebHost _host;
-        private ILoggerFactory _factory;
-
-        [SetUp]
-        public void Setup_data()
-        {
-            var serviceProvider = new ServiceCollection()
-                .AddLogging()
-                .BuildServiceProvider();
-            _factory = serviceProvider.GetService<ILoggerFactory>();
-        }
+        private IWebHost? _host;
 
         [Test]
         public void Test_startup()

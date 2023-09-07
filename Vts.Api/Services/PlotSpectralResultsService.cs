@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using System;
+using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Linq;
 using Vts.Api.Data;
@@ -9,11 +10,8 @@ namespace Vts.Api.Services
 {
     public class PlotSpectralResultsService : IPlotResultsService
     {
-        private readonly ILogger<PlotSpectralResultsService> _logger;
-
         public PlotSpectralResultsService(ILogger<PlotSpectralResultsService> logger)
         {
-            _logger = logger;
         }
 
         public Plots Plot(IPlotParameters plotParameters)
@@ -31,7 +29,8 @@ namespace Vts.Api.Services
                     case SpectralPlotType.Musp:
                         xyPoints.Add(new Point(wv, parameters.Tissue.GetMusp(wv)));
                         break;
-
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(plotParameters));
                 }
             }
             var plotData = new PlotData { Data = xyPoints, Label = parameters.TissueType };

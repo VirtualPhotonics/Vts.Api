@@ -5,9 +5,7 @@ using Microsoft.AspNetCore.Mvc.Abstractions;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Routing;
 using NUnit.Framework;
-using System.Collections.Generic;
 using System.Security.Claims;
-using System.Threading.Tasks;
 using Vts.Api.Security;
 
 namespace Vts.Api.Tests.Security
