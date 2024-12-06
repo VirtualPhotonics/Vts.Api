@@ -29,7 +29,7 @@ namespace Vts.Api.Services
                 var parameters = (SolutionDomainPlotParameters)plotParameters;
                 var fs = parameters.ForwardSolverType;
                 var hasIndependentAxis = parameters.SolutionDomain != SolutionDomainType.ROfFx && parameters.SolutionDomain != SolutionDomainType.ROfRho;
-                var independentValues = parameters.XAxis.AxisRange.AsEnumerable().ToArray();
+                var independentValues = parameters.XAxis.AxisRange.ToArray();
                 var opticalPropertyList = _parameterTools.GetOpticalPropertiesObject(parameters.OpticalProperties,
                     parameters.WavelengthOpticalPropertyList).ToArray();
                 var parametersInOrder = _parameterTools.GetParametersInOrder(
@@ -181,7 +181,7 @@ namespace Vts.Api.Services
                 var independentValue = independentAxis.AxisValue;
                 if (independentAxis.AxisRange != null)
                 {
-                    var independentArray = independentAxis.AxisRange.AsEnumerable().ToArray();
+                    var independentArray = independentAxis.AxisRange.ToArray();
                     independentValue = independentArray[i];
                 }
                 independentLabel = $" {independentAxis.Axis}={independentValue}";
