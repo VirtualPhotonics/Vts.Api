@@ -80,12 +80,10 @@ namespace Vts.Api.Tools
                 select new KeyValuePair<IndependentVariableAxis, object>(independentVariableAxis,
                     GetParameterValues(independentVariableAxis, xAxis, independentAxis, secondIndependentAxis));
             // Optical Properties are always first in the list
-            return
-                new KeyValuePair<IndependentVariableAxis, object>(
-                        IndependentVariableAxis.Wavelength,
-                        opticalProperties)
-                    .AsEnumerable()
-                    .Concat(allParameters).ToDictionary();
+            var returnValue = new KeyValuePair<IndependentVariableAxis, object>(IndependentVariableAxis.Wavelength, opticalProperties)
+                .AsEnumerable()
+                .Concat(allParameters);
+            return EnumerableExtensions.ToDictionary(returnValue);
         }
 
         /// <summary>
@@ -119,13 +117,13 @@ namespace Vts.Api.Tools
         {
             if (independentAxis != null && currentAxis == independentAxis.Axis)
             {
-                return independentAxis.AxisRange == null ? new[] { independentAxis.AxisValue } : independentAxis.AxisRange.AsEnumerable().ToArray();
+                return independentAxis.AxisRange == null ? new[] { independentAxis.AxisValue } : independentAxis.AxisRange.ToArray();
             }
             if (secondIndependentAxis != null && currentAxis == secondIndependentAxis.Axis)
             {
-                return secondIndependentAxis.AxisRange == null ? new[] { secondIndependentAxis.AxisValue } : secondIndependentAxis.AxisRange.AsEnumerable().ToArray();
+                return secondIndependentAxis.AxisRange == null ? new[] { secondIndependentAxis.AxisValue } : secondIndependentAxis.AxisRange.ToArray();
             }
-            return xAxis.AxisRange.AsEnumerable().ToArray();
+            return xAxis.AxisRange.ToArray();
         }
     }
 }
