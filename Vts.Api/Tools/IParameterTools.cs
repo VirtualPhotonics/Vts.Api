@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Vts.Api.Models;
+﻿using Vts.Api.Models;
 
 namespace Vts.Api.Tools
 {

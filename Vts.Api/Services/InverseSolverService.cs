@@ -1,7 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
-using System;
-using System.Linq;
-using Vts.Api.Data;
+﻿using Vts.Api.Data;
 using Vts.Api.Enums;
 using Vts.Api.Factories;
 using Vts.Api.Models;

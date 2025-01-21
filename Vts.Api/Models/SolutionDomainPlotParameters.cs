@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using System.Collections.Generic;
 using Vts.Api.Converters;
 
 namespace Vts.Api.Models

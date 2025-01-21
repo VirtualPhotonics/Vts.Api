@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using System.Collections.Generic;
 using Vts.Api.Converters;
 using Vts.Api.Enums;
 using Vts.SpectralMapping;
