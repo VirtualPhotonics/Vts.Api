@@ -36,11 +36,11 @@ namespace Vts.Api.Tests.Services
             var spectralPlotParameters = JsonConvert.DeserializeObject<SpectralPlotParameters>(postData);
             _plotFactoryMock.GetPlot(PlotType.Spectral, spectralPlotParameters).Returns(new Plots());
             var results = _spectralService.GetPlotData(spectralPlotParameters);
-            Assert.IsInstanceOf<Plots>(results);
+            Assert.That(results, Is.InstanceOf<Plots>());
             _plotFactoryMock.Received(1).GetPlot(PlotType.Spectral, spectralPlotParameters);
-            Assert.IsNotNull(spectralPlotParameters);
-            Assert.AreEqual(wavelengths[4], spectralPlotParameters.Wavelengths[4]);
-            Assert.AreEqual(TissueType.Skin, spectralPlotParameters.Tissue.TissueType);
+            Assert.That(spectralPlotParameters, Is.Not.Null);
+            Assert.That(spectralPlotParameters.Wavelengths[4], Is.EqualTo(wavelengths[4]));
+            Assert.That(spectralPlotParameters.Tissue.TissueType, Is.EqualTo(TissueType.Skin));
         }
 
         [Test]
@@ -50,14 +50,14 @@ namespace Vts.Api.Tests.Services
             var xAxis = new DoubleRange(650, 1000, 36);
             var wavelengths = xAxis.AsEnumerable().ToArray();
             var spectralPlotParameters = JsonConvert.DeserializeObject<SpectralPlotParameters>(postData);
-            Assert.IsNotNull(spectralPlotParameters);
+            Assert.That(spectralPlotParameters, Is.Not.Null);
             spectralPlotParameters.ScatteringType = (ScatteringType)99;
             _plotFactoryMock.GetPlot(PlotType.Spectral, spectralPlotParameters).Returns(new Plots());
             var results = _spectralService.GetPlotData(spectralPlotParameters);
-            Assert.IsInstanceOf<Plots>(results);
+            Assert.That(results, Is.InstanceOf<Plots>());
             _plotFactoryMock.Received(1).GetPlot(PlotType.Spectral, spectralPlotParameters);
-            Assert.AreEqual(wavelengths[4], spectralPlotParameters.Wavelengths[4]);
-            Assert.AreEqual(TissueType.Skin, spectralPlotParameters.Tissue.TissueType);
+            Assert.That(spectralPlotParameters.Wavelengths[4], Is.EqualTo(wavelengths[4]));
+            Assert.That(spectralPlotParameters.Tissue.TissueType, Is.EqualTo(TissueType.Skin));
         }
 
         [Test]
@@ -67,7 +67,7 @@ namespace Vts.Api.Tests.Services
             var spectralPlotParameters = JsonConvert.DeserializeObject<SpectralPlotParameters>(postData);
             _plotFactoryMock.GetPlot(PlotType.Spectral, spectralPlotParameters).Returns(new Plots());
             var results = _spectralService.GetPlotData(spectralPlotParameters);
-            Assert.IsInstanceOf<Plots>(results);
+            Assert.That(results, Is.InstanceOf<Plots>());
             _plotFactoryMock.Received(1).GetPlot(PlotType.Spectral, spectralPlotParameters);
         }
 
@@ -78,7 +78,7 @@ namespace Vts.Api.Tests.Services
             var spectralPlotParameters = JsonConvert.DeserializeObject<SpectralPlotParameters>(postData);
             _plotFactoryMock.GetPlot(PlotType.Spectral, spectralPlotParameters).Returns(new Plots());
             var results = _spectralService.GetPlotData(spectralPlotParameters);
-            Assert.IsInstanceOf<Plots>(results);
+            Assert.That(results, Is.InstanceOf<Plots>());
             _plotFactoryMock.Received(1).GetPlot(PlotType.Spectral, spectralPlotParameters);
         }
     }

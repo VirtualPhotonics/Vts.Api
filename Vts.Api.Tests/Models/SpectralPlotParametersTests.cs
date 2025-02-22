@@ -19,22 +19,22 @@ namespace Vts.Api.Tests.Models
             var mieScatterer = new MieScatterer(0.5, 1.4, 1, 0.01);
             var absorberConcentrations = new[] { new LabelValuePair() { Label = "Hb", Value = 28.4 } };
             var spectralPlotParameters = JsonConvert.DeserializeObject<SpectralPlotParameters>(postData);
-            Assert.AreEqual(xAxis.Start, spectralPlotParameters.XAxis.AxisRange.Start);
-            Assert.AreEqual(xAxis.Stop, spectralPlotParameters.XAxis.AxisRange.Stop);
-            Assert.AreEqual(xAxis.Count, spectralPlotParameters.XAxis.AxisRange.Count);
-            Assert.AreEqual(xAxis.Delta, spectralPlotParameters.XAxis.AxisRange.Delta);
-            Assert.IsNull(spectralPlotParameters.YAxis);
-            Assert.AreEqual(SpectralPlotType.Musp, spectralPlotParameters.SpectralPlotType);
-            Assert.AreEqual("μs'", spectralPlotParameters.PlotName);
-            Assert.IsNull(spectralPlotParameters.Tissue);
-            Assert.IsNull(spectralPlotParameters.Wavelengths);
-            Assert.AreEqual("Skin", spectralPlotParameters.TissueType);
-            Assert.AreEqual(ScatteringType.PowerLaw, spectralPlotParameters.ScatteringType);
-            Assert.AreEqual(absorberConcentrations[0].Label, spectralPlotParameters.AbsorberConcentration[0].Label);
-            Assert.AreEqual(absorberConcentrations[0].Value, spectralPlotParameters.AbsorberConcentration[0].Value);
-            Assert.AreEqual(powerLawScatterer.A, spectralPlotParameters.PowerLawScatterer.A);
-            Assert.AreEqual(intralipidScatterer.VolumeFraction, spectralPlotParameters.IntralipidScatterer.VolumeFraction);
-            Assert.AreEqual(mieScatterer.ParticleRadius, spectralPlotParameters.MieScatterer.ParticleRadius);
+            Assert.That(spectralPlotParameters.XAxis.AxisRange.Start, Is.EqualTo(xAxis.Start));
+            Assert.That(spectralPlotParameters.XAxis.AxisRange.Stop, Is.EqualTo(xAxis.Stop));
+            Assert.That(spectralPlotParameters.XAxis.AxisRange.Count, Is.EqualTo(xAxis.Count));
+            Assert.That(spectralPlotParameters.XAxis.AxisRange.Delta, Is.EqualTo(xAxis.Delta));
+            Assert.That(spectralPlotParameters.YAxis, Is.Null);
+            Assert.That(spectralPlotParameters.SpectralPlotType, Is.EqualTo(SpectralPlotType.Musp));
+            Assert.That(spectralPlotParameters.PlotName, Is.EqualTo("μs'"));
+            Assert.That(spectralPlotParameters.Tissue, Is.Null);
+            Assert.That(spectralPlotParameters.Wavelengths, Is.Null);
+            Assert.That(spectralPlotParameters.TissueType, Is.EqualTo("Skin"));
+            Assert.That(spectralPlotParameters.ScatteringType, Is.EqualTo(ScatteringType.PowerLaw));
+            Assert.That(spectralPlotParameters.AbsorberConcentration[0].Label, Is.EqualTo(absorberConcentrations[0].Label));
+            Assert.That(spectralPlotParameters.AbsorberConcentration[0].Value, Is.EqualTo(absorberConcentrations[0].Value));
+            Assert.That(spectralPlotParameters.PowerLawScatterer.A, Is.EqualTo(powerLawScatterer.A));
+            Assert.That(spectralPlotParameters.IntralipidScatterer.VolumeFraction, Is.EqualTo(intralipidScatterer.VolumeFraction));
+            Assert.That(spectralPlotParameters.MieScatterer.ParticleRadius, Is.EqualTo(mieScatterer.ParticleRadius));
         }
     }
 }
