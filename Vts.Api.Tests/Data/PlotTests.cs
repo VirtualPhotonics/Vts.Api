@@ -17,11 +17,11 @@ namespace Vts.Api.Tests.Data
                     new Point(3,4)
                 }
             };
-            Assert.AreEqual("label", plotData.Label);
-            Assert.AreEqual(1, plotData.Data.ElementAt(0).X);
-            Assert.AreEqual(2, plotData.Data.ElementAt(0).Y);
-            Assert.AreEqual(3, plotData.Data.ElementAt(1).X);
-            Assert.AreEqual(4, plotData.Data.ElementAt(1).Y);
+            Assert.That(plotData.Label, Is.EqualTo("label"));
+            Assert.That(plotData.Data.ElementAt(0).X, Is.EqualTo(1));
+            Assert.That(plotData.Data.ElementAt(0).Y, Is.EqualTo(2));
+            Assert.That(plotData.Data.ElementAt(1).X, Is.EqualTo(3));
+            Assert.That(plotData.Data.ElementAt(1).Y, Is.EqualTo(4));
         }
     }
 }

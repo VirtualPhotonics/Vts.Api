@@ -30,12 +30,12 @@ namespace Vts.Api.Tests
                 .UseStartup<Startup>()
                 .Build();
             // Check the services were added correctly
-            Assert.IsNotNull(_host.Services.GetService<IForwardSolverService>());
-            Assert.IsNotNull(_host.Services.GetService<IInverseSolverService>());
-            Assert.IsNotNull(_host.Services.GetService<IAuthorizationHandler>());
-            Assert.IsNotNull(_host.Services.GetService<IParameterTools>());
-            Assert.IsNotNull(_host.Services.GetService<PlotSolutionDomainResultsService>());
-            Assert.IsNotNull(_host.Services.GetService<PlotSpectralResultsService>());
+            Assert.That(_host.Services.GetService<IForwardSolverService>(), Is.Not.Null);
+            Assert.That(_host.Services.GetService<IInverseSolverService>(), Is.Not.Null);
+            Assert.That(_host.Services.GetService<IAuthorizationHandler>(), Is.Not.Null);
+            Assert.That(_host.Services.GetService<IParameterTools>(), Is.Not.Null);
+            Assert.That(_host.Services.GetService<PlotSolutionDomainResultsService>(), Is.Not.Null);
+            Assert.That(_host.Services.GetService<PlotSpectralResultsService>(), Is.Not.Null);
         }
     }
 }

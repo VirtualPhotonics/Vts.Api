@@ -27,7 +27,7 @@ namespace Vts.Api.Tests.Controllers
                 "Controller",
                 "Spectral"
             };
-            Assert.AreEqual(array, response);
+            Assert.That(response, Is.EqualTo(array));
         }
 
         [Test]
@@ -38,7 +38,7 @@ namespace Vts.Api.Tests.Controllers
             _spectralServiceMock.GetPlotData(Arg.Any<SpectralPlotParameters>()).Returns(expected);
             var spectralController = new SpectralController(_spectralServiceMock);
             var response = spectralController.Post(new SpectralPlotParameters());
-            Assert.IsInstanceOf<Plots>(response);
+            Assert.That(response, Is.InstanceOf<Plots>());
         }
     }
 }

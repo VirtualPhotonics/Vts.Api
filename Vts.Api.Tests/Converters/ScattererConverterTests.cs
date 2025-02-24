@@ -20,9 +20,9 @@ namespace Vts.Api.Tests.Converters
 
                 var converter = new ScattererConverter();
                 var obj = (PowerLawScatterer)converter.ReadJson(reader, typeof(PowerLawScatterer), new PowerLawScatterer(), false, JsonSerializer.CreateDefault());
-                Assert.IsNotNull(obj);
-                Assert.AreEqual(1.2, obj.A);
-                Assert.AreEqual(1.42, obj.B);
+                Assert.That(obj, Is.Not.Null);
+                Assert.That(obj.A, Is.EqualTo(1.2));
+                Assert.That(obj.B, Is.EqualTo(1.42));
             }
         }
 
@@ -37,9 +37,9 @@ namespace Vts.Api.Tests.Converters
                     break;
                 var converter = new ScattererConverter();
                 var obj = (PowerLawScatterer)converter.ReadJson(reader, typeof(PowerLawScatterer), new PowerLawScatterer(), false, JsonSerializer.CreateDefault());
-                Assert.IsNotNull(obj);
-                Assert.AreEqual(1.0, obj.A);
-                Assert.AreEqual(0.1, obj.B);
+                Assert.That(obj, Is.Not.Null);
+                Assert.That(obj.A, Is.EqualTo(1.0));
+                Assert.That(obj.B, Is.EqualTo(0.1));
             }
         }
 
@@ -54,8 +54,8 @@ namespace Vts.Api.Tests.Converters
                     break;
                 var converter = new ScattererConverter();
                 var obj = (IntralipidScatterer)converter.ReadJson(reader, typeof(IntralipidScatterer), new IntralipidScatterer(), false, JsonSerializer.CreateDefault());
-                Assert.IsNotNull(obj);
-                Assert.AreEqual(0.02, obj.VolumeFraction);
+                Assert.That(obj, Is.Not.Null);
+                Assert.That(obj.VolumeFraction, Is.EqualTo(0.02));
             }
         }
 
@@ -70,8 +70,8 @@ namespace Vts.Api.Tests.Converters
                     break;
                 var converter = new ScattererConverter();
                 var obj = (IntralipidScatterer)converter.ReadJson(reader, typeof(IntralipidScatterer), new IntralipidScatterer(), false, JsonSerializer.CreateDefault());
-                Assert.IsNotNull(obj);
-                Assert.AreEqual(0.01, obj.VolumeFraction);
+                Assert.That(obj, Is.Not.Null);
+                Assert.That(obj.VolumeFraction, Is.EqualTo(0.01));
             }
         }
 
@@ -87,11 +87,11 @@ namespace Vts.Api.Tests.Converters
 
                 var converter = new ScattererConverter();
                 var obj = (MieScatterer)converter.ReadJson(reader, typeof(MieScatterer), new MieScatterer(), false, JsonSerializer.CreateDefault());
-                Assert.IsNotNull(obj);
-                Assert.AreEqual(0.8, obj.ParticleRadius);
-                Assert.AreEqual(1.6, obj.ParticleRefractiveIndexMismatch);
-                Assert.AreEqual(1.1, obj.MediumRefractiveIndexMismatch);
-                Assert.AreEqual(0.1, obj.VolumeFraction);
+                Assert.That(obj, Is.Not.Null);
+                Assert.That(obj.ParticleRadius, Is.EqualTo(0.8));
+                Assert.That(obj.ParticleRefractiveIndexMismatch, Is.EqualTo(1.6));
+                Assert.That(obj.MediumRefractiveIndexMismatch, Is.EqualTo(1.1));
+                Assert.That(obj.VolumeFraction, Is.EqualTo(0.1));
             }
         }
 
@@ -106,11 +106,11 @@ namespace Vts.Api.Tests.Converters
                     break;
                 var converter = new ScattererConverter();
                 var obj = (MieScatterer)converter.ReadJson(reader, typeof(MieScatterer), new MieScatterer(), false, JsonSerializer.CreateDefault());
-                Assert.IsNotNull(obj);
-                Assert.AreEqual(0.5, obj.ParticleRadius);
-                Assert.AreEqual(1.4, obj.ParticleRefractiveIndexMismatch);
-                Assert.AreEqual(1.0, obj.MediumRefractiveIndexMismatch);
-                Assert.AreEqual(0.01, obj.VolumeFraction);
+                Assert.That(obj, Is.Not.Null);
+                Assert.That(obj.ParticleRadius, Is.EqualTo(0.5));
+                Assert.That(obj.ParticleRefractiveIndexMismatch, Is.EqualTo(1.4));
+                Assert.That(obj.MediumRefractiveIndexMismatch, Is.EqualTo(1.0));
+                Assert.That(obj.VolumeFraction, Is.EqualTo(0.01));
             }
         }
 
@@ -126,7 +126,7 @@ namespace Vts.Api.Tests.Converters
 
                 var converter = new ScattererConverter();
                 var obj = converter.ReadJson(reader, null, null, false, JsonSerializer.CreateDefault());
-                Assert.IsTrue(obj is PowerLawScatterer);
+                Assert.That(obj is PowerLawScatterer, Is.True);
             }
         }
 

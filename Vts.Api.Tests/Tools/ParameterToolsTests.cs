@@ -12,7 +12,7 @@ namespace Vts.Api.Tests.Tools
         {
             _parameterTools = new ParameterTools();
             var opticalProperties = _parameterTools.GetOpticalPropertiesObject(null, null);
-            Assert.IsInstanceOf<List<OpticalProperties>>(opticalProperties);
+            Assert.That(opticalProperties, Is.InstanceOf<List<OpticalProperties>>());
         }
     }
 }

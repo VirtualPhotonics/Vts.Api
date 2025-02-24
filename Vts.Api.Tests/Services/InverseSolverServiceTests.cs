@@ -37,7 +37,7 @@ namespace Vts.Api.Tests.Services
             var solutionDomainPlotParameters = JsonConvert.DeserializeObject<SolutionDomainPlotParameters>(postData);
             _plotFactoryMock.GetPlot(PlotType.SolutionDomain, solutionDomainPlotParameters).Returns(new Plots());
             var results = _inverseSolverService.GetPlotData(solutionDomainPlotParameters);
-            Assert.IsInstanceOf<Plots>(results);
+            Assert.That(results, Is.InstanceOf<Plots>());
             _plotFactoryMock.Received(1).GetPlot(PlotType.SolutionDomain, solutionDomainPlotParameters);
         }
 
@@ -48,8 +48,8 @@ namespace Vts.Api.Tests.Services
             var solutionDomainPlotParameters = JsonConvert.DeserializeObject<SolutionDomainPlotParameters>(postData);
             var initialGuessParams = _parameterTools.GetParametersInOrder(_parameterTools.GetOpticalPropertiesObject(solutionDomainPlotParameters.OpticalProperties, solutionDomainPlotParameters.WavelengthOpticalPropertyList), solutionDomainPlotParameters.SolutionDomain, solutionDomainPlotParameters.XAxis, solutionDomainPlotParameters.IndependentAxis, solutionDomainPlotParameters.SecondIndependentAxis);
             var test = (OpticalProperties[])initialGuessParams[IndependentVariableAxis.Wavelength];
-            Assert.IsNotNull(test);
-            Assert.AreEqual(0.01, test[0].Mua);
+            Assert.That(test, Is.Not.Null);
+            Assert.That(test[0].Mua, Is.EqualTo(0.01));
         }
 
         [Test]
@@ -59,8 +59,8 @@ namespace Vts.Api.Tests.Services
             var solutionDomainPlotParameters = JsonConvert.DeserializeObject<SolutionDomainPlotParameters>(postData);
             var initialGuessParams = _parameterTools.GetParametersInOrder(_parameterTools.GetOpticalPropertiesObject(solutionDomainPlotParameters.OpticalProperties, solutionDomainPlotParameters.WavelengthOpticalPropertyList), solutionDomainPlotParameters.SolutionDomain, solutionDomainPlotParameters.XAxis, solutionDomainPlotParameters.IndependentAxis, solutionDomainPlotParameters.SecondIndependentAxis);
             var test = (OpticalProperties[])initialGuessParams[IndependentVariableAxis.Wavelength];
-            Assert.IsNotNull(test);
-            Assert.AreEqual(0.01, test[0].Mua);
+            Assert.That(test, Is.Not.Null);
+            Assert.That(test[0].Mua, Is.EqualTo(0.01));
         }
 
         [Test]
@@ -70,8 +70,8 @@ namespace Vts.Api.Tests.Services
             var solutionDomainPlotParameters = JsonConvert.DeserializeObject<SolutionDomainPlotParameters>(postData);
             var initialGuessParams = _parameterTools.GetParametersInOrder(_parameterTools.GetOpticalPropertiesObject(solutionDomainPlotParameters.OpticalProperties, solutionDomainPlotParameters.WavelengthOpticalPropertyList), solutionDomainPlotParameters.SolutionDomain, solutionDomainPlotParameters.XAxis, solutionDomainPlotParameters.IndependentAxis, solutionDomainPlotParameters.SecondIndependentAxis);
             var test = (OpticalProperties[])initialGuessParams[IndependentVariableAxis.Wavelength];
-            Assert.IsNotNull(test);
-            Assert.AreEqual(0.01, test[0].Mua);
+            Assert.That(test, Is.Not.Null);
+            Assert.That(test[0].Mua, Is.EqualTo(0.01));
         }
 
         [Test]
@@ -81,8 +81,8 @@ namespace Vts.Api.Tests.Services
             var solutionDomainPlotParameters = JsonConvert.DeserializeObject<SolutionDomainPlotParameters>(postData);
             var initialGuessParams = _parameterTools.GetParametersInOrder(_parameterTools.GetOpticalPropertiesObject(solutionDomainPlotParameters.OpticalProperties, solutionDomainPlotParameters.WavelengthOpticalPropertyList), solutionDomainPlotParameters.SolutionDomain, solutionDomainPlotParameters.XAxis, solutionDomainPlotParameters.IndependentAxis, solutionDomainPlotParameters.SecondIndependentAxis);
             var test = (OpticalProperties[])initialGuessParams[IndependentVariableAxis.Wavelength];
-            Assert.IsNotNull(test);
-            Assert.AreEqual(0.01, test[0].Mua);
+            Assert.That(test, Is.Not.Null);
+            Assert.That(test[0].Mua, Is.EqualTo(0.01));
         }
 
         [Test]
@@ -92,8 +92,8 @@ namespace Vts.Api.Tests.Services
             var solutionDomainPlotParameters = JsonConvert.DeserializeObject<SolutionDomainPlotParameters>(postData);
             var initialGuessParams = _parameterTools.GetParametersInOrder(_parameterTools.GetOpticalPropertiesObject(solutionDomainPlotParameters.OpticalProperties, solutionDomainPlotParameters.WavelengthOpticalPropertyList), solutionDomainPlotParameters.SolutionDomain, solutionDomainPlotParameters.XAxis, solutionDomainPlotParameters.IndependentAxis, solutionDomainPlotParameters.SecondIndependentAxis);
             var test = (OpticalProperties[])initialGuessParams[IndependentVariableAxis.Wavelength];
-            Assert.IsNotNull(test);
-            Assert.AreEqual(0.01, test[0].Mua);
+            Assert.That(test, Is.Not.Null);
+            Assert.That(test[0].Mua, Is.EqualTo(0.01));
         }
 
         [Test]
@@ -103,8 +103,8 @@ namespace Vts.Api.Tests.Services
             var solutionDomainPlotParameters = JsonConvert.DeserializeObject<SolutionDomainPlotParameters>(postData);
             var initialGuessParams = _parameterTools.GetParametersInOrder(_parameterTools.GetOpticalPropertiesObject(solutionDomainPlotParameters.OpticalProperties, solutionDomainPlotParameters.WavelengthOpticalPropertyList), solutionDomainPlotParameters.SolutionDomain, solutionDomainPlotParameters.XAxis, solutionDomainPlotParameters.IndependentAxis, solutionDomainPlotParameters.SecondIndependentAxis);
             var test = (OpticalProperties[])initialGuessParams[IndependentVariableAxis.Wavelength];
-            Assert.IsNotNull(test);
-            Assert.AreEqual(0.01, test[0].Mua);
+            Assert.That(test, Is.Not.Null);
+            Assert.That(test[0].Mua, Is.EqualTo(0.01));
         }
 
         [Test]
@@ -122,12 +122,12 @@ namespace Vts.Api.Tests.Services
         [Test]
         public void Test_GetParameterOrder_returns_integer()
         {
-            Assert.AreEqual(0, ParameterTools.GetParameterOrder(IndependentVariableAxis.Wavelength));
-            Assert.AreEqual(1, ParameterTools.GetParameterOrder(IndependentVariableAxis.Rho));
-            Assert.AreEqual(1, ParameterTools.GetParameterOrder(IndependentVariableAxis.Fx));
-            Assert.AreEqual(2, ParameterTools.GetParameterOrder(IndependentVariableAxis.Time));
-            Assert.AreEqual(2, ParameterTools.GetParameterOrder(IndependentVariableAxis.Ft));
-            Assert.AreEqual(3, ParameterTools.GetParameterOrder(IndependentVariableAxis.Z));
+            Assert.That(ParameterTools.GetParameterOrder(IndependentVariableAxis.Wavelength), Is.EqualTo(0));
+            Assert.That(ParameterTools.GetParameterOrder(IndependentVariableAxis.Rho), Is.EqualTo(1));
+            Assert.That(ParameterTools.GetParameterOrder(IndependentVariableAxis.Fx), Is.EqualTo(1));
+            Assert.That(ParameterTools.GetParameterOrder(IndependentVariableAxis.Time), Is.EqualTo(2));
+            Assert.That(ParameterTools.GetParameterOrder(IndependentVariableAxis.Ft), Is.EqualTo(2));
+            Assert.That(ParameterTools.GetParameterOrder(IndependentVariableAxis.Z), Is.EqualTo(3));
         }
 
         [Test]
