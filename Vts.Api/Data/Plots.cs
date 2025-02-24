@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Vts.Api.Data
+﻿namespace Vts.Api.Data
 {
     /// <summary>
     /// Plot class

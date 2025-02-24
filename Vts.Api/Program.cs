@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Logging;
-using Vts.Api;
+﻿using Vts.Api;
 
 using var loggerFactory = LoggerFactory.Create(x => x
     .SetMinimumLevel(LogLevel.Trace)

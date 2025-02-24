@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Vts.Api.Security
 {

@@ -1,8 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using System.Linq;
 using System.Net;
-using System.Threading.Tasks;
 
 namespace Vts.Api.Security
 {
