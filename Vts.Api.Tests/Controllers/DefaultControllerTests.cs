@@ -18,8 +18,8 @@ namespace Vts.Api.Tests.Controllers
                 }
             };
             var response = liveController.Get();
-            Assert.AreEqual(200, liveController.HttpContext.Response.StatusCode);
-            Assert.AreEqual("200 OK", response);
+            Assert.That(liveController.HttpContext.Response.StatusCode, Is.EqualTo(200));
+            Assert.That(response, Is.EqualTo("200 OK"));
         }
     }
 }

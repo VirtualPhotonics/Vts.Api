@@ -27,7 +27,7 @@ namespace Vts.Api.Tests.Controllers
                 "Controller",
                 "Inverse"
             };
-            Assert.AreEqual(array, response);
+            Assert.That(response, Is.EqualTo(array));
         }
 
         [Test]
@@ -38,7 +38,7 @@ namespace Vts.Api.Tests.Controllers
             _inverseSolverMock.GetPlotData(Arg.Any<SolutionDomainPlotParameters>()).Returns(expected);
             var spectralController = new InverseController(_inverseSolverMock);
             var response = spectralController.Post(new SolutionDomainPlotParameters());
-            Assert.IsInstanceOf<Plots>(response);
+            Assert.That(response, Is.InstanceOf<Plots>());
         }
     }
 }

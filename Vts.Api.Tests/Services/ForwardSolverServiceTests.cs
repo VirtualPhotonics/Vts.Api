@@ -23,14 +23,14 @@ namespace Vts.Api.Tests.Services
             _plotFactoryMock = Substitute.For<IPlotFactory>();
             var serviceProvider = new ServiceCollection().AddLogging().BuildServiceProvider();
             _factory = serviceProvider.GetService<ILoggerFactory>();
-            Assert.IsNotNull(_factory);
+            Assert.That(_factory, Is.Not.Null);
             if (_factory != null) _logger = _factory.CreateLogger<ForwardSolverService>();
             _forwardSolverService = new ForwardSolverService(_logger, _plotFactoryMock);
             const string postData = "{\"forwardSolverType\":\"DistributedPointSourceSDA\",\"solutionDomain\":\"ROfRho\",\"independentAxes\":{\"label\":\"t\",\"value\":0.05},\"xAxis\":{\"start\":0.5,\"stop\":9.5,\"count\":19},\"opticalProperties\":{\"mua\":0.01,\"musp\":1,\"g\":0.8,\"n\":1.4},\"modelAnalysis\":\"R\",\"noiseValue\":\"0\"}";
             var solutionDomainPlotParameters = JsonConvert.DeserializeObject<SolutionDomainPlotParameters>(postData);
             _plotFactoryMock.GetPlot(PlotType.SolutionDomain, solutionDomainPlotParameters).Returns(new Plots());
             var results = _forwardSolverService.GetPlotData(solutionDomainPlotParameters);
-            Assert.IsInstanceOf<Plots>(results);
+            Assert.That(results, Is.InstanceOf<Plots>());
             _plotFactoryMock.Received(1).GetPlot(PlotType.SolutionDomain, solutionDomainPlotParameters);
         }
 
@@ -40,7 +40,7 @@ namespace Vts.Api.Tests.Services
             _plotFactoryMock = Substitute.For<IPlotFactory>();
             var serviceProvider = new ServiceCollection().AddLogging().BuildServiceProvider();
             _factory = serviceProvider.GetService<ILoggerFactory>();
-            Assert.IsNotNull(_factory);
+            Assert.That(_factory, Is.Not.Null);
             if (_factory != null) _logger = _factory.CreateLogger<ForwardSolverService>();
             _forwardSolverService = new ForwardSolverService(_logger, _plotFactoryMock);
             const string postData = "{\"forwardSolverType\":\"DistributedPointSourceSDA\",\"solutionDomain\":\"ROfRho\",\"xAxis\":{\"start\":0.5,\"stop\":9.5,\"count\":19},\"opticalProperties\":{\"mua\":0.01,\"musp\":1,\"g\":0.8,\"n\":1.4},\"modelAnalysis\":\"R\",\"noiseValue\":\"0\"}";

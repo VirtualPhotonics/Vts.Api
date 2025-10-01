@@ -64,12 +64,12 @@ namespace Vts.Api.Tests.Services
         internal static void Verify_plot_data(Plots data, string results)
         {
             var expected = JsonConvert.DeserializeObject<Plots>(results);
-            Assert.AreEqual(expected?.Id, data.Id);
-            Assert.AreEqual(expected?.PlotList.Count, data.PlotList.Count);
+            Assert.That(data.Id, Is.EqualTo(expected?.Id));
+            Assert.That(data.PlotList.Count, Is.EqualTo(expected?.PlotList.Count));
             for (var i = 0; i < expected?.PlotList.Count; i++)
             {
-                Assert.AreEqual(expected.PlotList[i].Label, data.PlotList[i].Label);
-                Assert.AreEqual(expected.PlotList[i].Data.Count, data.PlotList[i].Data.Count);
+                Assert.That(data.PlotList[i].Label, Is.EqualTo(expected.PlotList[i].Label));
+                Assert.That(data.PlotList[i].Data.Count, Is.EqualTo(expected.PlotList[i].Data.Count));
                 for (var j = 0; j < expected.PlotList[i].Data.Count; j++)
                 {
                     Assert.That(Math.Round(expected.PlotList[i].Data[j][0], 6), Is.EqualTo(Math.Round(data.PlotList[i].Data[j][0], 6)));

@@ -31,7 +31,7 @@ namespace Vts.Api.Tests.Security
             var authFilterContext = new AuthorizationFilterContext(actionContext, filters);
             var authHandlerContext = new AuthorizationHandlerContext(requirements, ClaimsPrincipal.Current, authFilterContext);
             var keyService = new ApiKeyRequirementHandler(httpContextAccessor); await keyService.HandleAsync(authHandlerContext);
-            Assert.IsTrue(authHandlerContext.HasSucceeded);
+            Assert.That(authHandlerContext.HasSucceeded, Is.True);
         }
 
         [Test]
@@ -52,7 +52,7 @@ namespace Vts.Api.Tests.Security
             var authHandlerContext = new AuthorizationHandlerContext(requirements, ClaimsPrincipal.Current, authFilterContext);
             var keyService = new ApiKeyRequirementHandler(httpContextAccessor);
             await keyService.HandleAsync(authHandlerContext);
-            Assert.IsTrue(authHandlerContext.HasFailed);
+            Assert.That(authHandlerContext.HasFailed, Is.True);
         }
 
         [Test]
@@ -69,7 +69,7 @@ namespace Vts.Api.Tests.Security
             var authHandlerContext = new AuthorizationHandlerContext(requirements, ClaimsPrincipal.Current, authFilterContext);
             var keyService = new ApiKeyRequirementHandler(null);
             await keyService.HandleAsync(authHandlerContext);
-            Assert.IsTrue(authHandlerContext.HasFailed);
+            Assert.That(authHandlerContext.HasFailed, Is.True);
         }
     }
 }
