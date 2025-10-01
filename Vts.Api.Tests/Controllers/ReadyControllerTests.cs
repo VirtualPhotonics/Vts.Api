@@ -22,8 +22,8 @@ namespace Vts.Api.Tests.Controllers
                 }
             };
             var response = readyController.Get();
-            Assert.AreEqual("200 OK", response);
-            Assert.AreEqual(200, readyController.HttpContext.Response.StatusCode);
+            Assert.That(response, Is.EqualTo("200 OK"));
+            Assert.That(readyController.HttpContext.Response.StatusCode, Is.EqualTo(200));
         }
 
         [Test]
@@ -38,7 +38,7 @@ namespace Vts.Api.Tests.Controllers
             };
             const string body = "{}";
             readyController.Post(body);
-            Assert.AreEqual(200, readyController.HttpContext.Response.StatusCode);
+            Assert.That(readyController.HttpContext.Response.StatusCode, Is.EqualTo(200));
         }
 
         [Test]
@@ -50,7 +50,7 @@ namespace Vts.Api.Tests.Controllers
             const HttpStatusCode expected = HttpStatusCode.OK;
             httpClient.DefaultRequestHeaders.Add("X-API-KEY", "TESTKEY");
             var response = await httpClient.PostAsync(url, new StringContent("{}", Encoding.UTF8, "application/json"));
-            Assert.AreEqual(expected, response.StatusCode);
+            Assert.That(response.StatusCode, Is.EqualTo(expected));
         }
 
         [Test]
@@ -63,7 +63,7 @@ namespace Vts.Api.Tests.Controllers
 
             var response = client.PostAsync(url, new StringContent("{}", Encoding.UTF8, "application/json"));
 
-            Assert.AreEqual(expected, response.Result.StatusCode);
+            Assert.That(response.Result.StatusCode, Is.EqualTo(expected));
         }
     }
 }

@@ -22,7 +22,7 @@ namespace Vts.Api.Tests.Security
             var requirements = service.GetPolicyAsync("ApiKeyPolicy").Result.Requirements;
             var apiRequirement = (ApiKeyRequirement)requirements[0];
             var key = apiRequirement.ApiKeys[0];
-            Assert.AreEqual("TESTKEY", key);
+            Assert.That(key, Is.EqualTo("TESTKEY"));
         }
     }
 }

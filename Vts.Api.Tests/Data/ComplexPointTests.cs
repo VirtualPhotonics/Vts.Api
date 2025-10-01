@@ -10,9 +10,9 @@ namespace Vts.Api.Tests.Data
         public void Test_complex_point()
         {
             var point = new ComplexPoint(0.4, new Complex(0.1, 0.2));
-            Assert.AreEqual(0.1, point.Y.Real);
-            Assert.AreEqual(0.2, point.Y.Imaginary);
-            Assert.AreEqual(0.4, point.X);
+            Assert.That(point.Y.Real, Is.EqualTo(0.1));
+            Assert.That(point.Y.Imaginary, Is.EqualTo(0.2));
+            Assert.That(point.X, Is.EqualTo(0.4));
         }
     }
 }
